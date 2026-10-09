@@ -3,7 +3,7 @@
 > **Mô hình:** Android Mobile App (Java 17 + XML, MVVM Clean Architecture)  
 > **Nhóm thực hiện:** 7 thành viên  
 > **Thời gian:** 14 ngày (2 tuần)  
-> **Môi trường:** `compileSdk 34`, `targetSdk 34`, `minSdk 24`, Máy ảo chuẩn **Google Pixel 10a (API 34)**  
+> **Môi trường:** `compileSdk 37`, `targetSdk 37`, `minSdk 24`, Máy ảo chuẩn **Google Pixel 10a (API 37.2)**  
 > **Bộ tài liệu kỹ thuật hoàn chỉnh:** [docs/INDEX.md](./docs/INDEX.md)
 
 ---
@@ -28,7 +28,7 @@
 ### 🗓️ TUẦN 1 (SPRINT 1: SETUP, CONTRACT-FIRST & MOCK DATA)
 
 #### 📍 Ngày 01 (Thứ Hai): Khởi tạo, Cài đặt môi trường & Thống nhất DTO
-- [ ] `[D1-TD]` **Tùng Dương:** Khởi tạo Git Repo, cấu hình SDK 34, package `com.facebook.client`, đẩy nhánh `develop`.
+- [ ] `[D1-TD]` **Tùng Dương:** Khởi tạo Git Repo, cấu hình SDK 37, package `com.facebook.client`, đẩy nhánh `develop`.
 - [ ] `[D1-AD]` **Ánh Dương:** Thống nhất Model DTO (`User`, `Post`, `Comment`, `Notification`) và Interface Repositories.
 - [ ] `[D1-MD]` **Minh Đức:** Khởi tạo Firebase Project, kích hoạt Auth, Firestore và Cloud Storage.
 - [ ] `[D1-HDH]` **Hà Đăng Huy:** Cài đặt Java 17, Git, lập Master Test Plan.

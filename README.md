@@ -4,7 +4,7 @@
 > **Nền tảng:** Android OS (Java 17 LTS + XML Layouts)  
 > **Kiến trúc:** MVVM + Clean Architecture + Modular by Feature + Repository Pattern  
 > **Backend & Database:** Google Firebase (Firestore + Cloud Storage - Free Tier)  
-> **Thiết bị máy ảo chuẩn:** Google Pixel 10a (Android 14 - API Level 34)  
+> **Thiết bị máy ảo chuẩn:** Google Pixel 10a (Android 17.0 - API Level 37.2 "CinnamonBun")  
 > **Quy mô đội ngũ:** 7 thành viên (Vận hành theo mô hình Agile/Scrum Squad chuyên nghiệp)
 
 ---
@@ -35,7 +35,7 @@ Dự án sở hữu hệ thống tài liệu kỹ thuật hoàn chỉnh gồm **
 
 ### 2. Dành cho Thành viên khi mới bắt đầu (Onboarding Checklist):
 *Mọi thành viên bắt buộc phải đọc và thực hành theo đúng thứ tự 3 bước:*
-* **Bước 1:** Mở ngay [**12_ENVIRONMENT_SETUP.md**](./docs/12_ENVIRONMENT_SETUP.md) để cài đặt đúng **JDK 17**, tạo máy ảo chuẩn **Pixel 10a (API 34)** và clone repo về Android Studio.
+* **Bước 1:** Mở ngay [**12_ENVIRONMENT_SETUP.md**](./docs/12_ENVIRONMENT_SETUP.md) để cài đặt đúng **JDK 17**, tạo máy ảo chuẩn **Pixel 10a (API 37.2)** và clone repo về Android Studio.
 * **Bước 2:** Đọc kỹ [**07_GIT_WORKFLOW_NAMING.md**](./docs/07_GIT_WORKFLOW_NAMING.md) để nắm quy tắc đặt tên nhánh (`feature/*`), quy chuẩn commit (`feat:`, `fix:`) và cách tạo Pull Request (PR) không bị từ chối.
 * **Bước 3:** Mở [**TODO.md**](./TODO.md) để xem danh sách công việc được phân công cho mình trong 14 ngày và tick `[x]` khi làm xong.
 
@@ -95,8 +95,8 @@ cd Facebook_Client
 
 ### Bước 3: Tạo Máy ảo Pixel 10a & Chạy App
 1. Vào `Tools -> Device Manager -> Create Device`.
-2. Chọn/Tạo cấu hình phần cứng **Pixel 10a** (6.1 inch, 1080x2400).
-3. Chọn System Image **API 34 (Android 14 - UpsideDownCake)** -> Đặt tên `Pixel_10a_API_34`.
+2. Chọn/Tạo cấu hình phần cứng **Pixel 10a** (6.3 inch, 1080x2424).
+3. Chọn System Image **API 37.2 (Android 17.0 - CinnamonBun)** bản **16 KB Page Size Google Play Intel x86_64** -> Đặt tên `Pixel_10a_API_37`.
 4. Bấm tổ hợp phím `Shift + F10` để khởi chạy ứng dụng!
 
 ---

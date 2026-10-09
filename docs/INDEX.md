@@ -24,7 +24,7 @@ Bộ tài liệu này được thiết kế và chuẩn hóa toàn diện theo q
 | **09** | [**09_BACKEND_FREE_SERVER.md**](./09_BACKEND_FREE_SERVER.md) | Giải pháp Server & Database Free (Firebase / Supabase), thiết kế Schema Database, API Contracts | Mục 12 |
 | **10** | [**10_TESTING_GUIDE.md**](./10_TESTING_GUIDE.md) | Hướng dẫn viết **Unit Test** Android (JUnit + Mockito) cho ViewModel, Repository, UseCase có code mẫu | Mục 13 |
 | **11** | [**11_BUG_TRIAGE_PROCESS.md**](./11_BUG_TRIAGE_PROCESS.md) | Quy trình quản lý và xử lý lỗi (**Bug Triage**), Ma trận trách nhiệm ai fix lỗi gì (RACI), Hotfix flow | Mục 15 |
-| **12** | [**12_ENVIRONMENT_SETUP.md**](./12_ENVIRONMENT_SETUP.md) | Hướng dẫn cài đặt **JDK 17**, Clone GitHub, Setup Package `com.facebook.client`, **Máy ảo chuẩn Pixel 10a (API 34)** & SDK đồng bộ | Mục 17 |
+| **12** | [**12_ENVIRONMENT_SETUP.md**](./12_ENVIRONMENT_SETUP.md) | Hướng dẫn cài đặt **JDK 17**, Clone GitHub, Setup Package `com.facebook.client`, **Máy ảo chuẩn Pixel 10a (API 37.2)** & SDK đồng bộ | Mục 17 |
 
 ---
 

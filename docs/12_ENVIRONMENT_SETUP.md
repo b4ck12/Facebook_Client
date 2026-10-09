@@ -9,13 +9,15 @@ Toàn bộ 7 thành viên bắt buộc phải cấu hình chính xác và đồn
 | Thông số kỹ thuật | Giá trị chuẩn bắt buộc | Ý nghĩa kỹ thuật |
 | :--- | :--- | :--- |
 | **JDK (Java Version)** | **Java 17 LTS (JavaVersion.VERSION_17)** | Phiên bản chuẩn dài hạn, tránh lỗi tương thích AGP |
-| **Android Studio** | **Jellyfish (2023.3.1)** hoặc **Koala (2024.1.1)** | Bản ổn định mới nhất của Google |
+| **Android Studio** | **Bản mới nhất "Rabbit 1" (2026) - hỗ trợ AGP 9.4+ / Android 17** | Bắt buộc để build được SDK 37 |
 | **Package Name / Namespace** | `com.facebook.client` | Định danh gói ứng dụng |
-| **compileSdk** | **34** (Android 14) | Phiên bản SDK dùng để biên dịch |
-| **targetSdk** | **34** (Android 14) | Phiên bản hệ điều hành mục tiêu |
+| **compileSdk** | **37** (Android 17.0) | Phiên bản SDK dùng để biên dịch |
+| **targetSdk** | **37** (Android 17.0) | Phiên bản hệ điều hành mục tiêu |
 | **minSdk** | **24** (Android 7.0 Nougat) | Đảm bảo tương thích 95%+ thiết bị thực tế |
-| **Thiết bị máy ảo AVD** | **Pixel 10a (API Level 34 - UpsideDownCake)** | Màn hình 6.1" OLED, 1080x2400, 420 dpi |
-| **Build Tool & AGP** | Gradle 8.4 & Android Gradle Plugin 8.3+ | Hệ thống build |
+| **Thiết bị máy ảo AVD** | **Pixel 10a (API Level 37.2 - CinnamonBun)** | Màn hình 6.3", 1080x2424, 420 dpi |
+| **Build Tool & AGP** | Gradle 9.6 & Android Gradle Plugin (AGP) 9.4+ | Hệ thống build |
+
+> 📌 **Lưu ý phiên bản SDK:** Máy ảo là bản **API 37.2** (bản minor của Android 17.0), nhưng trong `build.gradle` chỉ ghi số nguyên **37** (`compileSdk 37`, `targetSdk 37`).
 
 ---
 
@@ -79,7 +81,17 @@ java -version
 
 ---
 
-## 4. MỞ DỰ ÁN TRONG ANDROID STUDIO & CẤU HÌNH GRADLE JDK 17
+## 4. CÀI ANDROID STUDIO, MỞ DỰ ÁN & CẤU HÌNH GRADLE JDK 17
+
+### Bước 4.1: Tải và cài đặt Android Studio (bản mới nhất "Rabbit 1")
+1. Truy cập trang tải chính thức: https://developer.android.com/studio
+2. Bấm nút **Download Android Studio Rabbit 1** -> tải file cài đặt `.exe` và cài với các tùy chọn mặc định (Next -> Next -> Finish).
+
+![Trang tải Android Studio Rabbit 1](./Download_Android_Studio.png)
+
+> ⚠️ **Bắt buộc dùng bản Android Studio mới nhất (Rabbit 1 trở lên):** các bản cũ như Jellyfish, Koala... **không build được** `compileSdk 37` (Android 17).
+
+### Bước 4.2: Mở dự án & cấu hình Gradle JDK 17
 
 1. Khởi động **Android Studio**.
 2. Trên màn hình chào mừng, chọn **Open** (hoặc thanh menu `File -> Open`).
@@ -107,12 +119,12 @@ plugins {
 
 android {
     namespace 'com.facebook.client'
-    compileSdk 34
+    compileSdk 37
 
     defaultConfig {
         applicationId "com.facebook.client"
         minSdk 24
-        targetSdk 34
+        targetSdk 37
         versionCode 1
         versionName "1.0"
 
@@ -155,6 +167,10 @@ dependencies {
 }
 ```
 
+> ⚠️ **Lưu ý Android 17 (API 37):** Từ Android 15+, ứng dụng mặc định vẽ tràn viền (**edge-to-edge**).
+> Hãy dùng `Toolbar`/`AppBarLayout` và `BottomNavigationView` của **Material Components** (tự động xử lý insets),
+> hoặc thêm `android:fitsSystemWindows="true"` cho layout gốc để nội dung không bị đè lên thanh trạng thái.
+
 ### 5.2. Khởi tạo cấu trúc Package chuẩn trong thư mục mã nguồn
 Cả 7 thành viên phải thống nhất cấu trúc Package nằm dưới `com.facebook.client`:
 
@@ -179,7 +195,7 @@ app/src/main/java/com/facebook/client/
 
 ---
 
-## 6. HƯỚNG DẪN TẠO MÁY ẢO CHUẨN: PIXEL 10A (API 34)
+## 6. HƯỚNG DẪN TẠO MÁY ẢO CHUẨN: PIXEL 10A (API 37.2)
 
 Để đảm bảo toàn bộ thành viên nhìn thấy giao diện hiển thị với cùng kích thước, tỷ lệ và độ phân giải, nhóm thống nhất sử dụng thiết bị máy ảo **Pixel 10a**:
 
@@ -190,26 +206,31 @@ app/src/main/java/com/facebook/client/
    - Nếu trong danh sách chưa có sẵn Pixel 10a, bấm vào nút **New Hardware Profile** ở góc dưới bên trái:
      - **Device Name:** `Pixel 10a`
      - **Device Type:** `Phone`
-     - **Screen size:** `6.1` inch
-     - **Resolution:** `1080` x `2400` pixels
+     - **Screen size:** `6.3` inch
+     - **Resolution:** `1080` x `2424` pixels
      - **Default Skin:** `No Skin` hoặc Skin điện thoại mặc định
      - Bấm **Finish** để lưu Profile phần cứng `Pixel 10a`.
 4. Chọn thiết bị **Pixel 10a** vừa tạo -> Bấm **Next**.
 5. **Chọn Hệ điều hành (System Image):**
    - Chọn tab **Recommended** hoặc **x86 Images**.
-   - Chọn bản phát hành: **API Level 34** (Tên mã: **UpsideDownCake** - Android 14.0).
-   - Target: **Google APIs (x86_64)**.
+   - Chọn bản phát hành: **API Level 37.2** (Tên mã: **CinnamonBun** - Android 17.0).
+   - Chọn đúng dòng System Image: **"16 KB Page Size Google Play Intel x86_64 Atom System Image"** (Services: Google Play Store, ABI: x86_64).
    - Bấm nút Download bên cạnh nếu máy tính chưa tải bản image này về.
-   - Sau khi tải xong -> Chọn dòng API 34 -> Bấm **Next**.
+   - Sau khi tải xong -> Chọn dòng API 37.2 -> Bấm **Next**.
+
+![Chọn System Image API 37.2 "CinnamonBun" cho Pixel 10a](./Virtual_device.png)
+
+> 📸 **Ảnh màn hình chuẩn:** API **37.2 "CinnamonBun"; Android 17.0** + dòng **16 KB Page Size Google Play Intel x86_64 Atom System Image**, Resolution **1080 x 2424**, Density **420 dpi** — cả nhóm phải chọn giống hệt ảnh này.
+
 6. **Xác nhận thông số cấu hình nâng cao (Advanced Settings):**
-   - **AVD Name:** Đặt tên chính xác là `Pixel_10a_API_34`
+   - **AVD Name:** Đặt tên chính xác là `Pixel_10a_API_37`
    - Bấm nút **Show Advanced Settings**:
-     - *RAM:* `2048 MB`
+     - *RAM:* `4096 MB`
      - *VM Heap:* `512 MB`
      - *Internal Storage:* `4096 MB`
      - *Graphics:* Chọn **Automatic** (hoặc **Hardware - GLES 2.0** nếu máy có card đồ họa rời để chạy mượt hơn).
 7. Bấm **Finish**.
-8. Bấm nút **Play (▶️)** để khởi động máy ảo `Pixel_10a_API_34`.
+8. Bấm nút **Play (▶️)** để khởi động máy ảo `Pixel_10a_API_37`.
 
 ---
 
@@ -226,7 +247,7 @@ git pull origin develop
 git checkout -b feature/feed-ui-TSK-10
 
 # 3. Mở Android Studio và thực hiện code (Java, XML)
-# 4. Chạy thử nghiệm trên máy ảo Pixel_10a_API_34 (Nhấn Shift + F10)
+# 4. Chạy thử nghiệm trên máy ảo Pixel_10a_API_37 (Nhấn Shift + F10)
 # 5. Chạy kiểm tra Unit Test trong Terminal
 ./gradlew testDebugUnitTest
 
