@@ -86,5 +86,5 @@ Dự án được vận hành theo mô hình **Agile Cross-Functional Squad** ch
    - Theo dõi sát sao từng ngày theo bảng điều khiển tại [TODO.md](../TODO.md) và [06_TASKS_SPRINT_PLAN.md](./06_TASKS_SPRINT_PLAN.md).
    - Mỗi thành viên hoàn thành task trong ngày thì tick `[x]` vào bảng tiến độ.
 3. **Sprint Review & Retrospective (Cuối mỗi tuần):**
-   - Chạy demo trực tiếp trên máy ảo chuẩn **Pixel 10a (API 34)**.
+   - Chạy demo trực tiếp trên máy ảo chuẩn **Pixel 10a (API 37.2)**.
    - QA báo cáo số lượng bug đã phát hiện và tình trạng fix lỗi.

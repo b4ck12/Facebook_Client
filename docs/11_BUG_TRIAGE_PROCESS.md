@@ -88,7 +88,7 @@ Khi phát hiện lỗi, người báo cáo (thường là Hà Đăng Huy hoặc 
 - Nút "ĐĂNG" phải bị vô hiệu hóa (disabled), không cho phép người dùng bấm nếu chưa có nội dung.
 
 #### 4. Môi trường & Bằng chứng (Environment & Proof):
-- Máy ảo: Google Pixel 10a (API 34).
+- Máy ảo: Google Pixel 10a (API 37.2).
 - Ảnh chụp màn hình / Video đính kèm: [Link ảnh screenshot]
 - Trích xuất Logcat (nếu có crash): NullPointerException at CreatePostActivity.java:45
 ```

@@ -5,7 +5,7 @@
 ## 🧭 NGUYÊN TẮC VẬN HÀNH 2 TUẦN (14 NGÀY THẦN TỐC)
 
 - **Thời gian triển khai:** Đúng 14 ngày (2 tuần) chuẩn chu kỳ 2 Sprints ngắn.
-- **Mục tiêu tối thượng:** Bám sát 100% đặc tả `Mobile App.pdf`, không làm ngoài phạm vi, bàn giao ứng dụng chạy mượt mà trên máy ảo **Pixel 10a (API 34)**.
+- **Mục tiêu tối thượng:** Bám sát 100% đặc tả `Mobile App.pdf`, không làm ngoài phạm vi, bàn giao ứng dụng chạy mượt mà trên máy ảo **Pixel 10a (API 37.2)**.
 - **Cơ chế song song:** Tuần 1 Frontend dùng **Mock Data** chạy 100% giao diện, Backend làm Cloud DB; Tuần 2 ghép nối thực tế, viết Unit Test, sửa lỗi và đóng gói APK.
 - **Đánh dấu tiến độ:** Mỗi công việc có checkbox `[ ]`. Khi thành viên hoàn thành task, đổi thành `[x]`.
 
@@ -31,13 +31,13 @@
 ### 📍 NGÀY 01 (Thứ Hai): Khởi tạo Dự án, Chuẩn hóa Môi trường & Thống nhất Contract DTO
 *Mục tiêu ngày 1: Cả 7 người cài đặt máy đồng nhất, có repo chung, chốt toàn bộ Model DTO.*
 
-- [ ] **Tùng Dương (FE Lead):** `[D1-TD]` Khởi tạo Git Repo, cấu hình `.gitignore`, thiết lập `namespace "com.facebook.client"`, `compileSdk 34`, `targetSdk 34`, `minSdk 24`, đẩy nhánh `develop` lên GitHub.
+- [ ] **Tùng Dương (FE Lead):** `[D1-TD]` Khởi tạo Git Repo, cấu hình `.gitignore`, thiết lập `namespace "com.facebook.client"`, `compileSdk 37`, `targetSdk 37`, `minSdk 24`, đẩy nhánh `develop` lên GitHub.
 - [ ] **Ánh Dương (BE Lead):** `[D1-AD]` Họp với Tùng Dương, thống nhất 100% cấu trúc các lớp DTO (`User`, `Post`, `Comment`, `FriendRequest`, `Notification`) và định nghĩa Interface `IPostRepository`, `IFriendRepository`.
 - [ ] **Minh Đức (BE):** `[D1-MD]` Khởi tạo Firebase Project `Facebook-Client-App`, kích hoạt Authentication, Firestore Database và Cloud Storage.
 - [ ] **Hà Đăng Huy (BE + QA):** `[D1-HDH]` Cài đặt Java 17, cấu hình Git cá nhân, tạo tài liệu Kế hoạch Kiểm thử tổng thể (Master Test Plan).
-- [ ] **Minh Lương (FE):** `[D1-ML]` Cài đặt Java 17, Android Studio, cấu hình máy ảo chuẩn `Pixel_10a_API_34`, clone repo dự án về máy.
-- [ ] **Phúc Đức (FE):** `[D1-PD]` Cài đặt Java 17, Android Studio, kiểm tra chạy thử máy ảo `Pixel_10a_API_34`, clone repo dự án về máy.
-- [ ] **Tạ Quang Huy (FE + QA):** `[D1-TQH]` Cài đặt Java 17, Android Studio, máy ảo `Pixel_10a_API_34`, clone repo, chuẩn bị bộ Vector Icons chuẩn Facebook (like, comment, share, friends, bell).
+- [ ] **Minh Lương (FE):** `[D1-ML]` Cài đặt Java 17, Android Studio, cấu hình máy ảo chuẩn `Pixel_10a_API_37`, clone repo dự án về máy.
+- [ ] **Phúc Đức (FE):** `[D1-PD]` Cài đặt Java 17, Android Studio, kiểm tra chạy thử máy ảo `Pixel_10a_API_37`, clone repo dự án về máy.
+- [ ] **Tạ Quang Huy (FE + QA):** `[D1-TQH]` Cài đặt Java 17, Android Studio, máy ảo `Pixel_10a_API_37`, clone repo, chuẩn bị bộ Vector Icons chuẩn Facebook (like, comment, share, friends, bell).
 
 ---
 
@@ -99,7 +99,7 @@
 - [ ] **Tùng Dương (FE Lead):** `[D6-TD]` Rà soát toàn bộ luồng Auth giả lập, chuyển tab tại `MainActivity`, kết nối hiển thị bài viết mới tạo vào đầu danh sách Feed.
 - [ ] **Minh Lương (FE):** `[D6-ML]` Kết nối `CommentViewModel` với `CommentBottomSheetDialog`, gửi comment text và hiển thị ngay vào RecyclerView; làm AlertDialog "Chia sẻ ngay" khi bấm nút Share.
 - [ ] **Phúc Đức (FE):** `[D6-PD]` Dựng màn hình `activity_search_friends.xml`, gắn ô tìm kiếm với danh sách bạn bè mẫu, xử lý debounce nhập liệu 300ms.
-- [ ] **Tạ Quang Huy (FE + QA):** `[D6-TQH]` Ghép `PhotoGridAdapter` vào Tab Photos của Profile; chạy thử nghiệm toàn bộ giao diện trên máy ảo `Pixel_10a_API_34`, chụp ảnh các màn hình báo cáo.
+- [ ] **Tạ Quang Huy (FE + QA):** `[D6-TQH]` Ghép `PhotoGridAdapter` vào Tab Photos của Profile; chạy thử nghiệm toàn bộ giao diện trên máy ảo `Pixel_10a_API_37`, chụp ảnh các màn hình báo cáo.
 - [ ] **Ánh Dương (BE Lead):** `[D6-AD]` Viết hàm `addComment(postId, comment, callback)` trong `PostRepositoryImpl` (chỉ nhận text, tăng `commentsCount`).
 - [ ] **Minh Đức (BE):** `[D6-MD]` Viết trigger tự động tạo thông báo (`Notification`) khi có người Thích bài viết hoặc Bình luận bài viết.
 - [ ] **Hà Đăng Huy (BE + QA):** `[D6-HDH]` Rà soát toàn bộ các hàm backend của Firestore, chuẩn bị bộ dữ liệu test mẫu trên Firebase Console sẵn sàng cho tuần tích hợp.
@@ -167,7 +167,7 @@
 *Mục tiêu ngày 11: Tìm ra toàn bộ lỗi còn tồn đọng, phân loại P0-P3 theo ma trận RACI và gán người fix.*
 
 - [ ] **Hà Đăng Huy (QA Lead):** `[D11-HDH]` Thực hiện kiểm thử toàn bộ chức năng theo Master Test Plan; tạo danh sách Bug Tickets trên GitHub/Zalo với đầy đủ các bước tái hiện lỗi.
-- [ ] **Tạ Quang Huy (QA):** `[D11-TQH]` Kiểm thử giao diện trên máy ảo `Pixel_10a_API_34`: xoay màn hình, cuộn nhanh RecyclerView, kiểm tra font chữ, padding, màu sắc theo Design System.
+- [ ] **Tạ Quang Huy (QA):** `[D11-TQH]` Kiểm thử giao diện trên máy ảo `Pixel_10a_API_37`: xoay màn hình, cuộn nhanh RecyclerView, kiểm tra font chữ, padding, màu sắc theo Design System.
 - [ ] **Tùng Dương (FE Lead):** `[D11-TD]` Tiếp nhận các bug liên quan đến màn hình Tạo bài viết và Navigation, bắt đầu xử lý ngay các lỗi P0/P1.
 - [ ] **Minh Lương (FE):** `[D11-ML]` Tiếp nhận các bug liên quan đến Feed, nút Like, nút Share và Comment Sheet.
 - [ ] **Phúc Đức (FE):** `[D11-PD]` Tiếp nhận các bug liên quan đến Profile, hiển thị ảnh bìa, danh sách bạn bè và thanh tìm kiếm.
@@ -207,7 +207,7 @@
 
 - [ ] **Tùng Dương (FE Lead):** `[D14-TD]` Tạo Pull Request cuối cùng merge toàn bộ nhánh `develop` vào nhánh `master`; tạo Git Tag `v1.0.0-final`.
 - [ ] **Ánh Dương (BE Lead):** `[D14-AD]` Thực hiện đóng gói ứng dụng (Generate Signed Bundle / APK) tạo file `app-release.apk` tại `app/release/`.
-- [ ] **Hà Đăng Huy (BE + QA Lead):** `[D14-HDH]` Cài đặt file `app-release.apk` lên máy ảo `Pixel_10a_API_34` và thiết bị thật để kiểm tra lần cuối.
+- [ ] **Hà Đăng Huy (BE + QA Lead):** `[D14-HDH]` Cài đặt file `app-release.apk` lên máy ảo `Pixel_10a_API_37` và thiết bị thật để kiểm tra lần cuối.
 - [ ] **Tạ Quang Huy (FE + QA):** `[D14-TQH]` Quay video màn hình demo chạy ứng dụng trên máy ảo Pixel 10a (dự phòng trường hợp máy chiếu bị lỗi).
 - [ ] **Minh Lương (FE):** `[D14-ML]` Rà soát lại slide thuyết trình, khớp từng tính năng với đặc tả `Mobile App.pdf`.
 - [ ] **Phúc Đức (FE):** `[D14-PD]` Kiểm tra in ấn tài liệu báo cáo đồ án (nếu giảng viên yêu cầu nộp bản cứng).

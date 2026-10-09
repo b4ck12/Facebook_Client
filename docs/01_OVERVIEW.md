@@ -8,11 +8,11 @@
 - **Loại hình:** Đồ án môn học / Bài tập lớn (BTL) ứng dụng di động Android
 - **Ngôn ngữ & Nền tảng:** Android (Java + XML), Android Studio
 - **Môi trường thống nhất:**
-  - `compileSdk`: **34** (Android 14)
-  - `targetSdk`: **34** (Android 14)
+  - `compileSdk`: **37** (Android 17.0)
+  - `targetSdk`: **37** (Android 17.0)
   - `minSdk`: **24** (Android 7.0)
   - `Java Version`: **JDK 17 LTS**
-  - `Thiết bị máy ảo chuẩn`: **Pixel 10a** (Android 14 - API 34)
+  - `Thiết bị máy ảo chuẩn`: **Pixel 10a** (Android 17.0 - API 37.2 "CinnamonBun")
 - **Quy mô nhóm:** 7 thành viên (phân vai chuẩn công ty theo đúng danh sách trong `Mobile App.pdf`).
 
 ---

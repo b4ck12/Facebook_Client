@@ -9,7 +9,7 @@
 ## 🧭 LỘ TRÌNH ĐỌC TÀI LIỆU DÀNH CHO BẠN
 
 ### 1. Bạn là thành viên mới vào dự án?
-1. Đọc ngay [**12_ENVIRONMENT_SETUP.md**](./12_ENVIRONMENT_SETUP.md) để cài đặt đúng **Java 17**, máy ảo **Pixel 10a (API 34)** và clone repo.
+1. Đọc ngay [**12_ENVIRONMENT_SETUP.md**](./12_ENVIRONMENT_SETUP.md) để cài đặt đúng **Java 17**, máy ảo **Pixel 10a (API 37.2)** và clone repo.
 2. Đọc [**07_GIT_WORKFLOW_NAMING.md**](./07_GIT_WORKFLOW_NAMING.md) để nắm quy trình nhánh Git và quy chuẩn đặt tên.
 3. Mở [**../TODO.md**](../TODO.md) hoặc [**06_TASKS_SPRINT_PLAN.md**](./06_TASKS_SPRINT_PLAN.md) để xem task được phân công của mình trong 14 ngày.
 

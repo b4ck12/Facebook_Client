@@ -204,12 +204,12 @@ app/src/main/res/
 
 1. **Ngôn ngữ:** Java 17 LTS (JavaVersion.VERSION_17 - bắt buộc trên toàn bộ máy).
 2. **Cấu hình SDK thống nhất:**
-   - `compileSdk`: **34** (Android 14)
+   - `compileSdk`: **37** (Android 17.0)
    - `minSdk`: **24** (Android 7.0 Nougat)
-   - `targetSdk`: **34** (Android 14)
+   - `targetSdk`: **37** (Android 17.0)
    - `namespace` / `applicationId`: `com.facebook.client`
-3. **Thiết bị máy ảo chuẩn:** **Google Pixel 10a** (Android 14 - API Level 34 UpsideDownCake).
-4. **Nền tảng build:** Gradle 8.4 + Android Gradle Plugin (AGP) 8.3+.
+3. **Thiết bị máy ảo chuẩn:** **Google Pixel 10a** (Android 17.0 - API Level 37.2 "CinnamonBun").
+4. **Nền tảng build:** Gradle 9.6 + Android Gradle Plugin (AGP) 9.4+.
 5. **UI Engine:** XML Layouts kết hợp Material Components (`com.google.android.material:material:1.11.0`).
 6. **Hiển thị hình ảnh mượt mà:** `Glide` (`com.github.bumptech.glide:glide:4.16.0`) - Tối ưu caching và chống Out Of Memory (OOM) khi cuộn feed chứa nhiều ảnh.
 7. **Kiến trúc Android Jetpack:**
