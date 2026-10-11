@@ -1,0 +1,6 @@
+<resources>
+    <style name="Theme.FacebookClient" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/facebook_blue</item>
+    </style>
+</resources>
