@@ -109,6 +109,9 @@ java -version
 
 ## 5. THIẾT LẬP CẤU HÌNH GRADLE & SETUP CẤU TRÚC PACKAGE
 
+> ✅ **LƯU Ý QUAN TRỌNG:** Dự án Android Gradle và cấu trúc Package bên dưới **đã được khởi tạo sẵn** trên nhánh `develop`.  
+> Sau khi `git clone`, các thành viên nhóm **không cần tự tạo hay cấu hình lại từ đầu**. Bạn chỉ cần mở dự án trong Android Studio, kiểm tra cấu hình Gradle JDK 17 (ở Bước 4.2) và bắt đầu làm task.
+
 ### 5.1. File cấu hình chuẩn: `app/build.gradle`
 File `app/build.gradle` phải khai báo đúng các thông số đồng nhất:
 
