@@ -26,7 +26,7 @@ Toàn bộ 7 thành viên bắt buộc phải cấu hình chính xác và đồn
 ### Bước 2.1: Kiểm tra phiên bản Java hiện tại trên máy tính
 Mở **Command Prompt (cmd)** hoặc **PowerShell** trên Windows (hoặc Terminal trên macOS), gõ lệnh:
 ```bash
-java -version
+java --version
 ```
 - Nếu hiển thị: `openjdk version "17.x.x"` hoặc `java version "17.x.x"` -> Máy đã có Java 17 chuẩn.
 - Nếu hiển thị phiên bản khác (Java 8, 11, 21...) hoặc báo `command not found` -> Bắt buộc thực hiện bước 2.2 để cài Java 17.
@@ -198,42 +198,42 @@ app/src/main/java/com/facebook/client/
 
 ---
 
-## 6. HƯỚNG DẪN TẠO MÁY ẢO CHUẨN: PIXEL 10A (API 37.2)
+## 6. HƯỚNG DẪN TẠO MÁY ẢO LINH HOẠT THEO CẤU HÌNH MÁY TÍNH
 
-Để đảm bảo toàn bộ thành viên nhìn thấy giao diện hiển thị với cùng kích thước, tỷ lệ và độ phân giải, nhóm thống nhất sử dụng thiết bị máy ảo **Pixel 10a**:
+Để phù hợp với cấu hình phần cứng khác nhau của từng thành viên, nhóm thống nhất 2 phương án chọn máy ảo:
 
-### Các bước tạo máy ảo Pixel 10a trong Device Manager:
-1. Mở Android Studio, vào menu: **Tools -> Device Manager** (hoặc icon điện thoại ở thanh công cụ góc phải trên).
-2. Bấm nút **Create Device** (hoặc dấu cộng `+`).
-3. **Tạo Profile Phần cứng Pixel 10a:**
-   - Nếu trong danh sách chưa có sẵn Pixel 10a, bấm vào nút **New Hardware Profile** ở góc dưới bên trái:
-     - **Device Name:** `Pixel 10a`
-     - **Device Type:** `Phone`
-     - **Screen size:** `6.3` inch
-     - **Resolution:** `1080` x `2424` pixels
-     - **Default Skin:** `No Skin` hoặc Skin điện thoại mặc định
-     - Bấm **Finish** để lưu Profile phần cứng `Pixel 10a`.
-4. Chọn thiết bị **Pixel 10a** vừa tạo -> Bấm **Next**.
-5. **Chọn Hệ điều hành (System Image):**
-   - Chọn tab **Recommended** hoặc **x86 Images**.
-   - Chọn bản phát hành: **API Level 37.2** (Tên mã: **CinnamonBun** - Android 17.0).
-   - Chọn đúng dòng System Image: **"16 KB Page Size Google Play Intel x86_64 Atom System Image"** (Services: Google Play Store, ABI: x86_64).
-   - Bấm nút Download bên cạnh nếu máy tính chưa tải bản image này về.
-   - Sau khi tải xong -> Chọn dòng API 37.2 -> Bấm **Next**.
+### 🌟 Lựa chọn A: Pixel 10a (API 37.2) — Dành cho máy tính khỏe (RAM 16GB+)
+Đây là cấu hình chuẩn chính thức của dự án để quay video demo và chụp ảnh báo cáo:
+- **Profile:** Pixel 10a (`1080 x 2424`, `420 dpi`)
+- **System Image:** API 37.2 (Android 17.0) — `16 KB Page Size Google Play Intel x86_64 Atom System Image`
+- **RAM:** `4096 MB`
 
-![Chọn System Image API 37.2 "CinnamonBun" cho Pixel 10a](./Virtual_device.png)
+![Pixel 10a (API 37.2)](./10a_API_37.png)
 
-> 📸 **Ảnh màn hình chuẩn:** API **37.2 "CinnamonBun"; Android 17.0** + dòng **16 KB Page Size Google Play Intel x86_64 Atom System Image**, Resolution **1080 x 2424**, Density **420 dpi** — cả nhóm phải chọn giống hệt ảnh này.
+---
 
-6. **Xác nhận thông số cấu hình nâng cao (Advanced Settings):**
-   - **AVD Name:** Đặt tên chính xác là `Pixel_10a_API_37`
-   - Bấm nút **Show Advanced Settings**:
-     - *RAM:* `4096 MB`
-     - *VM Heap:* `512 MB`
-     - *Internal Storage:* `4096 MB`
-     - *Graphics:* Chọn **Automatic** (hoặc **Hardware - GLES 2.0** nếu máy có card đồ họa rời để chạy mượt hơn).
-7. Bấm **Finish**.
-8. Bấm nút **Play (▶️)** để khởi động máy ảo `Pixel_10a_API_37`.
+### ⚡ Lựa chọn B: Small Phone (API 24) — Dành cho máy tính yếu / vừa (RAM 8GB)
+Dành cho thành viên cần tối ưu hiệu năng, giảm ngốn CPU/RAM:
+- **Profile:** Small Phone (`720 x 1280`, `320 dpi`)
+- **System Image:** API 24 (Android 7.0)— `Google Play Intel x86 Atom System Image`
+- **RAM:** `1536 MB`
+- **Graphics:** `Hardware - GLES 2.0`
+
+![Small Phone (API 24) - Dành cho máy yếu](./Small_API_24.png)
+
+> 📌 **Lưu ý:** Cả 2 lựa chọn máy ảo đều hoàn toàn tương thích với mã nguồn dự án (`minSdk 24`). Các thành viên có thể dùng song song các loại máy ảo khác nhau mà không ảnh hưởng tới code chung trên Git.
+
+---
+
+### Các bước tạo máy ảo trong Device Manager:
+1. Mở Android Studio, vào menu: **Tools -> Device Manager** (hoặc icon điện thoại ở góc trên bên phải).
+2. Bấm nút **Create Device** (dấu cộng `+`).
+3. Chọn Hardware Profile (**Pixel 10a** cho Lựa chọn A hoặc **Small Phone** cho Lựa chọn B) -> Bấm **Next**.
+4. Chọn System Image (API 37.2 cho Lựa chọn A hoặc API 24/30 cho Lựa chọn B) -> Bấm **Next**.
+5. Trong **Show Advanced Settings**:
+   - Chỉnh RAM (`4096 MB` cho Lựa chọn A, `1536 MB` cho Lựa chọn B).
+   - Graphics: Chọn **Hardware - GLES 2.0**.
+6. Bấm **Finish** và bấm nút **Play (▶️)** để khởi động máy ảo.
 
 ---
 
