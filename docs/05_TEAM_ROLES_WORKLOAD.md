@@ -11,7 +11,7 @@ Dự án được vận hành theo mô hình **Agile Cross-Functional Squad** ch
 | STT | Họ và Tên | Vai trò chính | Vai trò kiêm nhiệm | Chức danh chuẩn công nghiệp (Industry Title) |
 | :---: | :--- | :--- | :--- | :--- |
 | **1** | **Ánh Dương** | Back-end | Kiến trúc sư hệ thống | **Lead Backend Engineer & Database Architect** |
-| **2** | **Minh Đức** | Back-end | Quản trị Cloud & Tích hợp | **Backend Engineer & Cloud/Storage Specialist** |
+| **2** | **Minh Đức** | Back-end | Quản trị Media/Storage & API | **Backend Engineer & Storage/Media Specialist** |
 | **3** | **Hà Đăng Huy** | Back-end | Kiểm thử chất lượng (QA) | **Backend Engineer & QA Lead / API Tester** |
 | **4** | **Tạ Quang Huy** | Front-end | Kiểm thử tự động (QA) | **Frontend Engineer & Mobile QA / UI Tester** |
 | **5** | **Tùng Dương** | Front-end | Thiết kế & Điều phối UI | **Lead Frontend Engineer & UI/UX Coordinator** |
@@ -24,16 +24,16 @@ Dự án được vận hành theo mô hình **Agile Cross-Functional Squad** ch
 
 ### 2.1. Nhóm Backend & Dữ liệu (3 Thành viên)
 - **Ánh Dương (Lead Backend Engineer & Database Architect - Main Backend):**
-  - Chịu trách nhiệm thiết kế tổng thể kiến trúc CSDL (ERD, Schemas, Security Rules trên Firebase/Supabase).
-  - Triển khai Core Data Repositories: Feed API, Quản lý đăng bài, tối ưu tốc độ đọc ghi.
-  - Phê duyệt (Review & Approve) toàn bộ Pull Request của tầng Backend.
-- **Minh Đức (Backend Engineer & Cloud/Storage Specialist):**
-  - Cấu hình hạ tầng Cloud Server miễn phí, Quản lý Cloud Storage (lưu trữ ảnh/video tối ưu dung lượng).
-  - Triển khai các API/Repository của phân hệ Trang cá nhân (Profile) và Hệ thống Thông báo (Notifications).
-  - Viết tài liệu API Contract và hỗ trợ mock data cho Frontend trong Sprint 1.
+  - Chịu trách nhiệm thiết kế tổng thể kiến trúc CSDL SQLite (`facebook.db`), SQLAlchemy Models, Pydantic Schemas.
+  - Triển khai Core RESTful API trên Python FastAPI: Feed API, Quản lý đăng bài, tương tác Like/Share, tối ưu truy vấn SQL và indexing.
+  - Cấu hình server Uvicorn, CORS middleware, và phê duyệt (Review & Approve) toàn bộ Pull Request của tầng Backend.
+- **Minh Đức (Backend Engineer & Storage/Media Specialist):**
+  - Xây dựng Media Upload API trên FastAPI (xử lý `UploadFile`, lưu file ảnh vào thư mục `static/uploads/`, sinh URL ảnh).
+  - Triển khai các API phân hệ Trang cá nhân (Profile) và Hệ thống Thông báo (Notifications) trên FastAPI + SQLite.
+  - Viết tài liệu API Contract (Swagger/OpenAPI) và hỗ trợ Mock/Seed data cho nhóm Frontend trong Sprint 1.
 - **Hà Đăng Huy (Backend Engineer & QA Lead / API Tester):**
-  - **Phần Backend:** Triển khai các API/Repository của phân hệ Bạn bè (Friends, Friend Requests, Search).
-  - **Phần Testing:** Lập Test Plan toàn dự án, thiết kế bộ dữ liệu kiểm thử (Test Data), viết Unit Test cho toàn bộ Data Layer (Repositories) và API Integration Tests.
+  - **Phần Backend:** Triển khai các API phân hệ Bạn bè (Friends, Friend Requests, Search) trên FastAPI + SQLite.
+  - **Phần Testing:** Lập Master Test Plan, viết Unit Test cho API với `pytest` / `TestClient`, kiểm thử tích hợp Android Retrofit Repositories và SQLite transactions.
 
 ### 2.2. Nhóm Frontend & Giao diện (4 Thành viên)
 - **Tùng Dương (Lead Frontend Engineer & UI/UX Coordinator):**
@@ -64,9 +64,9 @@ Dự án được vận hành theo mô hình **Agile Cross-Functional Squad** ch
 
 | Thành viên | Feature Dev (Code tính năng) | Testing & QA (Kiểm thử) | Architecture / DevOps / Docs | TỔNG STORY POINTS | Tỷ trọng dự án |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Ánh Dương** | 12 SP (Core Backend & Feed DB) | 2 SP (Hỗ trợ Test DB) | 6 SP (Lead BE, DB Schema, Arch) | **20 SP** | **14.3%** |
-| **Minh Đức** | 14 SP (Profile & Notif Backend) | 2 SP (Hỗ trợ Test API) | 4 SP (Cloud Admin, Storage Setup) | **20 SP** | **14.3%** |
-| **Hà Đăng Huy** | 9 SP (Friend Backend & Search) | **9 SP** (Lead QA, API Unit Tests) | 2 SP (Tài liệu Test Plan) | **20 SP** | **14.3%** |
+| **Ánh Dương** | 12 SP (Core FastAPI & Feed API) | 2 SP (Hỗ trợ Test DB/API) | 6 SP (Lead BE, SQLite Schema, Arch) | **20 SP** | **14.3%** |
+| **Minh Đức** | 14 SP (Profile, Notif & Upload API) | 2 SP (Hỗ trợ Test API) | 4 SP (FastAPI Setup, Static Storage) | **20 SP** | **14.3%** |
+| **Hà Đăng Huy** | 9 SP (Friend API & Search SQLite) | **9 SP** (Lead QA, API Unit Tests pytest) | 2 SP (Tài liệu Test Plan) | **20 SP** | **14.3%** |
 | **Tạ Quang Huy** | 9 SP (Notification UI & States) | **9 SP** (ViewModel Unit Tests & Manual QA) | 2 SP (UI Test Documentation) | **20 SP** | **14.3%** |
 | **Tùng Dương** | 12 SP (App Shell, Auth, CreatePost) | 2 SP (Review & Self-test) | 6 SP (Lead FE, Base Code, Design System) | **20 SP** | **14.3%** |
 | **Minh Lương** | 16 SP (Feed UI, Like, Comment, Share) | 2 SP (Unit test Feed logic) | 2 SP (Tài liệu Feed module) | **20 SP** | **14.3%** |

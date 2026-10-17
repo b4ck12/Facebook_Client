@@ -6,12 +6,17 @@
 
 - **Tên dự án:** Facebook Mobile Client
 - **Loại hình:** Đồ án môn học / Bài tập lớn (BTL) ứng dụng di động Android
-- **Ngôn ngữ & Nền tảng:** Android (Java + XML), Android Studio
+- **Ngôn ngữ & Nền tảng:**
+  - **Mobile Client:** Android (Java 17 LTS + XML Layouts), Android Studio
+  - **Backend Server:** Python 3.10+ (FastAPI Framework + Uvicorn ASGI Server)
+  - **Cơ sở dữ liệu:** SQLite (`facebook.db`, SQLAlchemy ORM, Pydantic Schemas)
+  - **Giao tiếp Client - Server:** RESTful API chuẩn JSON qua Retrofit 2 + OkHttp 3
 - **Môi trường thống nhất:**
   - `compileSdk`: **37** (Android 17.0)
   - `targetSdk`: **37** (Android 17.0)
   - `minSdk`: **24** (Android 7.0)
   - `Java Version`: **JDK 17 LTS**
+  - `Python Version`: **Python 3.10+**
   - `Thiết bị máy ảo chuẩn`: **Pixel 10a** (Android 17.0 - API 37.2 "CinnamonBun")
 - **Quy mô nhóm:** 7 thành viên (phân vai chuẩn công ty theo đúng danh sách trong `Mobile App.pdf`).
 

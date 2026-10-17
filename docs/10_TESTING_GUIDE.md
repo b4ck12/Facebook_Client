@@ -181,20 +181,90 @@ public class CreatePostViewModelTest {
 
 ---
 
+### 3.3. Bài toán 3: Kiểm thử Backend Python FastAPI & SQLite với Pytest
+Kiểm tra endpoint `POST /api/posts` tạo bài viết mới và kiểm tra validation từ chối bài viết rỗng trên FastAPI server.
+
+#### Cài đặt thư viện kiểm thử Python:
+```bash
+pip install pytest httpx
+```
+
+#### File kiểm thử: `backend/tests/test_posts_api.py`
+```python
+import pytest
+from fastapi.testclient import TestClient
+from main import app
+
+client = TestClient(app)
+
+def test_create_post_success():
+    """Kiểm tra tạo bài viết hợp lệ thành công"""
+    payload = {
+        "authorId": "usr_01",
+        "content": "Kiểm thử tự động API tạo bài viết thành công!",
+        "mediaUrl": None,
+        "isPublic": True
+    }
+    response = client.post("/api/posts", json=payload)
+    assert response.status_code == 201 or response.status_code == 200
+    data = response.json()
+    assert data["content"] == payload["content"]
+    assert "id" in data
+    assert data["likesCount"] == 0
+
+def test_create_post_empty_fails():
+    """Kiểm tra API từ chối bài viết khi cả text và media rỗng (chuẩn PDF)"""
+    payload = {
+        "authorId": "usr_01",
+        "content": "",
+        "mediaUrl": None,
+        "isPublic": True
+    }
+    response = client.post("/api/posts", json=payload)
+    assert response.status_code == 400
+    assert "Vui lòng nhập nội dung hoặc chọn ảnh" in response.json()["detail"]
+
+def test_toggle_like_success():
+    """Kiểm tra toggle like tăng/giảm trong SQLite"""
+    # Like lần 1 -> isLiked = True
+    res1 = client.post("/api/posts/post_1001/like?user_id=usr_01")
+    assert res1.status_code == 200
+    assert res1.json()["isLiked"] is True
+
+    # Like lần 2 -> isLiked = False (unlike)
+    res2 = client.post("/api/posts/post_1001/like?user_id=usr_01")
+    assert res2.status_code == 200
+    assert res2.json()["isLiked"] is False
+```
+
+---
+
 ## 4. HƯỚNG DẪN CHẠY TEST TRONG DỰ ÁN
 
-### Cách 1: Chạy bằng Terminal lệnh Gradle (Nhanh & Tự động)
-Chạy toàn bộ Unit Test trong terminal của Android Studio:
+### Cách 1: Chạy Android Unit Test bằng Terminal Gradle
+Chạy toàn bộ Unit Test Android trên terminal:
 ```bash
 ./gradlew testDebugUnitTest
 ```
-- Khi chạy xong, kết quả tổng hợp báo cáo dạng Web HTML trực quan sẽ nằm tại:  
-  📁 `app/build/reports/tests/testDebugUnitTest/index.html`  
-  *(Có thể mở bằng trình duyệt Chrome để xem tỷ lệ Pass 100%)*
+- Kết quả tổng hợp báo cáo dạng Web HTML trực quan:  
+  📁 `app/build/reports/tests/testDebugUnitTest/index.html`
 
 ### Cách 2: Chạy trực tiếp trên giao diện Android Studio
 1. Mở cửa sổ **Project** bên trái màn hình.
 2. Điều hướng tới thư mục: `app/src/test/java`.
 3. Bấm chuột phải vào thư mục `java` hoặc một file test cụ thể (ví dụ: `PostValidatorTest.java`).
 4. Chọn **Run 'Tests in java'** (hoặc phím tắt `Ctrl + Shift + F10` trên Windows).
-5. Android Studio sẽ hiển thị thanh tiến trình màu xanh lá cây (**Green Bar**) báo hiệu toàn bộ test đều đạt yêu cầu!
+5. Android Studio sẽ hiển thị thanh tiến trình màu xanh lá cây (**Green Bar**).
+
+### Cách 3: Chạy Kiểm thử Backend FastAPI với Pytest & Swagger UI
+1. **Chạy Pytest tự động trong terminal:**
+   ```bash
+   cd backend
+   pytest tests/ -v
+   ```
+   *(Toàn bộ các test cases endpoint và SQLite query sẽ hiển thị `PASSED` màu xanh)*
+2. **Kiểm thử trực quan trên Swagger UI:**
+   - Khởi động server: `uvicorn main:app --reload`
+   - Truy cập `http://localhost:8000/docs` trên trình duyệt.
+   - Bấm vào từng endpoint -> Chọn **Try it out** -> Nhập tham số -> Bấm **Execute** để xem response code `200` và dữ liệu JSON trực tiếp!
+

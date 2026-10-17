@@ -14,7 +14,9 @@ develop (nhánh tích hợp chính của cả nhóm)
   ^
   |-- feature/feed-ui-TSK-10          (Làm xong -> PR -> Merge vào develop)
   |-- feature/create-post-TSK-13      (Làm xong -> PR -> Merge vào develop)
-  |-- feature/backend-feed-TSK-19     (Làm xong -> PR -> Merge vào develop)
+  |-- feature/feed-ui-TSK-10          (Làm xong -> PR -> Merge vào develop)
+  |-- feature/create-post-TSK-13      (Làm xong -> PR -> Merge vào develop)
+  |-- feature/fastapi-feed-api-TSK-19 (Làm xong -> PR -> Merge vào develop)
   |-- bugfix/fix-comment-crash-BUG-05 (Sửa lỗi -> PR -> Merge vào develop)
 ```
 
@@ -32,13 +34,13 @@ develop (nhánh tích hợp chính của cả nhóm)
 Cú pháp: `<loại-nhánh>/<tên-ngắn-gọn>-<mã-task>`
 
 - **Tính năng mới:** `feature/<tên-tính-năng>-<task-id>`
-  - Ví dụ: `feature/feed-ui-TSK-10`, `feature/create-post-TSK-13`, `feature/friends-backend-TSK-21`
+  - Ví dụ: `feature/feed-ui-TSK-10`, `feature/create-post-TSK-13`, `feature/fastapi-friends-api-TSK-21`
 - **Sửa lỗi:** `bugfix/<mô-tả-lỗi>-<bug-id>`
   - Ví dụ: `bugfix/empty-post-validation-BUG-01`, `bugfix/like-count-sync-BUG-04`
 - **Tối ưu / Tái cấu trúc:** `refactor/<tên-module>`
-  - Ví dụ: `refactor/post-viewholder-optimize`
+  - Ví dụ: `refactor/post-viewholder-optimize`, `refactor/fastapi-sqlite-queries`
 - **Viết kiểm thử:** `test/<tên-module>-TSK-26`
-  - Ví dụ: `test/post-repository-unit-test`
+  - Ví dụ: `test/post-repository-unit-test`, `test/fastapi-api-pytest`
 
 ---
 
@@ -52,14 +54,17 @@ Mỗi commit phải giải thích rõ ràng thay đổi làm gì, bắt đầu b
 - `style:` Chỉnh sửa format, khoảng trắng, không ảnh hưởng logic
 - `refactor:` Tái cấu trúc code nhưng không thay đổi hành vi
 - `test:` Viết thêm hoặc chỉnh sửa Unit Test
-- `chore:` Thay đổi cấu hình build, dependencies Gradle
+- `chore:` Thay đổi cấu hình build, dependencies Gradle hoặc Python requirements
 
 **Ví dụ commit chuẩn:**
 ```bash
 feat(feed): implement PostAdapter and bind item_post layout (TSK-10)
+feat(backend): implement FastAPI feed endpoints and SQLite models (TSK-19)
 fix(create-post): disable post button when both text and media are empty (BUG-01)
 test(repository): add unit tests for PostRepositoryImpl with Mockito (TSK-26)
-chore(deps): add Glide image loading library to build.gradle
+test(backend): add pytest test cases for create post and like API (TSK-26)
+chore(deps): add Retrofit 2 and Gson converter to app/build.gradle
+chore(backend): add fastapi and sqlalchemy to requirements.txt
 ```
 
 ---
@@ -167,3 +172,13 @@ Cú pháp: `<tên-màn-hình/module>_<mô-tả>`
 <string name="create_post_btn_submit">ĐĂNG</string>
 <string name="error_empty_post">Vui lòng nhập nội dung hoặc chọn ảnh để đăng!</string>
 ```
+
+---
+
+### 4.3. Quy chuẩn đặt tên Backend Python (PEP 8 Standard)
+- **Tên Module / File:** `snake_case.py` (ví dụ: `database.py`, `models.py`, `schemas.py`, `crud_post.py`).
+- **Tên Router / Endpoint function:** `snake_case()` bắt đầu bằng động từ HTTP (ví dụ: `get_posts()`, `create_post()`, `toggle_like()`).
+- **Class (SQLAlchemy Models, Pydantic Schemas):** `PascalCase` (ví dụ: `User`, `Post`, `PostCreate`, `PostResponse`).
+- **Biến & Thuộc tính:** `snake_case` (ví dụ: `post_id`, `author_id`, `created_at`).
+- **Hằng số (Constants):** `UPPER_SNAKE_CASE` (ví dụ: `DATABASE_URL`, `UPLOAD_DIR`).
+

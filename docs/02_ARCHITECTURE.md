@@ -7,14 +7,14 @@
 Hệ thống được thiết kế dựa trên các tiêu chí cốt lõi:
 1. **Dễ hiểu & Dễ học (Simplicity & Learnability):** Sử dụng các mô hình tiêu chuẩn ngành, cú pháp Java trong sáng, cấu trúc thư mục rõ ràng để mọi thành viên trong nhóm 7 người đều nắm bắt nhanh.
 2. **Dễ phát triển song song (Parallel Development):** Tách bạch rõ các tầng và các tính năng, cho phép 4 lập trình viên Frontend và 3 lập trình viên Backend làm việc đồng thời mà không gây xung đột mã nguồn.
-3. **Dễ bảo trì & Mở rộng (Maintainability & Extensibility):** Áp dụng nguyên lý Single Responsibility Principle (SRP) và Dependency Inversion Principle (DIP). Khi thay đổi database (ví dụ từ Mock sang Firebase hoặc Supabase), tầng giao diện không bị ảnh hưởng.
+3. **Dễ bảo trì & Mở rộng (Maintainability & Extensibility):** Áp dụng nguyên lý Single Responsibility Principle (SRP) và Dependency Inversion Principle (DIP). Khi thay đổi nguồn dữ liệu (ví dụ từ Mock Data sang Python FastAPI REST API), tầng giao diện hoàn toàn không bị ảnh hưởng.
 4. **Dễ viết Unit Test (Testability):** Logic nghiệp vụ được cô lập trong ViewModel và Repository, không phụ thuộc vào Android Framework Lifecycle (Activity/Context).
 
 ---
 
 ## 2. MÔ HÌNH KIẾN TRÚC TỔNG THỂ (CLEAN ARCHITECTURE + MVVM)
 
-Hệ thống áp dụng mô hình kiến trúc phân tầng chuẩn do Google khuyến nghị cho ứng dụng Android: **MVVM (Model - View - ViewModel) kết hợp Clean Architecture**.
+Hệ thống áp dụng mô hình kiến trúc phân tầng chuẩn do Google khuyến nghị cho ứng dụng Android: **MVVM (Model - View - ViewModel) kết hợp Clean Architecture và RESTful Client-Server**.
 
 ```
 +-----------------------------------------------------------------------------------+
@@ -49,8 +49,9 @@ Hệ thống áp dụng mô hình kiến trúc phân tầng chuẩn do Google kh
                      v                                     v
 +------------------------------------+   +------------------------------------------+
 |      REMOTE DATA SOURCE            |   |          LOCAL DATA SOURCE               |
-| Firebase Firestore / Supabase API  |   | SharedPreferences (User Session, Token)  |
-| Cloud Storage (Lưu trữ ảnh/video)  |   | Room DB / In-Memory Cache (nếu có)       |
+|  Python FastAPI RESTful Server     |   | SharedPreferences (User Session, Token)  |
+|  SQLite Database (facebook.db)     |   | In-Memory Cache                          |
+|  Static Media Server (/static/)    |   |                                          |
 +------------------------------------+   +------------------------------------------+
 ```
 
@@ -76,12 +77,12 @@ Hệ thống áp dụng mô hình kiến trúc phân tầng chuẩn do Google kh
 - Sống sót qua các sự kiện xoay màn hình và thay đổi cấu hình (Configuration Changes).
 - **Quy tắc bất di bất dịch:** Tuyệt đối không import `android.content.Context` hoặc bất kỳ view nào (`View`, `Button`, `TextView`) vào ViewModel để tránh memory leak.
 
-### 2.3. Data Layer (Tầng dữ liệu - Repository Pattern)
+### 2.3. Data Layer (Tầng dữ liệu - Repository Pattern & Retrofit)
 - **Repository Interface:** Định nghĩa hợp đồng trừu tượng (Contract) mà tầng Presentation yêu cầu. Ví dụ: `IPostRepository`.
-- **Repository Implementation:** Thực thi giao tiếp dữ liệu cụ thể (`PostRepositoryImpl`).
+- **Repository Implementation:** Thực thi giao tiếp dữ liệu cụ thể (`PostRepositoryImpl`). Gọi `ApiService` qua thư viện Retrofit 2 để gửi HTTP Request tới Python FastAPI Backend.
 - **Ưu điểm vượt trội:**
-  - Trong giai đoạn đầu, tạo `MockPostRepository` trả về dữ liệu mẫu (Fake data) để Frontend làm việc ngay lập tức.
-  - Khi Backend hoàn thành, chỉ cần trỏ sang `FirebasePostRepository` hoặc `SupabasePostRepository` mà không phải sửa một dòng code nào ở tầng giao diện!
+  - Trong giai đoạn đầu (Sprint 1), tạo `MockPostRepository` trả về dữ liệu mẫu (Fake data) để Frontend làm việc ngay lập tức.
+  - Khi Backend Python FastAPI hoàn thành, chỉ cần trỏ sang `PostRepositoryImpl` (kết nối REST API) mà không phải sửa một dòng code nào ở tầng giao diện!
 
 ---
 
@@ -96,9 +97,9 @@ app/src/main/java/com/facebook/client/
 │
 ├── core/                               <-- Các thành phần dùng chung toàn app
 │   ├── base/                           <-- BaseActivity, BaseFragment, BaseViewModel
-│   ├── utils/                          <-- DateUtils, ImageUtils, ValidatorUtils
+│   ├── utils/                          <-- DateUtils, ImageUtils, PostValidator
 │   ├── common/                         <-- Resource.java, Constants.java
-│   └── network/                        <-- NetworkClient, ApiResponseHandler
+│   └── network/                        <-- ApiClient.java, ApiService.java, ApiResponseHandler.java
 │
 ├── data/                               <-- Quản lý dữ liệu tập trung
 │   ├── model/                          <-- Data Transfer Objects (DTO) / Entities
@@ -113,7 +114,8 @@ app/src/main/java/com/facebook/client/
 │   │
 │   └── repository/                     <-- Interface & Triển khai Repository
 │       ├── IPostRepository.java
-│       ├── PostRepositoryImpl.java
+│       ├── PostRepositoryImpl.java     <-- Gọi FastAPI qua Retrofit
+│       ├── MockPostRepository.java     <-- Mock data phục vụ Sprint 1
 │       ├── IFriendRepository.java
 │       ├── FriendRepositoryImpl.java
 │       ├── IProfileRepository.java
@@ -202,7 +204,7 @@ app/src/main/res/
 
 ## 5. THƯ VIỆN & CÔNG NGHỆ BỔ TRỢ (TECH STACK SPECIFICATION)
 
-1. **Ngôn ngữ:** Java 17 LTS (JavaVersion.VERSION_17 - bắt buộc trên toàn bộ máy).
+1. **Ngôn ngữ Android Client:** Java 17 LTS (`JavaVersion.VERSION_17` - bắt buộc trên toàn bộ máy).
 2. **Cấu hình SDK thống nhất:**
    - `compileSdk`: **37** (Android 17.0)
    - `minSdk`: **24** (Android 7.0 Nougat)
@@ -216,4 +218,12 @@ app/src/main/res/
    - `androidx.lifecycle:lifecycle-viewmodel:2.7.0`
    - `androidx.lifecycle:lifecycle-livedata:2.7.0`
    - `androidx.viewbinding:viewbinding:8.3.0`
-8. **Backend Cloud SDK (Miễn phí):** Firebase BOM (`com.google.firebase:firebase-bom:32.8.0`) hoặc Retrofit 2 + OkHttp 3 (nếu gọi REST API Supabase).
+8. **Mạng & Kết nối API (Networking):**
+   - `com.squareup.retrofit2:retrofit:2.9.0` (HTTP Client chuẩn RESTful)
+   - `com.squareup.retrofit2:converter-gson:2.9.0` (Parse JSON DTO)
+   - `com.squareup.okhttp3:logging-interceptor:4.12.0` (Logcat HTTP request/response)
+9. **Nền tảng Backend Server:**
+   - **Framework:** Python 3.10+ với **FastAPI** và ASGI server **Uvicorn**
+   - **Database:** **SQLite** (`facebook.db`) với **SQLAlchemy ORM** và **Pydantic** validation
+   - **Static Storage:** Thư mục `/static/uploads/` phục vụ ảnh tải lên cho Android Client
+   - **API Docs:** Swagger UI tích hợp sẵn tại `http://localhost:8000/docs`

@@ -16,6 +16,9 @@ Toàn bộ 7 thành viên bắt buộc phải cấu hình chính xác và đồn
 | **minSdk** | **24** (Android 7.0 Nougat) | Đảm bảo tương thích 95%+ thiết bị thực tế |
 | **Thiết bị máy ảo AVD** | **Pixel 10a (API Level 37.2 - CinnamonBun)** | Màn hình 6.3", 1080x2424, 420 dpi |
 | **Build Tool & AGP** | Gradle 9.6 & Android Gradle Plugin (AGP) 9.4+ | Hệ thống build |
+| **Backend Framework** | **Python 3.10+ (FastAPI + Uvicorn ASGI Server)** | RESTful API server tốc độ cao, Swagger UI |
+| **Cơ sở dữ liệu** | **SQLite (facebook.db, SQLAlchemy ORM)** | CSDL quan hệ serverless không cần cài đặt |
+| **Base URL cho Emulator** | `http://10.0.2.2:8000/api/` | Địa chỉ kết nối máy ảo Android tới Backend host |
 
 > 📌 **Lưu ý phiên bản SDK:** Máy ảo là bản **API 37.2** (bản minor của Android 17.0), nhưng trong `build.gradle` chỉ ghi số nguyên **37** (`compileSdk 37`, `targetSdk 37`).
 
@@ -159,6 +162,11 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.7.0'
     implementation 'androidx.lifecycle:lifecycle-livedata:2.7.0'
 
+    // Kết nối RESTful API (Retrofit 2 & OkHttp)
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+
     // Tải và hiển thị hình ảnh
     implementation 'com.github.bumptech.glide:glide:4.16.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
@@ -182,7 +190,8 @@ app/src/main/java/com/facebook/client/
 ├── core/
 │   ├── base/           (BaseActivity.java, BaseFragment.java)
 │   ├── utils/          (PostValidator.java, DateUtils.java)
-│   └── common/         (Resource.java, Constants.java)
+│   ├── common/         (Resource.java, Constants.java)
+│   └── network/        (ApiClient.java, ApiService.java, ApiResponseHandler.java)
 ├── data/
 │   ├── model/          (User.java, Post.java, Comment.java, Notification.java)
 │   └── repository/     (IPostRepository.java, PostRepositoryImpl.java, MockPostRepository.java)
@@ -267,3 +276,60 @@ git push origin feature/feed-ui-TSK-10
 
 # 9. Truy cập GitHub tạo Pull Request (PR) vào nhánh develop và gán Reviewer duyệt!
 ```
+
+---
+
+## 8. HƯỚNG DẪN CÀI ĐẶT & KHỞI CHẠY BACKEND PYTHON FASTAPI + SQLITE
+
+Dành cho cả 7 thành viên khi cần chạy Backend nội bộ để kiểm thử tích hợp (Integration Test) hoặc chấm điểm đồ án:
+
+### Bước 8.1: Kiểm tra Python trên máy tính
+Mở PowerShell hoặc Terminal, kiểm tra:
+```bash
+python --version
+```
+- Nếu hiển thị: `Python 3.10.x` trở lên -> Đã đạt yêu cầu.
+- Nếu chưa có Python: Tải và cài đặt Python 3.10+ từ https://www.python.org/downloads/ (Nhớ tích chọn **"Add python.exe to PATH"** khi cài đặt).
+
+### Bước 8.2: Tạo môi trường ảo & Cài đặt thư viện
+Di chuyển vào thư mục `backend/` trong repo dự án:
+```bash
+cd backend
+python -m venv venv
+
+# Kích hoạt môi trường ảo (Windows PowerShell):
+.\venv\Scripts\Activate.ps1
+# (Nếu báo lỗi script execution policy trên PowerShell, chạy lệnh: Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass)
+
+# Hoặc kích hoạt trên Command Prompt (cmd):
+venv\Scripts\activate.bat
+
+# Kích hoạt trên macOS / Linux:
+source venv/bin/activate
+```
+
+Cài đặt các gói phụ thuộc từ `requirements.txt`:
+```bash
+pip install -r requirements.txt
+```
+
+### Bước 8.3: Khởi chạy máy chủ FastAPI với Uvicorn
+```bash
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+- Khi chạy thành công, terminal sẽ thông báo:
+  ```text
+  INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+  INFO:     Started reloader process
+  INFO:     Application startup complete.
+  ```
+
+### Bước 8.4: Kiểm tra Swagger UI & Kết nối Android Studio
+1. **Kiểm tra trên trình duyệt máy tính:**  
+   Truy cập `http://localhost:8000/docs` để xem giao diện tài liệu OpenAPI Swagger UI và thử nghiệm các API.
+2. **Quy tắc địa chỉ IP cho Android Studio Emulator:**
+   - Trong code Retrofit Android (`ApiClient.java`), Base URL bắt buộc là:  
+     `public static final String BASE_URL = "http://10.0.2.2:8000/api/";`
+   - Vì trên máy ảo Android, `10.0.2.2` là alias đặc biệt trỏ thẳng về `127.0.0.1` của máy tính host.
+   - Thư mục tĩnh lưu ảnh tải lên: `http://10.0.2.2:8000/static/uploads/`.
+

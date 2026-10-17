@@ -9,7 +9,7 @@
 ## 🧭 LỘ TRÌNH ĐỌC TÀI LIỆU DÀNH CHO BẠN
 
 ### 1. Bạn là thành viên mới vào dự án?
-1. Đọc ngay [**12_ENVIRONMENT_SETUP.md**](./12_ENVIRONMENT_SETUP.md) để cài đặt đúng **Java 17**, máy ảo **Pixel 10a (API 37.2)** và clone repo.
+1. Đọc ngay [**12_ENVIRONMENT_SETUP.md**](./12_ENVIRONMENT_SETUP.md) để cài đặt đúng **Java 17**, Python 3.10+, máy ảo **Pixel 10a (API 37.2)** và clone repo.
 2. Đọc [**07_GIT_WORKFLOW_NAMING.md**](./07_GIT_WORKFLOW_NAMING.md) để nắm quy trình nhánh Git và quy chuẩn đặt tên.
 3. Mở [**../TODO.md**](../TODO.md) hoặc [**06_TASKS_SPRINT_PLAN.md**](./06_TASKS_SPRINT_PLAN.md) để xem task được phân công của mình trong 14 ngày.
 
@@ -19,25 +19,25 @@
 - [**08_CODING_CONVENTION_DOCS.md**](./08_CODING_CONVENTION_DOCS.md): Chuẩn code Java và ViewBinding chống leak bộ nhớ.
 
 ### 3. Bạn làm mảng Dữ liệu & Server (Backend)?
-- [**09_BACKEND_FREE_SERVER.md**](./09_BACKEND_FREE_SERVER.md): Cấu hình Firebase Cloud Firestore & Storage miễn phí, Schema ERD.
-- [**02_ARCHITECTURE.md**](./02_ARCHITECTURE.md): Cấu trúc Interface Repository và Data Models.
+- [**09_BACKEND_FREE_SERVER.md**](./09_BACKEND_FREE_SERVER.md): Kiến trúc Python FastAPI, CSDL SQLite (`facebook.db`), Schema ERD, RESTful API Endpoints.
+- [**02_ARCHITECTURE.md**](./02_ARCHITECTURE.md): Cấu trúc Interface Repository, Retrofit `ApiService` và Data DTOs.
 
 ### 4. Bạn phụ trách Kiểm thử & Chất lượng (QA/Testing)?
-- [**10_TESTING_GUIDE.md**](./10_TESTING_GUIDE.md): Hướng dẫn viết Unit Test (JUnit + Mockito).
+- [**10_TESTING_GUIDE.md**](./10_TESTING_GUIDE.md): Hướng dẫn viết Unit Test (JUnit 4, Mockito và pytest).
 - [**11_BUG_TRIAGE_PROCESS.md**](./11_BUG_TRIAGE_PROCESS.md): Quy trình quản lý và phân định lỗi "Ai fix lỗi gì".
 
 ---
 
 ## 📑 DANH MỤC TẤT CẢ TÀI LIỆU
 - [01_OVERVIEW.md](./01_OVERVIEW.md) - Tổng quan & Đặc tả PDF gốc
-- [02_ARCHITECTURE.md](./02_ARCHITECTURE.md) - Kiến trúc MVVM + Clean Architecture
+- [02_ARCHITECTURE.md](./02_ARCHITECTURE.md) - Kiến trúc MVVM + Clean Architecture, Retrofit 2
 - [03_DESIGN_SYSTEM.md](./03_DESIGN_SYSTEM.md) - Hệ thống thiết kế giao diện
 - [04_USER_FLOW.md](./04_USER_FLOW.md) - Sơ đồ luồng người dùng
 - [05_TEAM_ROLES_WORKLOAD.md](./05_TEAM_ROLES_WORKLOAD.md) - Phân vai 7 người & Cân bằng workload
 - [06_TASKS_SPRINT_PLAN.md](./06_TASKS_SPRINT_PLAN.md) - Kế hoạch 14 ngày chi tiết có tickbox
 - [07_GIT_WORKFLOW_NAMING.md](./07_GIT_WORKFLOW_NAMING.md) - Quy trình Git & Đặt tên
 - [08_CODING_CONVENTION_DOCS.md](./08_CODING_CONVENTION_DOCS.md) - Chuẩn code & Javadoc
-- [09_BACKEND_FREE_SERVER.md](./09_BACKEND_FREE_SERVER.md) - Server & Database Free (Firebase)
-- [10_TESTING_GUIDE.md](./10_TESTING_GUIDE.md) - Hướng dẫn viết Unit Test
+- [09_BACKEND_FREE_SERVER.md](./09_BACKEND_FREE_SERVER.md) - Server Backend (Python FastAPI) & Database (SQLite)
+- [10_TESTING_GUIDE.md](./10_TESTING_GUIDE.md) - Hướng dẫn viết Unit Test (JUnit 4 + Mockito + Pytest)
 - [11_BUG_TRIAGE_PROCESS.md](./11_BUG_TRIAGE_PROCESS.md) - Quy trình xử lý lỗi Bug Triage
-- [12_ENVIRONMENT_SETUP.md](./12_ENVIRONMENT_SETUP.md) - Cài đặt Java 17, Clone Git, Package & Máy ảo Pixel 10a
+- [12_ENVIRONMENT_SETUP.md](./12_ENVIRONMENT_SETUP.md) - Cài đặt Java 17, Python FastAPI, Clone Git & Máy ảo Pixel 10a

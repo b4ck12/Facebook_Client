@@ -43,8 +43,8 @@ sequenceDiagram
     actor User as Người dùng
     participant UI as CreatePostActivity
     participant VM as CreatePostViewModel
-    participant Repo as PostRepository
-    participant Cloud as Cloud Storage & DB
+    participant Repo as PostRepository (Retrofit)
+    participant Server as FastAPI Server & SQLite
 
     User->>UI: Bấm vào khung "Bạn đang nghĩ gì?" trên Feed
     UI->>User: Mở màn hình tạo bài viết (Nút Đăng ở trạng thái Disabled)
@@ -66,13 +66,13 @@ sequenceDiagram
     UI->>VM: submitPost(content, imageUri)
     
     opt Nếu có ảnh đính kèm
-        VM->>Cloud: Tải ảnh lên Cloud Storage (lấy ImageUrl)
-        Cloud-->>VM: Trả về Download URL của ảnh
+        VM->>Server: POST /api/upload (Tải file ảnh lên máy chủ)
+        Server-->>VM: Trả về URL ảnh tĩnh (/static/uploads/...)
     end
 
-    VM->>Repo: createPost(authorId, content, imageUrl, isPublic=true)
-    Repo->>Cloud: Ghi Document vào cơ sở dữ liệu
-    Cloud-->>Repo: Thành công (Post ID)
+    VM->>Repo: createPost(authorId, content, mediaUrl, isPublic=true)
+    Repo->>Server: POST /api/posts (Ghi bản ghi vào bảng posts trong SQLite)
+    Server-->>Repo: 201 Created (Post DTO)
     Repo-->>VM: Result.Success
     VM-->>UI: Cập nhật LiveData trạng thái thành công
     UI->>User: Đóng màn hình, quay về Feed, bài viết mới xuất hiện trên đỉnh Feed
@@ -89,26 +89,26 @@ sequenceDiagram
     participant Feed as FeedFragment / PostAdapter
     participant CmtUI as CommentBottomSheet
     participant VM as FeedViewModel / CommentViewModel
-    participant DB as Cloud DB
+    participant Server as FastAPI Server & SQLite
 
     Note over User, Feed: 1. THAO TÁC LIKE / THẢ TIM
     User->>Feed: Bấm nút "Thích" trên thẻ bài viết
     Feed->>Feed: Cập nhật giao diện tức thì (Optimistic UI Update: Đổi màu xanh, Tăng số like +1)
     Feed->>VM: toggleLike(postId, currentUserId)
-    VM->>DB: Thêm/Xóa UserId trong mảng likes của Post
-    DB-->>VM: Xác nhận thành công
+    VM->>Server: POST /api/posts/{id}/like (Cập nhật bảng post_likes trong SQLite)
+    Server-->>VM: Xác nhận thành công (isLiked=true/false, likesCount)
 
     Note over User, CmtUI: 2. THAO TÁC BÌNH LUẬN
     User->>Feed: Bấm nút "Bình luận"
     Feed->>CmtUI: Mở CommentBottomSheetDialog(postId)
     CmtUI->>VM: loadComments(postId)
-    VM->>DB: Truy vấn danh sách bình luận theo postId
-    DB-->>VM: Trả về danh sách Comment
+    VM->>Server: GET /api/posts/{id}/comments (Truy vấn bảng comments trong SQLite)
+    Server-->>VM: Trả về danh sách Comment JSON
     VM-->>CmtUI: Hiển thị danh sách RecyclerView
     User->>CmtUI: Nhập text bình luận và bấm nút "Gửi"
     CmtUI->>VM: addComment(postId, userId, textContent)
-    VM->>DB: Thêm mới bản ghi Comment (Text only)
-    DB-->>VM: Trả về Comment vừa tạo
+    VM->>Server: POST /api/posts/{id}/comments (Lưu bản ghi text-only vào SQLite)
+    Server-->>VM: Trả về Comment vừa tạo
     VM-->>CmtUI: Thêm dòng bình luận vào cuối danh sách, cuộn xuống dưới cùng
 
     Note over User, Feed: 3. THAO TÁC CHIA SẺ
@@ -116,8 +116,8 @@ sequenceDiagram
     Feed->>User: Hiển thị AlertDialog "Chia sẻ bài viết này lên dòng thời gian của bạn?"
     User->>Feed: Bấm "Chia sẻ ngay"
     Feed->>VM: sharePost(originalPostId, currentUserId)
-    VM->>DB: Tạo bài viết mới tham chiếu đến bài viết gốc
-    DB-->>VM: Thành công
+    VM->>Server: POST /api/posts/{id}/share (Tạo bài viết mới trong SQLite)
+    Server-->>VM: Thành công 201 Created
     Feed->>User: Hiển thị Toast "Đã chia sẻ thành công!"
 ```
 

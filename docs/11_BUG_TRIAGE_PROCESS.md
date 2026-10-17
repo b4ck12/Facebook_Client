@@ -58,10 +58,10 @@ Khi có lỗi xảy ra, đối chiếu bảng dưới đây để biết chính 
 | **Lỗi Bạn bè & Tìm kiếm** | Bấm tìm kiếm không hiện kết quả, nút Đồng ý kết bạn không cập nhật UI | **Phúc Đức** (FE) |
 | **Lỗi Trang cá nhân (Profile)** | Ảnh bìa bị vỡ, Tab ảnh lưới 3 cột không hiển thị đủ ảnh | **Phúc Đức** (FE) & **Tạ Quang Huy** |
 | **Lỗi Thông báo (Notification)** | Bấm vào thông báo không nhảy sang đúng bài viết | **Tạ Quang Huy** (FE/QA) |
-| **Lỗi Cloud Storage / Tải ảnh** | Tải ảnh lên báo lỗi 403 Forbidden, đường link ảnh trả về bị hỏng | **Minh Đức** (BE) |
-| **Lỗi Dữ liệu Feed & DB** | Firestore báo lỗi Permission Denied, dữ liệu bài viết không lưu vào DB | **Ánh Dương** (BE Lead) |
-| **Lỗi API Quan hệ Bạn bè** | Gọi API kết bạn bị lỗi trùng lặp dữ liệu, không xóa được lời mời | **Hà Đăng Huy** (BE/QA) |
-| **Lỗi Lệch Hợp đồng (Contract Mismatch)** | Tên trường JSON trên Backend khác với tên trường trong Model Java của Frontend | **Ánh Dương (BE) + Tùng Dương (FE)** cùng ngồi sửa lại DTO |
+| **Lỗi Media Upload / File ảnh tĩnh** | Upload ảnh báo lỗi 413 (File quá lớn), 422 (Validation), link ảnh `/static/uploads/` bị hỏng (404) | **Minh Đức** (BE) |
+| **Lỗi Dữ liệu Feed & SQLite** | FastAPI báo lỗi 500, `OperationalError: database is locked`, dữ liệu bài viết không lưu vào `facebook.db` | **Ánh Dương** (BE Lead) |
+| **Lỗi API Quan hệ Bạn bè** | Gọi API kết bạn bị lỗi Unique Constraint SQLite, không xóa được lời mời trong bảng friendships | **Hà Đăng Huy** (BE/QA) |
+| **Lỗi Lệch Hợp đồng (Contract Mismatch)** | Tên trường JSON giữa Pydantic Schema và Model Java Retrofit không khớp | **Ánh Dương (BE) + Tùng Dương (FE)** đối chiếu Swagger UI `/docs` và sửa DTO |
 
 ---
 
