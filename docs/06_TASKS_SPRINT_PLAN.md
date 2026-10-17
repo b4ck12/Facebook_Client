@@ -1,8 +1,8 @@
-# 📅 06. KẾ HOẠCH CHI TIẾT 2 TUẦN (14 NGÀY) - TỪNG THÀNH VIÊN, TỪNG TASK CÓ CHECKBOX TICK
+# 06. KẾ HOẠCH CHI TIẾT 2 TUẦN (14 NGÀY) - TỪNG THÀNH VIÊN, TỪNG TASK CÓ CHECKBOX TICK
 
 ---
 
-## 🧭 NGUYÊN TẮC VẬN HÀNH 2 TUẦN (14 NGÀY THẦN TỐC)
+## NGUYÊN TẮC VẬN HÀNH 2 TUẦN (14 NGÀY THẦN TỐC)
 
 - **Thời gian triển khai:** Đúng 14 ngày (2 tuần) chuẩn chu kỳ 2 Sprints ngắn.
 - **Mục tiêu tối thượng:** Bám sát 100% đặc tả `Mobile App.pdf`, không làm ngoài phạm vi, bàn giao ứng dụng chạy mượt mà trên máy ảo **Pixel 10a (API 37.2)** kết nối với backend **Python FastAPI** và **SQLite**.
@@ -11,7 +11,7 @@
 
 ---
 
-## 📊 TỔNG HỢP TIẾN ĐỘ THEO 7 THÀNH VIÊN (CHECKLIST TỔNG HỢP)
+## TỔNG HỢP TIẾN ĐỘ THEO 7 THÀNH VIÊN (CHECKLIST TỔNG HỢP)
 
 - [ ] **Tùng Dương (FE Lead):** Base Shell, Navigation, Auth, Màn hình Tạo bài viết `CreatePostActivity`.
 - [ ] **Minh Lương (FE):** Giao diện Feed, `PostAdapter`, Thao tác Like, Share, Hộp thoại Comment text-only.
@@ -23,12 +23,12 @@
 
 ---
 
-# 🗓️ TUẦN 1 (SPRINT 1: NGÀY 01 - NGÀY 07)
+# TUẦN 1 (SPRINT 1: NGÀY 01 - NGÀY 07)
 ### *Mục tiêu: Dựng nền tảng, Thống nhất DTO, Code độc lập song song với Mock Data & FastAPI Endpoints*
 
 ---
 
-### 📍 NGÀY 01 (Thứ Hai): Khởi tạo Dự án, Chuẩn hóa Môi trường & Thống nhất Contract DTO
+### NGÀY 01 (Thứ Hai): Khởi tạo Dự án, Chuẩn hóa Môi trường & Thống nhất Contract DTO
 *Mục tiêu ngày 1: Cả 7 người cài đặt máy đồng nhất, có repo chung, chốt toàn bộ Model DTO và SQLite Schema.*
 
 - [ ] **Tùng Dương (FE Lead):** `[D1-TD]` Khởi tạo Git Repo, cấu hình `.gitignore`, thiết lập `namespace "com.facebook.client"`, `compileSdk 37`, `targetSdk 37`, `minSdk 24`, đẩy nhánh `develop` lên GitHub.
@@ -41,7 +41,7 @@
 
 ---
 
-### 📍 NGÀY 02 (Thứ Ba): Dựng Khung Base Architecture, Theme Màu & Dữ liệu Mock
+### NGÀY 02 (Thứ Ba): Dựng Khung Base Architecture, Theme Màu & Dữ liệu Mock
 *Mục tiêu ngày 2: Frontend có dữ liệu giả lập để hiển thị; Backend khởi tạo SQLAlchemy Models và Upload Endpoint.*
 
 - [ ] **Tùng Dương (FE Lead):** `[D2-TD]` Xây dựng `BaseActivity`, `BaseFragment`, khai báo Bảng màu Facebook (`colors.xml`), Font chữ Roboto (`dimens.xml`) và Theme Material.
@@ -54,7 +54,7 @@
 
 ---
 
-### 📍 NGÀY 03 (Thứ Tư): Bắt đầu Code Giao diện Độc lập & Backend Feed API
+### NGÀY 03 (Thứ Tư): Bắt đầu Code Giao diện Độc lập & Backend Feed API
 *Mục tiêu ngày 3: Khung điều hướng 4 Tab hoàn thiện, thẻ bài viết item_post lên hình, Feed API sẵn sàng.*
 
 - [ ] **Tùng Dương (FE Lead):** `[D3-TD]` Dựng `MainActivity.xml`, gắn `BottomNavigationView` với 4 Tab: Feed, Friends, Notifications, Profile; tạo `NavigationComponent` chuyển tab mượt mà.
@@ -67,7 +67,7 @@
 
 ---
 
-### 📍 NGÀY 04 (Thứ Năm): Post Interaction (Like/Share), Create Post Form & Friends UI
+### NGÀY 04 (Thứ Năm): Post Interaction (Like/Share), Create Post Form & Friends UI
 *Mục tiêu ngày 4: Bấm like đổi màu ngay lập tức, mở form tạo bài viết chọn ảnh từ thư viện, API Like hoàn tất.*
 
 - [ ] **Tùng Dương (FE Lead):** `[D4-TD]` Dựng giao diện `activity_create_post.xml` (Top bar có nút ĐĂNG, Header người dùng Public, ô nhập text không viền, nút đính kèm ảnh duy nhất có icon xanh).
@@ -80,7 +80,7 @@
 
 ---
 
-### 📍 NGÀY 05 (Thứ Sáu): Validation Đăng bài, Comment Text-only & Profile Layout
+### NGÀY 05 (Thứ Sáu): Validation Đăng bài, Comment Text-only & Profile Layout
 *Mục tiêu ngày 5: Khóa nút Đăng khi rỗng (chuẩn PDF), mở bottom sheet comment text-only, API Create Post & Search.*
 
 - [ ] **Tùng Dương (FE Lead):** `[D5-TD]` Xử lý logic chọn 1 ảnh từ thư viện máy bằng `ActivityResultContracts.GetContent()`; viết hàm kiểm tra validation: **nếu text rỗng VÀ chưa chọn ảnh thì nút ĐĂNG bị mờ/khóa (disable)**.
@@ -93,7 +93,7 @@
 
 ---
 
-### 📍 NGÀY 06 (Thứ Bảy): Hoàn thiện 100% Giao diện Mock & Test Độc lập từng Module
+### NGÀY 06 (Thứ Bảy): Hoàn thiện 100% Giao diện Mock & Test Độc lập từng Module
 *Mục tiêu ngày 6: Tất cả các màn hình bấm được, chạy mượt mà trên máy ảo Pixel 10a; API Swagger UI test xanh 100%.*
 
 - [ ] **Tùng Dương (FE Lead):** `[D6-TD]` Rà soát toàn bộ luồng Auth giả lập, chuyển tab tại `MainActivity`, kết nối hiển thị bài viết mới tạo vào đầu danh sách Feed.
@@ -106,7 +106,7 @@
 
 ---
 
-### 📍 NGÀY 07 (Chủ Nhật): Review Checkpoint Tuần 1 & Hợp nhất Code Nhánh `develop`
+### NGÀY 07 (Chủ Nhật): Review Checkpoint Tuần 1 & Hợp nhất Code Nhánh `develop`
 *Mục tiêu ngày 7: 100% code tuần 1 được review sạch sẽ và merge vào develop, không có conflict.*
 
 - [ ] **Tùng Dương (FE Lead):** `[D7-TD]` Review toàn bộ Pull Request của 3 bạn FE (`Minh Lương`, `Phúc Đức`, `Tạ Quang Huy`), phê duyệt và merge vào nhánh `develop`.
@@ -119,25 +119,30 @@
 
 ---
 
-# 🗓️ TUẦN 2 (SPRINT 2: NGÀY 08 - NGÀY 14)
+# TUẦN 2 (SPRINT 2: NGÀY 08 - NGÀY 14)
 ### *Mục tiêu: Tích hợp Real FastAPI Backend, Viết Unit Test, Sửa lỗi & Nghiệm thu*
 
 ---
 
-### 📍 NGÀY 08 (Thứ Hai): Tích hợp Real Backend vào Feed & Đăng bài (Integration Day 1)
+### NGÀY 08 (Thứ Hai): Tích hợp Real Backend vào Feed & Đăng bài (Integration Day 1)
 *Mục tiêu ngày 8: Thay thế MockPostRepository bằng PostRepositoryImpl, load bài viết thật từ FastAPI server.*
 
-- [ ] **Tùng Dương (FE Lead):** `[D8-TD]` Khởi tạo Retrofit `ApiClient` kết nối tới `http://10.0.2.2:8000/api/`; ghép `PostRepositoryImpl` vào `CreatePostViewModel`, gọi API upload ảnh và tạo bài viết lên FastAPI.
-- [ ] **Minh Lương (FE):** `[D8-ML]` Chuyển `FeedViewModel` sang dùng `PostRepositoryImpl`, lấy dữ liệu bài viết thật từ FastAPI + SQLite; kiểm tra thao tác Like đồng bộ lên server.
+- [ ] **Tùng Dương (FE Lead):** `[D8-TD]` **Xây dựng Tầng Mạng Cốt lõi (Core Network Setup):**
+  - Thêm thư viện Retrofit 2 (`2.9.0`), Converter Gson (`2.9.0`), OkHttp Logging Interceptor (`4.12.0`) vào `app/build.gradle`.
+  - Tạo cấu hình mạng `res/xml/network_security_config.xml` cho phép HTTP cleartext tới `10.0.2.2` và `localhost`.
+  - Khai báo quyền `INTERNET`, `ACCESS_NETWORK_STATE` và gán `networkSecurityConfig` trong `AndroidManifest.xml`.
+  - Viết `ApiClient.java` (Retrofit Singleton trỏ `http://10.0.2.2:8000/api/`), `ApiService.java` (Interface toàn bộ REST Endpoints), `ApiResponseHandler.java`, `Resource.java`.
+  - Ghép `PostRepositoryImpl` vào `CreatePostViewModel`, gọi API upload ảnh multipart (`POST /api/upload`) và tạo bài viết (`POST /api/posts`).
+- [ ] **Minh Lương (FE):** `[D8-ML]` Chuyển `FeedViewModel` sang dùng `PostRepositoryImpl`, lấy dữ liệu bài viết thật từ FastAPI + SQLite (`GET /api/posts`); kiểm tra thao tác Like (`POST /api/posts/{id}/like`) đồng bộ lên server.
 - [ ] **Ánh Dương (BE Lead):** `[D8-AD]` Hỗ trợ Tùng Dương và Minh Lương gỡ lỗi (debug) kết nối Retrofit với FastAPI, cấu hình CORS Middleware và log request Uvicorn.
-- [ ] **Phúc Đức (FE):** `[D8-PD]` Bắt đầu ghép `FriendRepositoryImpl` vào `FriendsViewModel`, tải danh sách lời mời kết bạn từ endpoint `/api/friends/requests`.
+- [ ] **Phúc Đức (FE):** `[D8-PD]` Bắt đầu ghép `FriendRepositoryImpl` vào `FriendsViewModel`, gọi API tải danh sách lời mời kết bạn từ endpoint `GET /api/friends/requests`.
 - [ ] **Minh Đức (BE):** `[D8-MD]` Hỗ trợ Phúc Đức gỡ lỗi dữ liệu bạn bè; kiểm tra câu lệnh SQL trong SQLite.
 - [ ] **Hà Đăng Huy (BE + QA):** `[D8-HDH]` Kiểm thử độc lập API kết bạn bằng cách test trên 2 tài khoản demo khác nhau xem lời mời có đến đúng người không.
-- [ ] **Tạ Quang Huy (FE + QA):** `[D8-TQH]` Ghép `NotificationRepositoryImpl` vào `NotificationViewModel`, gọi API `/api/notifications` từ FastAPI server.
+- [ ] **Tạ Quang Huy (FE + QA):** `[D8-TQH]` Ghép `NotificationRepositoryImpl` vào `NotificationViewModel`, gọi API `GET /api/notifications` từ FastAPI server.
 
 ---
 
-### 📍 NGÀY 09 (Thứ Ba): Tích hợp Real Backend vào Profile & Thao tác Bạn bè (Integration Day 2)
+### NGÀY 09 (Thứ Ba): Tích hợp Real Backend vào Profile & Thao tác Bạn bè (Integration Day 2)
 *Mục tiêu ngày 9: Toàn bộ 4 tab của ứng dụng đều đọc/ghi dữ liệu thật từ FastAPI + SQLite.*
 
 - [ ] **Phúc Đức (FE):** `[D9-PD]` Hoàn tất tích hợp dữ liệu thật cho Màn hình Trang cá nhân (`ProfileFragment`): hiển thị ảnh bìa, avatar và danh sách bài viết từ endpoint `/api/users/{id}` và `/api/users/{id}/posts`.
@@ -150,7 +155,7 @@
 
 ---
 
-### 📍 NGÀY 10 (Thứ Tư): Viết Toàn bộ Unit Test & Xử lý Trạng thái UI (Loading/Empty/Error)
+### NGÀY 10 (Thứ Tư): Viết Toàn bộ Unit Test & Xử lý Trạng thái UI (Loading/Empty/Error)
 *Mục tiêu ngày 10: Đạt chuẩn Unit Test đồ án (Android JUnit + Backend pytest), app xử lý mượt mà khi rỗng hoặc lỗi mạng.*
 
 - [ ] **Hà Đăng Huy (BE + QA Lead):** `[D10-HDH]` Hoàn thiện bộ Unit Test cho Data Layer: `PostRepositoryTest` (Android Mockito) và `test_api.py` (FastAPI endpoints với pytest, đạt ít nhất 8 test cases bao gồm success/error).
@@ -163,7 +168,7 @@
 
 ---
 
-### 📍 NGÀY 11 (Thứ Năm): Bug Hunting Day (Kiểm thử Toàn diện & Phân loại Bug)
+### NGÀY 11 (Thứ Năm): Bug Hunting Day (Kiểm thử Toàn diện & Phân loại Bug)
 *Mục tiêu ngày 11: Tìm ra toàn bộ lỗi còn tồn đọng, phân loại P0-P3 theo ma trận RACI và gán người fix.*
 
 - [ ] **Hà Đăng Huy (QA Lead):** `[D11-HDH]` Thực hiện kiểm thử toàn bộ chức năng theo Master Test Plan; tạo danh sách Bug Tickets trên GitHub/Zalo kèm HTTP status code và Logcat.
@@ -176,7 +181,7 @@
 
 ---
 
-### 📍 NGÀY 12 (Thứ Sáu): Sửa Toàn bộ Lỗi & Tối ưu Hiệu năng (Bug Fixing Sprint)
+### NGÀY 12 (Thứ Sáu): Sửa Toàn bộ Lỗi & Tối ưu Hiệu năng (Bug Fixing Sprint)
 *Mục tiêu ngày 12: Đóng sạch 100% bug Blocker (P0) và Critical (P1), không còn hiện tượng giật lag.*
 
 - [ ] **Tùng Dương (FE Lead):** `[D12-TD]` Sửa triệt để lỗi giao diện tạo bài viết, đảm bảo nút ĐĂNG chỉ sáng khi có chữ hoặc ảnh; vô hiệu hóa nút trong khi đang tải (tránh bấm 2 lần).
@@ -189,7 +194,7 @@
 
 ---
 
-### 📍 NGÀY 13 (Thứ Bảy): Kiểm thử Hồi quy (Regression Test) & Hoàn thiện Báo cáo Đồ án
+### NGÀY 13 (Thứ Bảy): Kiểm thử Hồi quy (Regression Test) & Hoàn thiện Báo cáo Đồ án
 *Mục tiêu ngày 13: 100% Bug được đóng (Closed), hoàn thành tài liệu báo cáo Word/PDF và Slide thuyết trình.*
 
 - [ ] **Hà Đăng Huy (QA Lead):** `[D13-HDH]` Thực hiện Regression Test toàn diện từ bước Đăng nhập -> Lướt Feed -> Like/Comment/Share -> Đăng bài -> Kết bạn -> Xem Profile; Đóng toàn bộ Bug tickets.
@@ -202,7 +207,7 @@
 
 ---
 
-### 📍 NGÀY 14 (Chủ Nhật): Tổng duyệt Demo trên Pixel 10a, Đóng gói APK Release & Sẵn sàng Bảo vệ
+### NGÀY 14 (Chủ Nhật): Tổng duyệt Demo trên Pixel 10a, Đóng gói APK Release & Sẵn sàng Bảo vệ
 *Mục tiêu ngày 14: Xuất file app-release.apk, merge master, sẵn sàng 100% cho buổi chấm điểm.*
 
 - [ ] **Tùng Dương (FE Lead):** `[D14-TD]` Tạo Pull Request cuối cùng merge toàn bộ nhánh `develop` vào nhánh `master`; tạo Git Tag `v1.0.0-final`.
@@ -212,4 +217,4 @@
 - [ ] **Minh Lương (FE):** `[D14-ML]` Rà soát lại slide thuyết trình, khớp từng tính năng với đặc tả `Mobile App.pdf`.
 - [ ] **Phúc Đức (FE):** `[D14-PD]` Kiểm tra in ấn tài liệu báo cáo đồ án (nếu giảng viên yêu cầu nộp bản cứng).
 - [ ] **Minh Đức (BE):** `[D14-MD]` Đảm bảo server Python FastAPI và file `facebook.db` sẵn sàng khởi chạy mượt mà ngay khi giảng viên yêu cầu demo.
-- [ ] **CẢ 7 THÀNH VIÊN:** `[D14-ALL]` Chạy tổng duyệt kịch bản thuyết trình nhóm (Rehearsal) - **HOÀN THÀNH 100% ĐỒ ÁN! 🎉**
+- [ ] **CẢ 7 THÀNH VIÊN:** `[D14-ALL]` Chạy tổng duyệt kịch bản thuyết trình nhóm (Rehearsal) - **HOÀN THÀNH 100% ĐỒ ÁN! **

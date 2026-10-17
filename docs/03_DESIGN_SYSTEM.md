@@ -1,4 +1,4 @@
-# 🎨 03. HỆ THỐNG THIẾT KẾ GIAO DIỆN & TRẢI NGHIỆM (DESIGN SYSTEM - DESIGN.md)
+# 03. HỆ THỐNG THIẾT KẾ GIAO DIỆN & TRẢI NGHIỆM (DESIGN SYSTEM - DESIGN.md)
 
 ---
 
@@ -56,7 +56,7 @@ Mọi lập trình viên giao diện bắt buộc khai báo và sử dụng màu
 - Quy chuẩn kích thước và độ đậm (Style Scale):
 
 | Kiểu văn bản (Style) | Kích thước (sp) | Độ đậm (Font Weight) | Màu sắc gợi ý | Mục đích sử dụng |
-| :--- | :---: | :---: | :---: | :--- |
+|:--- |:---: |:---: |:---: |:--- |
 | **Headline / App Title** | 22sp | Bold (700) | `fb_blue` | Logo "facebook" trên thanh điều hướng đỉnh |
 | **User Name (Tác giả)** | 15sp | SemiBold (600) | `fb_text_primary` | Tên người đăng bài, tên trong danh sách bạn bè |
 | **Post Content Text** | 15sp | Regular (400) | `fb_text_primary` | Nội dung bài viết (lineSpacingExtra: 3dp) |
@@ -100,10 +100,10 @@ Khai báo trong `res/values/dimens.xml`:
 ### 5.2. Bottom Navigation Bar (4 Tab chính)
 - Chiều cao: `56dp`, nền `fb_surface`, đường viền đỉnh 1dp `fb_divider_light`.
 - 4 Tab cố định theo đặc tả:
-  1. 🏠 **Feed** (Icon bảng tin)
-  2. 👥 **Friends** (Icon bạn bè)
-  3. 🔔 **Notifications** (Icon quả chuông)
-  4. 👤 **Profile** (Icon người dùng / Mini Avatar)
+  1. **Feed** (Icon bảng tin)
+  2. **Friends** (Icon bạn bè)
+  3. **Notifications** (Icon quả chuông)
+  4. **Profile** (Icon người dùng / Mini Avatar)
 - Trạng thái Active: Icon & chữ chuyển màu `fb_blue`. Trạng thái Inactive: màu `fb_action_gray`.
 
 ### 5.3. Khu vực tạo bài viết nhanh (Create Post Box trên đỉnh Feed)
@@ -133,7 +133,7 @@ Khai báo trong `res/values/dimens.xml`:
   - Đoạn văn bản mô tả (padding 12dp).
   - `ImageView` hiển thị ảnh (nếu bài viết có ảnh): chiều rộng `match_parent`, `adjustViewBounds=true`, `scaleType=centerCrop`, chiều cao tối đa `400dp`.
 - **Thống kê (Footer Stats):**
-  - Trái: Icon like xanh nhỏ + Số lượt thích (Ví dụ: `👍 24`).
+  - Trái: Icon like xanh nhỏ + Số lượt thích (Ví dụ: `24 lượt thích`).
   - Phải: Số lượng bình luận (Ví dụ: `5 bình luận`).
 - **Thanh thao tác (Action Bar):** Chia đều 3 cột với đường kẻ viền mỏng trên dưới:
   1. Nút **Thích (Like):** Icon ngón tay cái. Khi đã like: Icon đổi sang màu xanh `fb_like_blue` và chữ "Thích" in đậm màu xanh.

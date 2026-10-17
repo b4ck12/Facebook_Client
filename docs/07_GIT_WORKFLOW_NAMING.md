@@ -1,4 +1,4 @@
-# 🌿 07. QUY TRÌNH LÀM VIỆC GIT & QUY CHUẨN ĐẶT TÊN (GIT WORKFLOW & NAMING CONVENTIONS)
+# 07. QUY TRÌNH LÀM VIỆC GIT & QUY CHUẨN ĐẶT TÊN (GIT WORKFLOW & NAMING CONVENTIONS)
 
 ---
 
@@ -6,18 +6,29 @@
 
 Dự án áp dụng mô hình chuẩn **Feature Branch Workflow** (biến thể tinh gọn của Git Flow phù hợp cho nhóm 7 người):
 
-```
-master (chỉ chứa code đã phát hành nghiệm thu, bảo vệ đồ án)
-  ^
-  | (Merge khi kết thúc Sprint và chạy ổn định)
-develop (nhánh tích hợp chính của cả nhóm)
-  ^
-  |-- feature/feed-ui-TSK-10          (Làm xong -> PR -> Merge vào develop)
-  |-- feature/create-post-TSK-13      (Làm xong -> PR -> Merge vào develop)
-  |-- feature/feed-ui-TSK-10          (Làm xong -> PR -> Merge vào develop)
-  |-- feature/create-post-TSK-13      (Làm xong -> PR -> Merge vào develop)
-  |-- feature/fastapi-feed-api-TSK-19 (Làm xong -> PR -> Merge vào develop)
-  |-- bugfix/fix-comment-crash-BUG-05 (Sửa lỗi -> PR -> Merge vào develop)
+```mermaid
+gitGraph
+    commit id: "Init Repo"
+    branch develop
+    checkout develop
+    commit id: "Setup Architecture"
+    branch feature/feed-ui
+    checkout feature/feed-ui
+    commit id: "feat: Feed UI & Adapter"
+    checkout develop
+    merge feature/feed-ui id: "PR #1"
+    branch feature/fastapi-api
+    checkout feature/fastapi-api
+    commit id: "feat: FastAPI Endpoints"
+    checkout develop
+    merge feature/fastapi-api id: "PR #2"
+    branch bugfix/like-sync
+    checkout bugfix/like-sync
+    commit id: "fix: Like Optimistic UI"
+    checkout develop
+    merge bugfix/like-sync id: "PR #3"
+    checkout master
+    merge develop id: "Release Demo" tag: "v1.0-final"
 ```
 
 ### Các nhánh chính:
@@ -82,7 +93,7 @@ git checkout -b feature/feed-ui-TSK-10
 #### Bước 2: Trong quá trình code (Thường xuyên commit nhỏ, có ý nghĩa)
 ```bash
 git status
-git add .
+git add.
 git commit -m "feat(feed): add layout for item_post and view holder"
 ```
 
@@ -111,7 +122,7 @@ git push origin feature/feed-ui-TSK-10
 Để code của 7 thành viên viết ra trông như được viết bởi một người duy nhất, toàn đội ngũ bắt buộc tuân thủ 100% các quy ước sau:
 
 ### 4.1. Quy chuẩn đặt tên Java Code
-- **Package:** Toàn bộ chữ thường, không có dấu gạch dưới.  
+- **Package:** Toàn bộ chữ thường, không có dấu gạch dưới. 
   *Ví dụ:* `com.facebook.client.features.feed`, `com.facebook.client.data.repository`
 - **Class & Interface:** `PascalCase` (chữ cái đầu viết hoa).
   - Activity: Kết thúc bằng `Activity` (ví dụ: `LoginActivity`, `CreatePostActivity`).
@@ -121,11 +132,11 @@ git push origin feature/feed-ui-TSK-10
   - ViewHolder: Kết thúc bằng `ViewHolder` (ví dụ: `PostViewHolder`).
   - Interface Repository: Bắt đầu bằng chữ `I` (ví dụ: `IPostRepository`, `IFriendRepository`).
   - Implementation Class: Kết thúc bằng `Impl` (ví dụ: `PostRepositoryImpl`).
-- **Method (Phương thức):** `camelCase`, bắt đầu bằng động từ thể hiện rõ hành động.  
+- **Method (Phương thức):** `camelCase`, bắt đầu bằng động từ thể hiện rõ hành động. 
   *Ví dụ:* `loadFeedPosts()`, `toggleLike()`, `sendFriendRequest()`, `validateInput()`
-- **Biến cục bộ & Tham số (Variable & Parameter):** `camelCase`.  
+- **Biến cục bộ & Tham số (Variable & Parameter):** `camelCase`. 
   *Ví dụ:* `postId`, `authorName`, `isLiked`
-- **Hằng số (Constant):** `UPPER_SNAKE_CASE` (viết hoa toàn bộ, cách nhau bằng dấu gạch dưới).  
+- **Hằng số (Constant):** `UPPER_SNAKE_CASE` (viết hoa toàn bộ, cách nhau bằng dấu gạch dưới). 
   *Ví dụ:* `DEFAULT_PAGE_SIZE = 20`, `EXTRA_POST_ID = "extra_post_id"`
 
 ---
@@ -134,7 +145,7 @@ git push origin feature/feed-ui-TSK-10
 
 #### A. File Giao diện (Layout Files): `<tiền-tố>_<tên-màn-hình>.xml`
 | Tiền tố | Mục đích | Ví dụ minh họa |
-| :--- | :--- | :--- |
+|:--- |:--- |:--- |
 | `activity_` | Màn hình Activity | `activity_main.xml`, `activity_create_post.xml` |
 | `fragment_` | Màn hình con Fragment | `fragment_feed.xml`, `fragment_profile.xml` |
 | `item_` | 1 dòng trong RecyclerView | `item_post.xml`, `item_comment.xml`, `item_friend.xml` |
@@ -146,7 +157,7 @@ git push origin feature/feed-ui-TSK-10
 Cú pháp: `@+id/<viết-tắt-loại-view>_<tên-nghiệp-vụ>`
 
 | Loại View | Viết tắt chuẩn | Ví dụ định danh chuẩn | Tuyệt đối KHÔNG đặt |
-| :--- | :---: | :--- | :--- |
+|:--- |:---: |:--- |:--- |
 | **TextView** | `tv_` | `tv_author_name`, `tv_post_time`, `tv_like_count` | `text1`, `tv1`, `name` |
 | **ImageView** | `iv_` | `iv_avatar`, `iv_post_image`, `iv_like_icon` | `image`, `imgAvatar` |
 | **Button / MaterialButton** | `btn_` | `btn_submit_post`, `btn_confirm_friend`, `btn_cancel`| `button`, `btn1`, `submit` |

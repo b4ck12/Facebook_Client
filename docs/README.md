@@ -1,12 +1,12 @@
-# 📚 HƯỚNG DẪN TRUY CẬP TÀI LIỆU DỰ ÁN (DOCS PORTAL)
+# HƯỚNG DẪN TRUY CẬP TÀI LIỆU DỰ ÁN (DOCS PORTAL)
 
-> **Dự án:** Facebook Mobile Client (Bài tập lớn Android)  
-> **Xem nhanh hướng dẫn Onboarding toàn diện tại:** 👉 [**README.md gốc của dự án**](../README.md)  
-> **Xem mục lục trung tâm chi tiết tại:** 👉 [**docs/INDEX.md**](./INDEX.md)
+>**Dự án:** Facebook Mobile Client (Bài tập lớn Android) 
+>**Xem nhanh hướng dẫn Onboarding toàn diện tại:** [**README.md gốc của dự án**](../README.md) 
+>**Xem mục lục trung tâm chi tiết tại:** [**docs/INDEX.md**](./INDEX.md)
 
 ---
 
-## 🧭 LỘ TRÌNH ĐỌC TÀI LIỆU DÀNH CHO BẠN
+## LỘ TRÌNH ĐỌC TÀI LIỆU DÀNH CHO BẠN
 
 ### 1. Bạn là thành viên mới vào dự án?
 1. Đọc ngay [**12_ENVIRONMENT_SETUP.md**](./12_ENVIRONMENT_SETUP.md) để cài đặt đúng **Java 17**, Python 3.10+, máy ảo **Pixel 10a (API 37.2)** và clone repo.
@@ -19,7 +19,7 @@
 - [**08_CODING_CONVENTION_DOCS.md**](./08_CODING_CONVENTION_DOCS.md): Chuẩn code Java và ViewBinding chống leak bộ nhớ.
 
 ### 3. Bạn làm mảng Dữ liệu & Server (Backend)?
-- [**09_BACKEND_FREE_SERVER.md**](./09_BACKEND_FREE_SERVER.md): Kiến trúc Python FastAPI, CSDL SQLite (`facebook.db`), Schema ERD, RESTful API Endpoints.
+- [**09_BACKEND_SERVER.md**](./09_BACKEND_SERVER.md): Kiến trúc Python FastAPI, CSDL SQLite (`facebook.db`), Schema ERD, RESTful API Endpoints.
 - [**02_ARCHITECTURE.md**](./02_ARCHITECTURE.md): Cấu trúc Interface Repository, Retrofit `ApiService` và Data DTOs.
 
 ### 4. Bạn phụ trách Kiểm thử & Chất lượng (QA/Testing)?
@@ -28,7 +28,7 @@
 
 ---
 
-## 📑 DANH MỤC TẤT CẢ TÀI LIỆU
+## DANH MỤC TẤT CẢ TÀI LIỆU
 - [01_OVERVIEW.md](./01_OVERVIEW.md) - Tổng quan & Đặc tả PDF gốc
 - [02_ARCHITECTURE.md](./02_ARCHITECTURE.md) - Kiến trúc MVVM + Clean Architecture, Retrofit 2
 - [03_DESIGN_SYSTEM.md](./03_DESIGN_SYSTEM.md) - Hệ thống thiết kế giao diện
@@ -37,7 +37,7 @@
 - [06_TASKS_SPRINT_PLAN.md](./06_TASKS_SPRINT_PLAN.md) - Kế hoạch 14 ngày chi tiết có tickbox
 - [07_GIT_WORKFLOW_NAMING.md](./07_GIT_WORKFLOW_NAMING.md) - Quy trình Git & Đặt tên
 - [08_CODING_CONVENTION_DOCS.md](./08_CODING_CONVENTION_DOCS.md) - Chuẩn code & Javadoc
-- [09_BACKEND_FREE_SERVER.md](./09_BACKEND_FREE_SERVER.md) - Server Backend (Python FastAPI) & Database (SQLite)
+- [09_BACKEND_SERVER.md](./09_BACKEND_SERVER.md) - Server Backend (Python FastAPI) & Database (SQLite)
 - [10_TESTING_GUIDE.md](./10_TESTING_GUIDE.md) - Hướng dẫn viết Unit Test (JUnit 4 + Mockito + Pytest)
 - [11_BUG_TRIAGE_PROCESS.md](./11_BUG_TRIAGE_PROCESS.md) - Quy trình xử lý lỗi Bug Triage
 - [12_ENVIRONMENT_SETUP.md](./12_ENVIRONMENT_SETUP.md) - Cài đặt Java 17, Python FastAPI, Clone Git & Máy ảo Pixel 10a

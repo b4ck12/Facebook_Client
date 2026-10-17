@@ -1,4 +1,4 @@
-# 🧪 10. HƯỚNG DẪN VIẾT VÀ CHẠY UNIT TEST (TESTING GUIDE)
+# 10. HƯỚNG DẪN VIẾT VÀ CHẠY UNIT TEST (TESTING GUIDE)
 
 ---
 
@@ -246,8 +246,8 @@ Chạy toàn bộ Unit Test Android trên terminal:
 ```bash
 ./gradlew testDebugUnitTest
 ```
-- Kết quả tổng hợp báo cáo dạng Web HTML trực quan:  
-  📁 `app/build/reports/tests/testDebugUnitTest/index.html`
+- Kết quả tổng hợp báo cáo dạng Web HTML trực quan: 
+   `app/build/reports/tests/testDebugUnitTest/index.html`
 
 ### Cách 2: Chạy trực tiếp trên giao diện Android Studio
 1. Mở cửa sổ **Project** bên trái màn hình.

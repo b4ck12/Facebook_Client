@@ -1,12 +1,12 @@
-# 🐛 11. QUY TRÌNH QUẢN LÝ VÀ XỬ LÝ LỖI (BUG TRIAGE & RESOLUTION PROTOCOL)
+# 11. QUY TRÌNH QUẢN LÝ VÀ XỬ LÝ LỖI (BUG TRIAGE & RESOLUTION PROTOCOL)
 
 ---
 
 ## 1. MỤC TIÊU & NGUYÊN TẮC (CORE PRINCIPLES)
 
-> [!IMPORTANT]
-> **Nguyên tắc "Lỗi của ai - Người đó fix":**  
-> Tuyệt đối không đùn đẩy trách nhiệm. Bất kỳ lỗi nào phát sinh đều phải được định danh chính xác nguyên nhân gốc rễ (Root Cause) xuất phát từ tầng Giao diện (Frontend) hay tầng Dữ liệu/Hệ thống (Backend) để gán đúng lập trình viên phụ trách module đó giải quyết.
+>[!IMPORTANT]
+>**Nguyên tắc "Lỗi của ai - Người đó fix":** 
+>Tuyệt đối không đùn đẩy trách nhiệm. Bất kỳ lỗi nào phát sinh đều phải được định danh chính xác nguyên nhân gốc rễ (Root Cause) xuất phát từ tầng Giao diện (Frontend) hay tầng Dữ liệu/Hệ thống (Backend) để gán đúng lập trình viên phụ trách module đó giải quyết.
 
 ---
 
@@ -36,7 +36,7 @@ stateDiagram-v2
 ## 3. PHÂN ĐỊNH MỨC ĐỘ NGHIÊM TRỌNG (BUG SEVERITY LEVELS)
 
 | Cấp độ | Tên mức độ | Mô tả hiện tượng | Thời gian xử lý tối đa (SLA) |
-| :---: | :--- | :--- | :---: |
+|:---: |:--- |:--- |:---: |
 | **P0** | **Blocker** | Ứng dụng bị văng (Crash App), dừng đột ngột (ANR), hoặc không thể đăng nhập vào ứng dụng. Chặn toàn bộ việc kiểm thử các tính năng khác. | **Fix ngay trong 4 giờ** |
 | **P1** | **Critical** | Tính năng cốt lõi bị hỏng: Không thể đăng bài, bấm like nhưng không lưu vào DB, không xem được danh sách bạn bè. | **Fix trong vòng 24 giờ** |
 | **P2** | **Major** | Tính năng chạy được nhưng sai nghiệp vụ: Đăng bài khi cả text và ảnh đều rỗng, số like hiển thị sai sau khi cuộn trang, avatar bị méo tỷ lệ. | **Fix trong vòng 48 giờ** |
@@ -49,7 +49,7 @@ stateDiagram-v2
 Khi có lỗi xảy ra, đối chiếu bảng dưới đây để biết chính xác người có trách nhiệm sửa lỗi:
 
 | Loại lỗi phát sinh | Dấu hiệu nhận biết trong Logcat / UI | Thành viên chịu trách nhiệm Fix |
-| :--- | :--- | :--- |
+|:--- |:--- |:--- |
 | **Lỗi Form Tạo bài viết** | Bấm nút Đăng không phản hồi, cho phép đăng bài rỗng, nút chọn ảnh bị đơ | **Tùng Dương** (FE Lead) |
 | **Lỗi Shell / Navigation** | Bấm chuyển các Tab đáy bị lag, thanh Header trên cùng bị che khuất | **Tùng Dương** (FE Lead) |
 | **Lỗi Bảng tin (Feed)** | RecyclerView cuộn bị giật lag, hiển thị trùng bài viết, sai định dạng ngày giờ | **Minh Lương** (FE) |

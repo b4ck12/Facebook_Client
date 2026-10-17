@@ -1,4 +1,4 @@
-đọc chi tiết file TODO.md, và các file Mobile App.pdf, sau đó tạo folder docs và tạo những file markdown vào đó với những yêu cầu  và file sau:
+đọc chi tiết file TODO.md, và các file Mobile App.pdf, sau đó tạo folder docs và tạo những file markdown vào đó với những yêu cầu và file sau:
 1. overview
 2. system architecture
 3. task
@@ -10,7 +10,7 @@
 9. User Flow
 10. không out of scope: làm đồ án bài tập lớn 
 11. chia role với 7 người như 1 công ty chuyên nghiệp thực thụ
-12. backend server (Python FastAPI) & sqlite database (chạy local / free cloud)
+12. backend server (Python FastAPI) & sqlite database (chạy local / server)
 13. cách viết Unit Test
 14. task cần tách biệt để có thể làm song song với nhau
 15. quy trình khi có lỗi thì ai fix

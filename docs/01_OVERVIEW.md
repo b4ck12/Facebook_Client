@@ -1,4 +1,4 @@
-# 📋 01. TỔNG QUAN DỰ ÁN & ĐỐI CHIẾU CHÍNH XÁC ĐẶC TẢ PDF (OVERVIEW & PDF SCOPE)
+# 01. TỔNG QUAN DỰ ÁN & ĐỐI CHIẾU CHÍNH XÁC ĐẶC TẢ PDF (OVERVIEW & PDF SCOPE)
 
 ---
 
@@ -93,10 +93,10 @@ Bám sát nguyên văn phân chia nhân sự trong `Mobile App.pdf`:
 
 ## 3. RANH GIỚI PHẠM VI (SCOPE BOUNDARY) - BÀI TẬP LỚN ĐẠI HỌC
 
-> [!IMPORTANT]
-> **Tuyệt đối KHÔNG LÀM ngoài phạm vi (No Scope Creep):**
-> 1. Không làm nhắn tin trò chuyện Messenger, chat 1-1, gọi thoại/video.
-> 2. Không làm Tin 24h (Stories), Reels video ngắn, Livestream.
-> 3. Không làm Fanpage, Nhóm (Groups), Marketplace buôn bán, Quảng cáo, Thanh toán.
-> 4. Không cho bình luận ảnh/sticker trong comment, không làm trả lời lồng nhau.
-> 5. Giữ ứng dụng chạy nhẹ nhàng, mượt mà trên máy ảo chuẩn **Pixel 10a**.
+>[!IMPORTANT]
+>**Tuyệt đối KHÔNG LÀM ngoài phạm vi (No Scope Creep):**
+>1. Không làm nhắn tin trò chuyện Messenger, chat 1-1, gọi thoại/video.
+>2. Không làm Tin 24h (Stories), Reels video ngắn, Livestream.
+>3. Không làm Fanpage, Nhóm (Groups), Marketplace buôn bán, Quảng cáo, Thanh toán.
+>4. Không cho bình luận ảnh/sticker trong comment, không làm trả lời lồng nhau.
+>5. Giữ ứng dụng chạy nhẹ nhàng, mượt mà trên máy ảo chuẩn **Pixel 10a**.

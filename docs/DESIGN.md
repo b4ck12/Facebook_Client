@@ -1,8 +1,8 @@
-# 🎨 DESIGN.md - HỆ THỐNG THIẾT KẾ FACEBOOK CLIENT
+# DESIGN.md - HỆ THỐNG THIẾT KẾ FACEBOOK CLIENT
 
-> Tài liệu này là bản đối chiếu nhanh của hệ thống thiết kế giao diện (Design System).  
-> Chi tiết toàn bộ mã màu, thông số typography, component specs và trạng thái UI được định nghĩa đầy đủ tại:  
-> 👉 [**docs/03_DESIGN_SYSTEM.md**](./03_DESIGN_SYSTEM.md)
+>Tài liệu này là bản đối chiếu nhanh của hệ thống thiết kế giao diện (Design System). 
+>Chi tiết toàn bộ mã màu, thông số typography, component specs và trạng thái UI được định nghĩa đầy đủ tại: 
+> [**docs/03_DESIGN_SYSTEM.md**](./03_DESIGN_SYSTEM.md)
 
 ---
 

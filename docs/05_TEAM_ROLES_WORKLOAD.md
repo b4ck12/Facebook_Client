@@ -1,4 +1,4 @@
-# 👥 05. CƠ CẤU NHÂN SỰ CHUẨN DOANH NGHIỆP & CÂN BẰNG KHỐI LƯỢNG CÔNG VIỆC (ROLES & WORKLOAD)
+# 05. CƠ CẤU NHÂN SỰ CHUẨN DOANH NGHIỆP & CÂN BẰNG KHỐI LƯỢNG CÔNG VIỆC (ROLES & WORKLOAD)
 
 ---
 
@@ -6,10 +6,31 @@
 
 Dự án được vận hành theo mô hình **Agile Cross-Functional Squad** chuẩn các công ty công nghệ lớn (Google, Meta, VNG, Viettel). Mỗi thành viên có chức danh chuyên nghiệp, phân định ranh giới trách nhiệm rõ ràng (RACI: Responsible, Accountable, Consulted, Informed).
 
+```mermaid
+flowchart TD
+    Squad["FACEBOOK MOBILE CLIENT SQUAD (7 THÀNH VIÊN)"]
+    
+    Squad --> FE["FRONTEND TEAM (Android Java & XML)"]
+    Squad --> BE["BACKEND TEAM (Python FastAPI & SQLite)"]
+    Squad --> QA["CROSS-FUNCTIONAL QA (Testing)"]
+
+    FE --> FE1["Tùng Dương (Lead FE & UI/UX)"]
+    FE --> FE2["Minh Lương (Feed, Interactions, Comment)"]
+    FE --> FE3["Phúc Đức (Profile, Friends, Search)"]
+    FE --> FE4["Tạ Quang Huy (Notifications & UI QA)"]
+
+    BE --> BE1["Ánh Dương (Lead BE & DB Architect)"]
+    BE --> BE2["Minh Đức (Media Upload, Profile/Notif API)"]
+    BE --> BE3["Hà Đăng Huy (Friends API & API QA)"]
+
+    QA -.-> BE3
+    QA -.-> FE4
+```
+
 ### Bảng Cơ cấu Nhân sự & Định danh Chức vụ:
 
 | STT | Họ và Tên | Vai trò chính | Vai trò kiêm nhiệm | Chức danh chuẩn công nghiệp (Industry Title) |
-| :---: | :--- | :--- | :--- | :--- |
+|:---: |:--- |:--- |:--- |:--- |
 | **1** | **Ánh Dương** | Back-end | Kiến trúc sư hệ thống | **Lead Backend Engineer & Database Architect** |
 | **2** | **Minh Đức** | Back-end | Quản trị Media/Storage & API | **Backend Engineer & Storage/Media Specialist** |
 | **3** | **Hà Đăng Huy** | Back-end | Kiểm thử chất lượng (QA) | **Backend Engineer & QA Lead / API Tester** |
@@ -37,33 +58,39 @@ Dự án được vận hành theo mô hình **Agile Cross-Functional Squad** ch
 
 ### 2.2. Nhóm Frontend & Giao diện (4 Thành viên)
 - **Tùng Dương (Lead Frontend Engineer & UI/UX Coordinator):**
-  - Khởi tạo kiến trúc khung Android (BaseActivity, BaseFragment, ViewModel setup, Theme, Navigation).
-  - Xây dựng Màn hình Đăng nhập (Auth), Top Bar, Bottom Navigation, và Màn hình Tạo bài viết (`CreatePostActivity`).
-  - Đảm bảo tính nhất quán của Design System toàn app và review code tầng UI.
+  - Khởi tạo kiến trúc khung Android (BaseActivity, BaseFragment, ViewModel setup, Theme Material, Navigation Component 4 Tab).
+  - **Chịu trách nhiệm chính Tầng Mạng cốt lõi (Core Network Layer):**
+    - Khai báo thư viện Retrofit 2, Converter Gson, OkHttp Logging Interceptor trong `app/build.gradle`.
+    - Khai báo quyền `INTERNET`, `ACCESS_NETWORK_STATE` và cấu hình an ninh mạng `network_security_config.xml` cho phép gọi `http://10.0.2.2:8000/api/` trong `AndroidManifest.xml`.
+    - Xây dựng `ApiClient.java` (Retrofit Singleton), `ApiService.java` (Interface định nghĩa endpoints), `ApiResponseHandler.java` và wrapper `Resource<T>`.
+  - Xây dựng Màn hình Đăng nhập (Auth), Top Bar, Bottom Navigation, và Màn hình Tạo bài viết (`CreatePostActivity` kèm gọi API upload ảnh multipart).
+  - Đảm bảo tính nhất quán của Design System toàn app và review code tầng UI/Network của nhóm FE.
 - **Minh Lương (Frontend Engineer - Feed & Social Interactions):**
   - Chịu trách nhiệm toàn bộ giao diện và logic của Bảng tin (`FeedFragment`).
   - Xây dựng `PostAdapter`, `PostViewHolder`, xử lý thao tác Like mượt mà (Optimistic UI) và Share bài viết.
   - Xây dựng Hộp thoại Bình luận (`CommentBottomSheetDialog`, `CommentAdapter`) chuẩn text-only.
+  - **Tích hợp Mạng phân hệ Feed:** Viết `PostRepositoryImpl.java` kết nối `ApiService` để lấy bài viết thật (`GET /api/posts`), tương tác Like (`POST /api/posts/{id}/like`), Share (`POST /api/posts/{id}/share`) và gửi bình luận (`POST /api/posts/{id}/comments`).
 - **Phúc Đức (Frontend Engineer - Profile & Friends System):**
-  - Xây dựng Màn hình Bạn bè (`FriendsFragment`), danh sách lời mời kết bạn và thanh Tìm kiếm bạn bè (`SearchFriendsActivity`).
+  - Xây dựng Màn hình Bạn bè (`FriendsFragment`), danh sách lời mời kết bạn và thanh Tìm kiếm bạn bè (`SearchFriendsActivity` có debounce 300ms).
   - Xây dựng Màn hình Trang cá nhân (`ProfileFragment`), hiển thị Tab bài viết và Tab ảnh/video dạng lưới 3 cột (`PhotoGridAdapter`).
+  - **Tích hợp Mạng phân hệ Bạn bè & Profile:** Viết `FriendRepositoryImpl.java` và `ProfileRepositoryImpl.java` kết nối `ApiService` để gọi API bạn bè (`/api/friends/*`) và thông tin người dùng (`/api/users/*`).
 - **Tạ Quang Huy (Frontend Engineer & Mobile QA / UI Tester):**
-  - **Phần Frontend:** Xây dựng Màn hình Thông báo (`NotificationsFragment`), các thành phần Empty/Loading/Error State tái sử dụng, tối ưu Glide caching.
+  - **Phần Frontend:** Xây dựng Màn hình Thông báo (`NotificationsFragment`), các thành phần Empty/Loading/Error State tái sử dụng, tối ưu Glide caching, và viết `NotificationRepositoryImpl.java` kết nối API thông báo (`GET /api/notifications`).
   - **Phần Testing:** Thiết kế kịch bản kiểm thử giao diện (UI Test Cases), viết Unit Test cho toàn bộ Presentation Layer (`ViewModels`) và thực hiện kiểm thử thủ công (Manual Testing) trên máy ảo trước mỗi bản release.
 
 ---
 
 ## 3. MA TRẬN CÂN BẰNG KHỐI LƯỢNG CÔNG VIỆC (WORKLOAD BALANCING MATRIX)
 
-> [!IMPORTANT]
-> **Giải quyết bài toán kiêm nhiệm role:**
-> - Hà Đăng Huy và Tạ Quang Huy kiêm nhiệm vai trò Testing (QA).
-> - Để tổng khối lượng công việc của cả 7 thành viên **hoàn toàn bằng nhau (100% Equal Workload = 14.3% mỗi người)**, khối lượng coding tính năng của hai bạn được giảm tải tương ứng để nhường chỗ cho công tác viết Test Script, lập Test Plan và kiểm thử nghiệm thu.
+>[!IMPORTANT]
+>**Giải quyết bài toán kiêm nhiệm role:**
+>- Hà Đăng Huy và Tạ Quang Huy kiêm nhiệm vai trò Testing (QA).
+>- Để tổng khối lượng công việc của cả 7 thành viên **hoàn toàn bằng nhau (100% Equal Workload = 14.3% mỗi người)**, khối lượng coding tính năng của hai bạn được giảm tải tương ứng để nhường chỗ cho công tác viết Test Script, lập Test Plan và kiểm thử nghiệm thu.
 
 ### Bảng phân bổ Story Points (SP) chuẩn hóa (Tổng dự án: 140 SP):
 
 | Thành viên | Feature Dev (Code tính năng) | Testing & QA (Kiểm thử) | Architecture / DevOps / Docs | TỔNG STORY POINTS | Tỷ trọng dự án |
-| :--- | :---: | :---: | :---: | :---: | :---: |
+|:--- |:---: |:---: |:---: |:---: |:---: |
 | **Ánh Dương** | 12 SP (Core FastAPI & Feed API) | 2 SP (Hỗ trợ Test DB/API) | 6 SP (Lead BE, SQLite Schema, Arch) | **20 SP** | **14.3%** |
 | **Minh Đức** | 14 SP (Profile, Notif & Upload API) | 2 SP (Hỗ trợ Test API) | 4 SP (FastAPI Setup, Static Storage) | **20 SP** | **14.3%** |
 | **Hà Đăng Huy** | 9 SP (Friend API & Search SQLite) | **9 SP** (Lead QA, API Unit Tests pytest) | 2 SP (Tài liệu Test Plan) | **20 SP** | **14.3%** |

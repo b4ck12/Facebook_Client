@@ -1,4 +1,4 @@
-# 📝 08. TIÊU CHUẨN MÃ NGUỒN & TÀI LIỆU HÓA (CODING CONVENTION & DOCUMENTATION)
+# 08. TIÊU CHUẨN MÃ NGUỒN & TÀI LIỆU HÓA (CODING CONVENTION & DOCUMENTATION)
 
 ---
 
@@ -49,8 +49,8 @@ public class CreatePostActivity extends AppCompatActivity {
 ```
 
 ### 2.2. Chuẩn ViewBinding trong Fragment (Bắt buộc hủy binding ở onDestroyView)
-> [!WARNING]
-> Trong Fragment, View có vòng đời ngắn hơn Fragment. Nếu không gán `binding = null` trong `onDestroyView()`, ứng dụng sẽ bị **Memory Leak** nghiêm trọng!
+>[!WARNING]
+>Trong Fragment, View có vòng đời ngắn hơn Fragment. Nếu không gán `binding = null` trong `onDestroyView()`, ứng dụng sẽ bị **Memory Leak** nghiêm trọng!
 
 ```java
 public class FeedFragment extends Fragment {

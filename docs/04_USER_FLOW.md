@@ -1,4 +1,4 @@
-# 🔄 04. LUỒNG NGƯỜI DÙNG & TƯƠNG TÁC (USER FLOW)
+# 04. LUỒNG NGƯỜI DÙNG & TƯƠNG TÁC (USER FLOW)
 
 ---
 
