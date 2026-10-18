@@ -1,10 +1,41 @@
+# ==========================================
+# Cấu hình IDE (Android Studio / IntelliJ)
+# ==========================================
+# File cấu hình module riêng của IntelliJ/Android Studio, tự sinh theo máy từng người
 *.iml
-.gradle
-/local.properties
+# Thư mục cấu hình workspace của Android Studio (giao diện, file mở, cache của từng dev)
 .idea/
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+
+# ==========================================
+# Hệ thống Build Gradle & File biên dịch
+# ==========================================
+# Thư mục lưu cache và tiến trình nền của Gradle daemon khi chạy build
+.gradle/
+# Toàn bộ thư mục build (cả root build/ và app/build/):
+# Chứa file nhị phân (.class, .dex, APK) và code sinh tự động; rất nặng và gây xung đột Git
+build/
+
+# ==========================================
+# Cấu hình môi trường máy cá nhân
+# ==========================================
+# Chứa đường dẫn SDK Android cục bộ (sdk.dir=...), mỗi máy cài ở thư mục khác nhau
 local.properties
+
+# ==========================================
+# Công cụ đo kiểm hiệu năng (Profiling)
+# ==========================================
+# Nơi Android Studio lưu file chụp màn hình, quay video hoặc đo RAM/CPU Profiler
+captures/
+
+# ==========================================
+# Biên dịch mã nguồn C/C++ (NDK / CMake)
+# ==========================================
+# Thư mục cache và file tạm khi biên dịch code C/C++ (nếu có sử dụng NDK)
+.externalNativeBuild/
+.cxx/
+
+# ==========================================
+# File rác hệ điều hành
+# ==========================================
+# File tự sinh của hệ điều hành macOS để lưu vị trí hiển thị icon trong thư mục
+.DS_Store
