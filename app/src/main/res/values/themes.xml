@@ -1,6 +1,35 @@
+
+<!-- Đây là một trong những file quan trọng nhất trong việc định hình giao diện tổng thể và phong cách (Look and Feel) của toàn bộ ứng dụng Android. -->
+<!-- File này khai báo theme chính mà ứng dụng (hoặc từng Activity) sẽ sử dụng. Nó quyết định các thiết lập mặc định cho toàn bộ app, ví dụ như:
+•
+Sử dụng bộ thư viện Material Design nào (ví dụ: Theme.Material3.DayNight).
+•
+Màu chủ đạo (Primary color), màu phụ (Secondary color), màu nền cửa sổ (windowBackground).
+•
+Ẩn hoặc hiện thanh tiêu đề (windowActionBar, windowNoTitle).
+•
+Tùy chỉnh màu sắc của thanh trạng thái (Status Bar) và thanh điều hướng (Navigation Bar). -->
+
+<!-- •
+Đồng bộ phong cách toàn ứng dụng: Giúp mọi màn hình, nút bấm, tiêu đề, và hộp thoại trong app đều tuân theo chung một thiết kế chuẩn mà không cần phải định nghĩa lại màu sắc hay kiểu dáng ở từng nút riêng lẻ.
+•
+Hỗ trợ chế độ Sáng / Tối (Light & Dark Mode): Bằng cách kết hợp giữa thư mục res/values/themes.xml (cho chế độ sáng) và res/values-night/themes.xml (cho chế độ tối), ứng dụng có thể tự động đổi toàn bộ màu sắc nền, chữ, và component khi người dùng bật Dark Mode trên điện thoại.
+•
+Tách biệt logic và giao diện: Giúp code trong các file Layout XML và Activity/Fragment cực kỳ gọn gàng, tập trung vào tính năng thay vì phải đi chỉnh từng màu sắc chi tiết của hệ thống. -->
+
+
 <resources>
     <style name="Theme.FacebookClient" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/facebook_blue</item>
+        <!-- Màu chủ đạo thương hiệu -->
+        <item name="colorPrimary">@color/fb_blue</item>
+        <item name="colorPrimaryVariant">@color/fb_blue_dark</item>
+        <item name="colorOnPrimary">@color/fb_text_on_blue</item>
+
+        <!-- Nền mặc định của ứng dụng (màu xám nhạt Facebook) -->
+        <item name="android:windowBackground">@color/fb_background</item>
+
+        <!-- Thanh trạng thái Status Bar màu trắng, icon chữ đen -->
+        <item name="android:statusBarColor">@color/fb_surface</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>
