@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- nơi lưu trữ tập trung các kích thước và khoảng cách được sử dụng trong giao diện ứng dụng Android. -->
+<!-- Bên trong file này, mình cố định định nghĩa các khoảng cách (margin, padding), kích thước chữ (text size), hoặc chiều rộng/chiều cao cố định bằng các đơn vị đo lường như dp (Density-independent Pixels) hoặc sp (Scale-independent Pixels):-->
+<!-- mục đích -->
+<!-- Đồng bộ giao diện (Consistency): Giúp toàn bộ ứng dụng tuân theo một tiêu chuẩn thiết kế chung (ví dụ: tất cả các màn hình đều dùng chung khoảng cách lề 16dp, cỡ chữ tiêu đề đều là 20sp).
+•
+Dễ bảo trì và thay đổi: Nếu sau này sếp yêu cầu đổi tất cả khoảng cách lề của ứng dụng từ 16dp thành 24dp, bạn chỉ cần sửa ở đúng 1 dòng duy nhất trong dimens.xml thay vì phải đi tìm sửa hàng trăm file layout.
+•
+Hỗ trợ đa màn hình (Responsive / Tablet Support): Bạn có thể tạo các thư mục values-sw600dp/dimens.xml riêng cho máy tính bảng (tablet) để tự động tăng kích thước lề hoặc cỡ chữ lớn hơn mà không cần viết lại logic code giao diện. -->
+
+<resources>
+    <!-- Lưới khoảng cách chuẩn 4dp/8dp (Spacing Grid) -->
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_md">12dp</dimen>
+    <dimen name="spacing_lg">16dp</dimen>
+    <dimen name="spacing_xl">24dp</dimen>
+
+    <!-- Bo góc (Corner Radius) -->
+    <dimen name="radius_sm">4dp</dimen>
+    <dimen name="radius_md">8dp</dimen>
+    <dimen name="radius_lg">16dp</dimen>
+    <dimen name="radius_circle">999dp</dimen>
+
+    <!-- Kích thước phông chữ (Typography Scale) -->
+    <dimen name="text_size_caption">12sp</dimen>
+    <dimen name="text_size_action">13sp</dimen>
+    <dimen name="text_size_body">14sp</dimen>
+    <dimen name="text_size_title">15sp</dimen>
+    <dimen name="text_size_headline">22sp</dimen>
+
+    <!-- Độ nổi khối (Elevation) -->
+    <dimen name="elevation_none">0dp</dimen>
+    <dimen name="elevation_card">1dp</dimen>
+    <dimen name="elevation_app_bar">4dp</dimen>
+
+    <!-- Kích thước thành phần cố định -->
+    <dimen name="avatar_size_small">32dp</dimen>
+    <dimen name="avatar_size_medium">40dp</dimen>
+    <dimen name="avatar_size_large">60dp</dimen>
+    <dimen name="avatar_size_profile">120dp</dimen>
+    <dimen name="cover_height_profile">200dp</dimen>
+    <dimen name="top_bar_height">56dp</dimen>
+</resources>
