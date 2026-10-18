@@ -30,7 +30,7 @@
 
 #### Ngày 01 (Thứ Hai): Khởi tạo, Cài đặt môi trường & Thống nhất DTO
 - [x] `[D1-TD]` **Tùng Dương:** Khởi tạo Git Repo, cấu hình SDK 37, package `com.facebook.client`, đẩy nhánh `develop`.
-- [ ] `[D1-AD]` **Ánh Dương:** Thống nhất Model DTO (`User`, `Post`, `Comment`, `Notification`), thiết kế DDL SQLite (`schema.sql`) và Interface Repositories.
+- [X] `[D1-AD]` **Ánh Dương:** Thống nhất Model DTO (`User`, `Post`, `Comment`, `Notification`), thiết kế DDL SQLite (`schema.sql`) và Interface Repositories.
 - [ ] `[D1-MD]` **Minh Đức:** Khởi tạo project FastAPI trong `backend/`, cấu hình `requirements.txt`, kết nối SQLite `facebook.db` và static storage `/static/uploads/`.
 - [ ] `[D1-HDH]` **Hà Đăng Huy:** Cài đặt Java 17, Python 3.10+, Git, lập Master Test Plan.
 - [ ] `[D1-ML]` **Minh Lương:** Cài đặt Java 17, Android Studio, tạo máy ảo Pixel 10a, clone repo.
