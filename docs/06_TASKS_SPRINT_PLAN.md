@@ -33,7 +33,7 @@
 
 - [ ] **Tùng Dương (FE Lead):** `[D1-TD]` Khởi tạo Git Repo, cấu hình `.gitignore`, thiết lập `namespace "com.facebook.client"`, `compileSdk 37`, `targetSdk 37`, `minSdk 24`, đẩy nhánh `develop` lên GitHub.
 - [ ] **Ánh Dương (BE Lead):** `[D1-AD]` Họp với Tùng Dương, thống nhất 100% cấu trúc các lớp DTO (`User`, `Post`, `Comment`, `FriendRequest`, `Notification`), định nghĩa DDL SQLite (`schema.sql`) và Interface `IPostRepository`, `IFriendRepository`.
-- [ ] **Minh Đức (BE):** `[D1-MD]` Khởi tạo project Python FastAPI trong thư mục `backend/`, thiết lập file `requirements.txt` (FastAPI, Uvicorn, SQLAlchemy, Pydantic), cấu hình kết nối SQLite `facebook.db` và thư mục `static/uploads/`.
+- [x] **Minh Đức (BE):** `[D1-MD]` Khởi tạo project Python FastAPI trong thư mục `backend/`, thiết lập file `requirements.txt` (FastAPI, Uvicorn, SQLAlchemy, Pydantic), cấu hình kết nối SQLite `facebook.db` và thư mục `static/uploads/`.
 - [ ] **Hà Đăng Huy (BE + QA):** `[D1-HDH]` Cài đặt Java 17, Python 3.10+, cấu hình Git cá nhân, tạo tài liệu Kế hoạch Kiểm thử tổng thể (Master Test Plan).
 - [ ] **Minh Lương (FE):** `[D1-ML]` Cài đặt Java 17, Android Studio, cấu hình máy ảo chuẩn `Pixel_10a_API_37`, clone repo dự án về máy.
 - [ ] **Phúc Đức (FE):** `[D1-PD]` Cài đặt Java 17, Android Studio, kiểm tra chạy thử máy ảo `Pixel_10a_API_37`, clone repo dự án về máy.
