@@ -37,7 +37,7 @@
 - [ ] **Hà Đăng Huy (BE + QA):** `[D1-HDH]` Cài đặt Java 17, Python 3.10+, cấu hình Git cá nhân, tạo tài liệu Kế hoạch Kiểm thử tổng thể (Master Test Plan).
 - [ ] **Minh Lương (FE):** `[D1-ML]` Cài đặt Java 17, Android Studio, cấu hình máy ảo chuẩn `Pixel_10a_API_37`, clone repo dự án về máy.
 - [ ] **Phúc Đức (FE):** `[D1-PD]` Cài đặt Java 17, Android Studio, kiểm tra chạy thử máy ảo `Pixel_10a_API_37`, clone repo dự án về máy.
-- [ ] **Tạ Quang Huy (FE + QA):** `[D1-TQH]` Cài đặt Java 17, Android Studio, máy ảo `Pixel_10a_API_37`, clone repo, chuẩn bị bộ Vector Icons chuẩn Facebook (like, comment, share, friends, bell).
+- [x] **Tạ Quang Huy (FE + QA):** `[D1-TQH]` Cài đặt Java 17, Android Studio, máy ảo `Pixel_10a_API_37`, clone repo, chuẩn bị bộ Vector Icons chuẩn Facebook (like, comment, share, friends, bell).
 
 ---
 
@@ -50,7 +50,7 @@
 - [ ] **Hà Đăng Huy (BE + QA):** `[D2-HDH]` Xây dựng script `seed_data.py` (chèn dữ liệu mẫu vào SQLite) và class `MockDataGenerator.java` sinh sẵn 10 bài viết mẫu, 5 bạn bè, 5 thông báo trong bộ nhớ để FE dùng ngay.
 - [ ] **Minh Lương (FE):** `[D2-ML]` Tạo class `MockPostRepository.java` thực thi `IPostRepository`, trả về danh sách bài viết giả lập từ `MockDataGenerator`.
 - [ ] **Phúc Đức (FE):** `[D2-PD]` Tạo class `MockFriendRepository.java` thực thi `IFriendRepository`, trả về danh sách bạn bè và lời mời kết bạn mẫu.
-- [ ] **Tạ Quang Huy (FE + QA):** `[D2-TQH]` Tạo class `MockNotificationRepository.java`, dựng sẵn bộ dữ liệu thông báo mẫu; import đầy đủ bộ icon Facebook vào `res/drawable`.
+- [x] **Tạ Quang Huy (FE + QA):** `[D2-TQH]` Tạo class `MockNotificationRepository.java`, dựng sẵn bộ dữ liệu thông báo mẫu; import đầy đủ 21 vector icons Facebook vào `res/drawable`.
 
 ---
 

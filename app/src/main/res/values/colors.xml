@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+<!-- lưu trữ tập trung tất cả các mã màu được sử dụng trong toàn bộ ứng dụng của mình. -->
+<!-- là nơi để thay đổi màu giao diện trực tiếp cho app mình -->
+<!-- chỉ cần sửa đúng 1 dòng trong file colors.xml. Toàn bộ ứng dụng sẽ tự động cập nhật theo mà không phải đi tìm sửa từng file giao diện. -->
+
 <resources>
+<!-- Màu thương hiệu chính (Brand Colors) -->
+    <color name="fb_blue">#1877F2</color>
+    <color name="fb_blue_dark">#166FE5</color>
+    <color name="fb_blue_light">#E7F3FF</color>
+    <color name="facebook_blue">#1877F2</color>
+
+<!-- Nền và Thẻ (Surfaces & Backgrounds) -->
+    <color name="fb_background">#F0F2F5</color>
+    <color name="fb_surface">#FFFFFF</color>
+    <color name="fb_surface_variant">#E4E6EB</color>
+
+
+<!-- Văn bản (Typography Colors) -->
+    <color name="fb_text_primary">#050505</color>
+    <color name="fb_text_secondary">#65676B</color>
+    <color name="fb_text_hint">#8A8D91</color>
+    <color name="fb_text_on_blue">#FFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="facebook_blue">#1877F2</color>
+
+<!-- Đường kẻ & Phân cách (Borders & Dividers) -->
+    <color name="fb_divider">#CED0D4</color>
+    <color name="fb_divider_light">#E4E6EB</color>
+
+<!-- Màu trạng thái & Tương tác (Semantic & Action Colors) -->
+    <color name="fb_like_blue">#1877F2</color>
+    <color name="fb_heart_red">#FA383E</color>
+    <color name="fb_action_gray">#65676B</color>
+    <color name="fb_online_green">#31A24C</color>
+    <color name="fb_error_red">#E41E3F</color>
+    <color name="fb_shimmer_gray">#D8DADF</color>
 </resources>
+
