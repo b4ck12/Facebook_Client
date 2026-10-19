@@ -35,7 +35,7 @@
 - [ ] `[D1-HDH]` **Hà Đăng Huy:** Cài đặt Java 17, Python 3.10+, Git, lập Master Test Plan.
 - [ ] `[D1-ML]` **Minh Lương:** Cài đặt Java 17, Android Studio, tạo máy ảo Pixel 10a, clone repo.
 - [x] `[D1-PD]` **Phúc Đức:** Cài đặt Java 17, Android Studio, tạo máy ảo Pixel 10a, clone repo.
-- [ ] `[D1-TQH]` **Tạ Quang Huy:** Cài đặt máy ảo Pixel 10a, chuẩn bị bộ Vector Icons Facebook chuẩn.
+- [x] `[D1-TQH]` **Tạ Quang Huy:** Cài đặt máy ảo Pixel 10a, chuẩn bị bộ Vector Icons Facebook chuẩn.
 
 #### Ngày 02 (Thứ Ba): Dựng Khung Base, Theme Màu & Dữ liệu Mock
 - [x] `[D2-TD]` **Tùng Dương:** Xây dựng BaseActivity, BaseFragment, Theme Facebook, `colors.xml`, `dimens.xml`.
@@ -44,7 +44,7 @@
 - [ ] `[D2-HDH]` **Hà Đăng Huy:** Xây dựng script `seed_data.py` (chèn dữ liệu mẫu SQLite) và `MockDataGenerator.java` cho FE.
 - [ ] `[D2-ML]` **Minh Lương:** Tạo `MockPostRepository.java` trả về danh sách bài viết giả lập.
 - [ ] `[D2-PD]` **Phúc Đức:** Tạo `MockFriendRepository.java` trả về danh sách bạn bè mẫu.
-- [ ] `[D2-TQH]` **Tạ Quang Huy:** Tạo `MockNotificationRepository.java`, import icon vào drawable.
+- [x] `[D2-TQH]` **Tạ Quang Huy:** Tạo `MockNotificationRepository.java`, import 21 vector icons vào drawable.
 
 #### Ngày 03 (Thứ Tư): Khung Điều hướng 4 Tab & Giao diện Thẻ Bài viết
 - [ ] `[D3-TD]` **Tùng Dương:** Dựng `MainActivity` với `BottomNavigationView` 4 tab (Feed, Friends, Notifications, Profile).
