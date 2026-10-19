@@ -1,20 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+<!--
+  Khung giao diện chính (Main Shell) của ứng dụng Facebook Client ([D3-TD]).
+  Bao gồm 3 phần chính:
+  1. Thanh điều hướng đỉnh (Top Bar): Chiều cao 56dp, hiển thị logo "facebook" và nút Tìm kiếm.
+  2. Vùng chứa màn hình con (FragmentContainerView): Tích hợp NavHostFragment để hiển thị 4 Tab.
+  3. Thanh điều hướng đáy (BottomNavigationView): Chứa 4 Tab (Feed, Friends, Notifications, Profile).
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/layout_main_root"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/fb_background"
+  tools:context=".MainActivity">
 
+  <!-- ========================================================================= -->
+  <!-- 1. THANH ĐIỀU HƯỚNG ĐỈNH (TOP APP BAR - Chiều cao 56dp theo Design System) -->
+  <!-- ========================================================================= -->
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/layout_top_bar"
+    android:layout_width="0dp"
+    android:layout_height="@dimen/top_bar_height"
+    android:background="@color/fb_surface"
+    android:elevation="@dimen/elevation_card"
+    android:paddingHorizontal="@dimen/spacing_lg"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <!-- Logo chữ "facebook" màu xanh đặc trưng (#1877F2), cỡ 22sp in đậm -->
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome to Facebook Client!"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+      android:id="@+id/tv_app_logo"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/fb_logo_title"
+      android:textColor="@color/fb_blue"
+      android:textSize="@dimen/text_size_headline"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Nút Tìm kiếm tròn góc phải (nền xám #E4E6EB, icon kính lúp) -->
+    <ImageButton
+      android:id="@+id/ib_top_search"
+      android:layout_width="36dp"
+      android:layout_height="36dp"
+      android:background="@drawable/bg_circle_button"
+      android:contentDescription="@string/cd_search_button"
+      android:padding="@dimen/spacing_sm"
+      android:scaleType="centerInside"
+      android:src="@drawable/ic_search"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <!-- Đường kẻ phân cách mỏng dưới Top Bar -->
+  <View
+    android:id="@+id/view_top_divider"
+    android:layout_width="0dp"
+    android:layout_height="1dp"
+    android:background="@color/fb_divider_light"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/layout_top_bar" />
+
+  <!-- ========================================================================= -->
+  <!-- 2. KHUNG CHỨA FRAGMENT ĐIỀU HƯỚNG (NAV HOST FRAGMENT CONTAINER)           -->
+  <!-- ========================================================================= -->
+  <androidx.fragment.app.FragmentContainerView
+    android:id="@+id/nav_host_fragment"
+    android:name="androidx.navigation.fragment.NavHostFragment"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    app:defaultNavHost="true"
+    app:layout_constraintBottom_toTopOf="@id/view_bottom_divider"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/view_top_divider"
+    app:navGraph="@navigation/main_navigation" />
+
+  <!-- Đường kẻ viền mỏng 1dp ngăn cách nội dung và BottomNavigationView -->
+  <View
+    android:id="@+id/view_bottom_divider"
+    android:layout_width="0dp"
+    android:layout_height="1dp"
+    android:background="@color/fb_divider_light"
+    app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+  <!-- ========================================================================= -->
+  <!-- 3. THANH ĐIỀU HƯỚNG ĐÁY 4 TAB (BOTTOM NAVIGATION VIEW - Chiều cao 56dp)    -->
+  <!-- ========================================================================= -->
+  <com.google.android.material.bottomnavigation.BottomNavigationView
+    android:id="@+id/bottom_navigation"
+    android:layout_width="0dp"
+    android:layout_height="@dimen/top_bar_height"
+    android:background="@color/fb_surface"
+    app:elevation="@dimen/elevation_app_bar"
+    app:itemIconTint="@color/selector_tab_color"
+    app:itemTextColor="@color/selector_tab_color"
+    app:labelVisibilityMode="labeled"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

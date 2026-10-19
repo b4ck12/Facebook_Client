@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Sơ đồ điều hướng trung tâm (Jetpack Navigation Graph) của ứng dụng.
+  - app:startDestination="@id/nav_feed": Mặc định khi mở ứng dụng sẽ hiển thị Tab Bảng tin (Feed).
+  - ID của mỗi <fragment> (@+id/nav_feed, @+id/nav_friends, @+id/nav_notifications, @+id/nav_profile)
+    khớp chính xác 100% với ID các <item> trong res/menu/bottom_nav_menu.xml để NavigationUI tự động đồng bộ.
+-->
+<navigation
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/main_navigation"
+  app:startDestination="@id/nav_feed">
+
+  <!-- Đích đến 1: Màn hình Bảng tin (Home Feed) -->
+  <fragment
+    android:id="@+id/nav_feed"
+    android:name="com.facebook.client.features.feed.FeedFragment"
+    android:label="@string/nav_tab_feed"
+    tools:layout="@layout/fragment_feed" />
+
+  <!-- Đích đến 2: Màn hình Bạn bè (Friends) -->
+  <fragment
+    android:id="@+id/nav_friends"
+    android:name="com.facebook.client.features.friends.FriendsFragment"
+    android:label="@string/nav_tab_friends"
+    tools:layout="@layout/fragment_friends" />
+
+  <!-- Đích đến 3: Màn hình Thông báo (Notifications) -->
+  <fragment
+    android:id="@+id/nav_notifications"
+    android:name="com.facebook.client.features.notifications.NotificationsFragment"
+    android:label="@string/nav_tab_notifications"
+    tools:layout="@layout/fragment_notifications" />
+
+  <!-- Đích đến 4: Màn hình Trang cá nhân (Profile) -->
+  <fragment
+    android:id="@+id/nav_profile"
+    android:name="com.facebook.client.features.profile.ProfileFragment"
+    android:label="@string/nav_tab_profile"
+    tools:layout="@layout/fragment_profile" />
+
+</navigation>
+

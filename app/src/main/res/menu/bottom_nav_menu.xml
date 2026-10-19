@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Danh sách 4 Tab chính của ứng dụng trên BottomNavigationView.
+  LƯU Ý QUAN TRỌNG:
+  Các android:id (@+id/nav_feed, @+id/nav_friends, @+id/nav_notifications, @+id/nav_profile)
+  được đặt trùng khớp 100% với id của các <fragment> trong res/navigation/main_navigation.xml
+  để NavigationUI tự động chuyển đổi màn hình khi người dùng bấm chọn Tab.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <!-- Tab 1: Bảng tin (Home Feed) -->
+  <item
+    android:id="@+id/nav_feed"
+    android:icon="@drawable/ic_feed"
+    android:title="@string/nav_tab_feed" />
+
+  <!-- Tab 2: Bạn bè & Lời mời kết bạn (Friends) -->
+  <item
+    android:id="@+id/nav_friends"
+    android:icon="@drawable/ic_friends"
+    android:title="@string/nav_tab_friends" />
+
+  <!-- Tab 3: Thông báo tương tác (Notifications) -->
+  <item
+    android:id="@+id/nav_notifications"
+    android:icon="@drawable/ic_notifications"
+    android:title="@string/nav_tab_notifications" />
+
+  <!-- Tab 4: Trang cá nhân (Profile) -->
+  <item
+    android:id="@+id/nav_profile"
+    android:icon="@drawable/ic_profile"
+    android:title="@string/nav_tab_profile" />
+
+</menu>
+
