@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Bộ chọn màu tự động (ColorStateList) cho BottomNavigationView:
+  - Khi Tab đang được chọn (state_checked="true"): Đổi icon và chữ sang màu xanh Facebook (@color/fb_blue)
+  - Khi Tab không được chọn (mặc định): Hiển thị màu xám trung tính (@color/fb_action_gray)
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:color="@color/fb_blue" android:state_checked="true" />
+  <item android:color="@color/fb_action_gray" />
+</selector>
+

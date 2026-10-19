@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">Facebook Client</string>
+  <!-- Tên ứng dụng và Logo thương hiệu trên thanh Top Bar -->
+  <string name="app_name">Facebook Client</string>
+  <string name="fb_logo_title">facebook</string>
+
+  <!-- Nhãn hiển thị cho 4 Tab trên thanh BottomNavigationView -->
+  <string name="nav_tab_feed">Bảng tin</string>
+  <string name="nav_tab_friends">Bạn bè</string>
+  <string name="nav_tab_notifications">Thông báo</string>
+  <string name="nav_tab_profile">Cá nhân</string>
+
+  <!-- Mô tả hỗ trợ tiếp cận (Accessibility Content Descriptions) -->
+  <string name="cd_search_button">Tìm kiếm bạn bè</string>
+
+  <!-- Chuỗi văn bản tạm (Placeholder) cho khung 4 Fragment -->
+  <string name="placeholder_feed_title">Màn hình Bảng tin (Home Feed)</string>
+  <string name="placeholder_friends_title">Màn hình Bạn bè (Friends)</string>
+  <string name="placeholder_notifications_title">Màn hình Thông báo (Notifications)</string>
+  <string name="placeholder_profile_title">Màn hình Trang cá nhân (Profile)</string>
 </resources>

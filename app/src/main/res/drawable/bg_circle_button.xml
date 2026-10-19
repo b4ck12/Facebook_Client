@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Hình nền tròn màu xám nhạt (@color/fb_surface_variant) dùng cho các nút icon trên thanh Top Bar
+  (ví dụ: nút Tìm kiếm bạn bè) theo chuẩn Design System.
+-->
+<shape
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:shape="oval">
+  <solid android:color="@color/fb_surface_variant" />
+</shape>
+
