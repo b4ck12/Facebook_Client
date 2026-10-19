@@ -44,3 +44,19 @@ captures/
 # Cấu hình file vscode của riêng từng máy 
 # ============
 .vscode/
+
+# ============
+# Backend Python & SQLite temporary files
+# ============
+backend/venv/
+backend/.env
+backend/__pycache__/
+backend/*/__pycache__/
+*.py[cod]
+*$py.class
+backend/.pytest_cache/
+*.db-journal
+*.db-wal
+*.db-shm
+backend/static/uploads/*
+!backend/static/uploads/.gitkeep

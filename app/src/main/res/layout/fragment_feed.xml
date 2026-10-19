@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Layout khung (Skeleton) cho Màn hình Bảng tin (Home Feed).
+  Thành viên phụ trách mở rộng chi tiết: Minh Lương (FE).
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/layout_feed_root"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/fb_background"
+  tools:context=".features.feed.FeedFragment">
+
+  <!-- Tiêu đề hiển thị tạm thời để kiểm tra chuyển Tab điều hướng -->
+  <TextView
+    android:id="@+id/tv_feed_placeholder"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/placeholder_feed_title"
+    android:textColor="@color/fb_text_primary"
+    android:textSize="@dimen/text_size_title"
+    android:textStyle="bold"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
