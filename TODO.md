@@ -33,7 +33,7 @@
 - [X] `[D1-AD]` **Ánh Dương:** Thống nhất Model DTO (`User`, `Post`, `Comment`, `Notification`), thiết kế DDL SQLite (`schema.sql`) và Interface Repositories.
 - [ ] `[D1-MD]` **Minh Đức:** Khởi tạo project FastAPI trong `backend/`, cấu hình `requirements.txt`, kết nối SQLite `facebook.db` và static storage `/static/uploads/`.
 - [ ] `[D1-HDH]` **Hà Đăng Huy:** Cài đặt Java 17, Python 3.10+, Git, lập Master Test Plan.
-- [ ] `[D1-ML]` **Minh Lương:** Cài đặt Java 17, Android Studio, tạo máy ảo Pixel 10a, clone repo.
+- [x] `[D1-ML]` **Minh Lương:** Cài đặt Java 17, Android Studio, tạo máy ảo Pixel 10a, clone repo.
 - [x] `[D1-PD]` **Phúc Đức:** Cài đặt Java 17, Android Studio, tạo máy ảo Pixel 10a, clone repo.
 - [x] `[D1-TQH]` **Tạ Quang Huy:** Cài đặt máy ảo Pixel 10a, chuẩn bị bộ Vector Icons Facebook chuẩn.
 
