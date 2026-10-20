@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from database import engine, Base
+import models
 
 # Đảm bảo thư mục upload tĩnh tồn tại
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
