@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Nền tròn màu đen bán trong suốt (#99000000) dùng cho nút [X] gỡ ảnh
+  nằm đè lên góc trên bên phải của khung xem trước ảnh (Media Preview).
+-->
+<shape
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:shape="oval">
+  <solid android:color="#99000000" />
+</shape>
+

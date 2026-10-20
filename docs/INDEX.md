@@ -25,13 +25,14 @@ Bộ tài liệu này được thiết kế và chuẩn hóa toàn diện theo q
 | **10** | [**10_TESTING_GUIDE.md**](./10_TESTING_GUIDE.md) | Hướng dẫn viết **Unit Test** Android (JUnit + Mockito) & Backend (Pytest) có code mẫu chi tiết | Mục 13 |
 | **11** | [**11_BUG_TRIAGE_PROCESS.md**](./11_BUG_TRIAGE_PROCESS.md) | Quy trình quản lý và xử lý lỗi (**Bug Triage**), Ma trận trách nhiệm ai fix lỗi gì (RACI), Hotfix flow | Mục 15 |
 | **12** | [**12_ENVIRONMENT_SETUP.md**](./12_ENVIRONMENT_SETUP.md) | Hướng dẫn cài đặt **JDK 17**, Python FastAPI, Clone GitHub, Setup Package, **Máy ảo chuẩn Pixel 10a (API 37.2)** | Mục 17 |
+| **13** | [**QA_MASTER_TEST_PLAN.md**](./QA_MASTER_TEST_PLAN.md) | **Kế hoạch Kiểm thử Tổng thể (Master Test Plan)** chuẩn hóa 100% kịch bản kiểm thử 5 phân hệ & SLA lỗi | QA Lead (Mục 13, 15) |
 
 ---
 
 ## HƯỚNG DẪN ĐỌC TÀI LIỆU THEO VAI TRÒ
 
-- **Dành cho Tech Lead & Quản lý:** Đọc ngay `01_OVERVIEW.md`, `05_TEAM_ROLES_WORKLOAD.md`, `06_TASKS_SPRINT_PLAN.md`, `11_BUG_TRIAGE_PROCESS.md`.
+- **Dành cho Tech Lead & Quản lý:** Đọc ngay `01_OVERVIEW.md`, `05_TEAM_ROLES_WORKLOAD.md`, `06_TASKS_SPRINT_PLAN.md`, `11_BUG_TRIAGE_PROCESS.md`, `QA_MASTER_TEST_PLAN.md`.
 - **Dành cho Frontend Developers (Tùng Dương, Minh Lương, Phúc Đức, Tạ Quang Huy):** Đọc kỹ `02_ARCHITECTURE.md`, `03_DESIGN_SYSTEM.md`, `04_USER_FLOW.md`, `07_GIT_WORKFLOW_NAMING.md`, `08_CODING_CONVENTION_DOCS.md`.
 - **Dành cho Backend Developers (Ánh Dương, Minh Đức, Hà Đăng Huy):** Đọc kỹ `02_ARCHITECTURE.md`, `06_TASKS_SPRINT_PLAN.md`, `09_BACKEND_SERVER.md`, `07_GIT_WORKFLOW_NAMING.md`.
-- **Dành cho Testers / QA (Hà Đăng Huy, Tạ Quang Huy):** Đọc kỹ `10_TESTING_GUIDE.md`, `11_BUG_TRIAGE_PROCESS.md`, `04_USER_FLOW.md`.
+- **Dành cho Testers / QA (Hà Đăng Huy, Tạ Quang Huy):** Đọc kỹ `QA_MASTER_TEST_PLAN.md`, `10_TESTING_GUIDE.md`, `11_BUG_TRIAGE_PROCESS.md`, `04_USER_FLOW.md`.
 - **Dành cho tất cả thành viên khi Onboarding:** Bắt buộc thực hiện theo các bước trong `12_ENVIRONMENT_SETUP.md`.

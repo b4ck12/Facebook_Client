@@ -32,15 +32,15 @@
 - [x] `[D1-TD]` **Tùng Dương:** Khởi tạo Git Repo, cấu hình SDK 37, package `com.facebook.client`, đẩy nhánh `develop`.
 - [X] `[D1-AD]` **Ánh Dương:** Thống nhất Model DTO (`User`, `Post`, `Comment`, `Notification`), thiết kế DDL SQLite (`schema.sql`) và Interface Repositories.
 - [x] `[D1-MD]` **Minh Đức:** Khởi tạo project FastAPI trong `backend/`, cấu hình `requirements.txt`, kết nối SQLite `facebook.db` và static storage `/static/uploads/`.
-- [ ] `[D1-HDH]` **Hà Đăng Huy:** Cài đặt Java 17, Python 3.10+, Git, lập Master Test Plan.
+- [x] `[D1-HDH]` **Hà Đăng Huy:** Cài đặt Java 17, Python 3.10+, Git, lập Master Test Plan.
 - [x] `[D1-ML]` **Minh Lương:** Cài đặt Java 17, Android Studio, tạo máy ảo Pixel 10a, clone repo.
 - [x] `[D1-PD]` **Phúc Đức:** Cài đặt Java 17, Android Studio, tạo máy ảo Pixel 10a, clone repo.
 - [x] `[D1-TQH]` **Tạ Quang Huy:** Cài đặt máy ảo Pixel 10a, chuẩn bị bộ Vector Icons Facebook chuẩn.
 
 #### Ngày 02 (Thứ Ba): Dựng Khung Base, Theme Màu & Dữ liệu Mock
 - [x] `[D2-TD]` **Tùng Dương:** Xây dựng BaseActivity, BaseFragment, Theme Facebook, `colors.xml`, `dimens.xml`.
-- [ ] `[D2-AD]` **Ánh Dương:** Viết SQLAlchemy models (`models.py`) và Pydantic schemas (`schemas.py`), tạo các bảng SQLite.
-- [ ] `[D2-MD]` **Minh Đức:** Viết endpoint `POST /api/upload` tiếp nhận ảnh multipart, lưu vào `static/uploads/` và trả URL ảnh.
+- [X] `[D2-AD]` **Ánh Dương:** Viết SQLAlchemy models (`models.py`) và Pydantic schemas (`schemas.py`), tạo các bảng SQLite.
+- [x] `[D2-MD]` **Minh Đức:** Viết endpoint `POST /api/upload` tiếp nhận ảnh multipart, lưu vào `static/uploads/` và trả URL ảnh.
 - [ ] `[D2-HDH]` **Hà Đăng Huy:** Xây dựng script `seed_data.py` (chèn dữ liệu mẫu SQLite) và `MockDataGenerator.java` cho FE.
 - [x] `[D2-ML]` **Minh Lương:** Tạo `MockPostRepository.java` trả về danh sách bài viết giả lập.
 - [ ] `[D2-PD]` **Phúc Đức:** Tạo `MockFriendRepository.java` trả về danh sách bạn bè mẫu.
@@ -56,7 +56,7 @@
 - [ ] `[D3-HDH]` **Hà Đăng Huy:** Viết router `friends.py` trên FastAPI: triển khai endpoint `GET /api/friends/requests`.
 
 #### Ngày 04 (Thứ Năm): Tương tác Like/Share, Form Đăng bài & Friends UI
-- [ ] `[D4-TD]` **Tùng Dương:** Dựng màn hình `activity_create_post.xml` (ô nhập text, nút đính kèm ảnh duy nhất).
+- [x] `[D4-TD]` **Tùng Dương:** Dựng màn hình `activity_create_post.xml` (ô nhập text, nút đính kèm ảnh duy nhất).
 - [ ] `[D4-ML]` **Minh Lương:** Viết `PostAdapter.java`, xử lý sự kiện click Like (Optimistic UI đổi màu xanh ngay).
 - [ ] `[D4-PD]` **Phúc Đức:** Viết `FriendRequestAdapter.java`, xử lý click Chấp nhận và Xóa lời mời kết bạn.
 - [ ] `[D4-TQH]` **Tạ Quang Huy:** Viết `NotificationAdapter.java`, xử lý trạng thái đã đọc / chưa đọc.
