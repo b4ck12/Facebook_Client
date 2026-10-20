@@ -47,7 +47,7 @@
 - [ ] **Tùng Dương (FE Lead):** `[D2-TD]` Xây dựng `BaseActivity`, `BaseFragment`, khai báo Bảng màu Facebook (`colors.xml`), Font chữ Roboto (`dimens.xml`) và Theme Material.
 - [ ] **Ánh Dương (BE Lead):** `[D2-AD]` Viết SQLAlchemy models (`models.py`) và Pydantic schemas (`schemas.py`), tạo các bảng trên SQLite: `users`, `posts`, `comments`, `friendships`, `post_likes`, `notifications`.
 - [x] **Minh Đức (BE):** `[D2-MD]` Viết endpoint `POST /api/upload` trên FastAPI tiếp nhận ảnh upload dạng multipart, lưu file vào `static/uploads/` và trả về URL ảnh tĩnh phục vụ Android client.
-- [ ] **Hà Đăng Huy (BE + QA):** `[D2-HDH]` Xây dựng script `seed_data.py` (chèn dữ liệu mẫu vào SQLite) và class `MockDataGenerator.java` sinh sẵn 10 bài viết mẫu, 5 bạn bè, 5 thông báo trong bộ nhớ để FE dùng ngay.
+- [x] **Hà Đăng Huy (BE + QA):** `[D2-HDH]` Xây dựng script `seed_data.py` (chèn dữ liệu mẫu vào SQLite) và class `MockDataGenerator.java` sinh sẵn 10 bài viết mẫu, 5 bạn bè, 5 thông báo trong bộ nhớ để FE dùng ngay.
 - [ ] **Minh Lương (FE):** `[D2-ML]` Tạo class `MockPostRepository.java` thực thi `IPostRepository`, trả về danh sách bài viết giả lập từ `MockDataGenerator`.
 - [ ] **Phúc Đức (FE):** `[D2-PD]` Tạo class `MockFriendRepository.java` thực thi `IFriendRepository`, trả về danh sách bạn bè và lời mời kết bạn mẫu.
 - [x] **Tạ Quang Huy (FE + QA):** `[D2-TQH]` Tạo class `MockNotificationRepository.java`, dựng sẵn bộ dữ liệu thông báo mẫu; import đầy đủ 21 vector icons Facebook vào `res/drawable`.
