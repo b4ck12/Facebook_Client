@@ -55,8 +55,9 @@ backend/*/__pycache__/
 *.py[cod]
 *$py.class
 backend/.pytest_cache/
+*.db
 *.db-journal
 *.db-wal
 *.db-shm
 backend/static/uploads/*
-!backend/static/uploads/.gitkeep
+!backend/static/uploads/.gitkeep
