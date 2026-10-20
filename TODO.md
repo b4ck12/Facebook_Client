@@ -39,8 +39,8 @@
 
 #### Ngày 02 (Thứ Ba): Dựng Khung Base, Theme Màu & Dữ liệu Mock
 - [x] `[D2-TD]` **Tùng Dương:** Xây dựng BaseActivity, BaseFragment, Theme Facebook, `colors.xml`, `dimens.xml`.
-- [ ] `[D2-AD]` **Ánh Dương:** Viết SQLAlchemy models (`models.py`) và Pydantic schemas (`schemas.py`), tạo các bảng SQLite.
-- [ ] `[D2-MD]` **Minh Đức:** Viết endpoint `POST /api/upload` tiếp nhận ảnh multipart, lưu vào `static/uploads/` và trả URL ảnh.
+- [X] `[D2-AD]` **Ánh Dương:** Viết SQLAlchemy models (`models.py`) và Pydantic schemas (`schemas.py`), tạo các bảng SQLite.
+- [x] `[D2-MD]` **Minh Đức:** Viết endpoint `POST /api/upload` tiếp nhận ảnh multipart, lưu vào `static/uploads/` và trả URL ảnh.
 - [x] `[D2-HDH]` **Hà Đăng Huy:** Xây dựng script `seed_data.py` (chèn dữ liệu mẫu SQLite) và `MockDataGenerator.java` cho FE.
 - [x] `[D2-ML]` **Minh Lương:** Tạo `MockPostRepository.java` trả về danh sách bài viết giả lập.
 - [ ] `[D2-PD]` **Phúc Đức:** Tạo `MockFriendRepository.java` trả về danh sách bạn bè mẫu.
@@ -48,7 +48,7 @@
 
 #### Ngày 03 (Thứ Tư): Khung Điều hướng 4 Tab & Giao diện Thẻ Bài viết
 - [x] `[D3-TD]` **Tùng Dương:** Dựng `MainActivity` với `BottomNavigationView` 4 tab (Feed, Friends, Notifications, Profile).
-- [ ] `[D3-ML]` **Minh Lương:** Thiết kế layout `item_post.xml` (Header avatar, text nội dung, media, action bar).
+- [x] `[D3-ML]` **Minh Lương:** Thiết kế layout `item_post.xml` (Header avatar, text nội dung, media, action bar).
 - [ ] `[D3-PD]` **Phúc Đức:** Thiết kế `fragment_friends.xml` và `item_friend_request.xml` (Confirm/Delete).
 - [ ] `[D3-TQH]` **Tạ Quang Huy:** Thiết kế `fragment_notifications.xml` và `item_notification.xml`.
 - [ ] `[D3-AD]` **Ánh Dương:** Viết router `posts.py` trên FastAPI: triển khai endpoint `GET /api/posts` truy vấn SQLite.
@@ -56,7 +56,7 @@
 - [ ] `[D3-HDH]` **Hà Đăng Huy:** Viết router `friends.py` trên FastAPI: triển khai endpoint `GET /api/friends/requests`.
 
 #### Ngày 04 (Thứ Năm): Tương tác Like/Share, Form Đăng bài & Friends UI
-- [ ] `[D4-TD]` **Tùng Dương:** Dựng màn hình `activity_create_post.xml` (ô nhập text, nút đính kèm ảnh duy nhất).
+- [x] `[D4-TD]` **Tùng Dương:** Dựng màn hình `activity_create_post.xml` (ô nhập text, nút đính kèm ảnh duy nhất).
 - [ ] `[D4-ML]` **Minh Lương:** Viết `PostAdapter.java`, xử lý sự kiện click Like (Optimistic UI đổi màu xanh ngay).
 - [ ] `[D4-PD]` **Phúc Đức:** Viết `FriendRequestAdapter.java`, xử lý click Chấp nhận và Xóa lời mời kết bạn.
 - [ ] `[D4-TQH]` **Tạ Quang Huy:** Viết `NotificationAdapter.java`, xử lý trạng thái đã đọc / chưa đọc.
