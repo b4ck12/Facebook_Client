@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Giao diện màn hình Tạo bài viết mới (CreatePostActivity - [D4-TD]).
+  Tuân thủ 100% đặc tả Design System (03_DESIGN_SYSTEM.md mục 5.4) và Mobile App.pdf:
+  1. Top Bar (56dp): Nút Back (ic_arrow_back), tiêu đề "Create post", nút "POST" ở góc phải
+     (mặc định ở trạng thái khóa enabled="false", alpha="0.4" khi chưa nhập nội dung/chọn ảnh).
+  2. Header tác giả: Avatar tròn (44dp), Tên người dùng, huy hiệu "Public" kèm icon quả địa cầu (ic_public).
+  3. Ô nhập nội dung (et_post_content): EditText không viền (background="@null"), cỡ chữ 17sp,
+     hint "What's on your mind?".
+  4. Khung xem trước ảnh (cv_media_preview): Hiển thị ảnh được chọn kèm nút [X] (ib_remove_image)
+     ở góc phải trên để xóa ảnh (mặc định ẩn visibility="gone").
+  5. Thanh công cụ đáy (layout_bottom_toolbar): Chỉ có DUY NHẤT 1 nút bấm "Photo/video"
+     kèm icon màu xanh lá (ic_photo_library) - Tuyệt đối không có Tag, Location, Feeling, Music.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/layout_create_post_root"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/fb_surface"
+  tools:context=".features.feed.CreatePostActivity">
+
+  <!-- ========================================================================= -->
+  <!-- 1. THANH ĐIỀU HƯỚNG ĐỈNH (TOP BAR: Back + "Create post" + Nút "POST")     -->
+  <!-- ========================================================================= -->
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/layout_top_bar"
+    android:layout_width="0dp"
+    android:layout_height="@dimen/top_bar_height"
+    android:background="@color/fb_surface"
+    android:paddingHorizontal="@dimen/spacing_md"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <!-- Nút mũi tên quay lại (Back Arrow) -->
+    <ImageButton
+      android:id="@+id/ib_back"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:background="?attr/selectableItemBackgroundBorderless"
+      android:contentDescription="@string/cd_back_button"
+      android:padding="@dimen/spacing_sm"
+      android:scaleType="centerInside"
+      android:src="@drawable/ic_arrow_back"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Tiêu đề màn hình: "Create post" -->
+    <TextView
+      android:id="@+id/tv_toolbar_title"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/spacing_sm"
+      android:layout_marginEnd="@dimen/spacing_sm"
+      android:text="@string/create_post_title"
+      android:textColor="@color/fb_text_primary"
+      android:textSize="18sp"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/btn_submit_post"
+      app:layout_constraintStart_toEndOf="@id/ib_back"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <!--
+      Nút "POST" ở góc phải trên cùng:
+      Mặc định bị khóa (enabled="false") và làm mờ (alpha="0.4") khi chưa có text hoặc ảnh.
+      Khi người dùng nhập chữ hoặc chọn ảnh (ở [D5-TD]), nút sẽ bật sáng (enabled="true", alpha="1.0").
+    -->
+    <com.google.android.material.button.MaterialButton
+      android:id="@+id/btn_submit_post"
+      android:layout_width="wrap_content"
+      android:layout_height="36dp"
+      android:alpha="0.4"
+      android:enabled="false"
+      android:insetTop="0dp"
+      android:insetBottom="0dp"
+      android:minWidth="68dp"
+      android:paddingHorizontal="@dimen/spacing_lg"
+      android:text="@string/create_post_btn_submit"
+      android:textAllCaps="true"
+      android:textColor="@color/fb_text_on_blue"
+      android:textSize="@dimen/text_size_action"
+      android:textStyle="bold"
+      app:backgroundTint="@color/fb_blue"
+      app:cornerRadius="6dp"
+      app:elevation="0dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <!-- Đường kẻ phân cách mỏng dưới Top Bar -->
+  <View
+    android:id="@+id/view_top_divider"
+    android:layout_width="0dp"
+    android:layout_height="1dp"
+    android:background="@color/fb_divider_light"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/layout_top_bar" />
+
+  <!-- ========================================================================= -->
+  <!-- 2. VÙNG NỘI DUNG CUỘN (HEADER TÁC GIẢ + Ô NHẬP TEXT + PREVIEW ẢNH)        -->
+  <!-- ========================================================================= -->
+  <androidx.core.widget.NestedScrollView
+    android:id="@+id/scroll_create_post_body"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:fillViewport="true"
+    app:layout_constraintBottom_toTopOf="@id/view_bottom_divider"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/view_top_divider">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="@dimen/spacing_lg">
+
+      <!-- 2.1. HEADER NGƯỜI DÙNG & HUY HIỆU PUBLIC -->
+      <LinearLayout
+        android:id="@+id/layout_author_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!-- Avatar người đăng bài (44dp x 44dp theo Design System) -->
+        <ImageView
+          android:id="@+id/iv_author_avatar"
+          android:layout_width="44dp"
+          android:layout_height="44dp"
+          android:contentDescription="@string/cd_author_avatar"
+          android:src="@drawable/bg_avatar_placeholder" />
+
+        <!-- Cột chứa Tên người dùng và Huy hiệu quyền riêng tư "Public" -->
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing_md"
+          android:layout_weight="1"
+          android:orientation="vertical">
+
+          <!-- Tên người đăng bài (15sp Bold) -->
+          <TextView
+            android:id="@+id/tv_author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_post_default_author"
+            android:textColor="@color/fb_text_primary"
+            android:textSize="@dimen/text_size_title"
+            android:textStyle="bold" />
+
+          <!-- Huy hiệu cố định "Public" kèm icon quả địa cầu (ic_public) -->
+          <LinearLayout
+            android:id="@+id/layout_privacy_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:background="@drawable/bg_public_badge"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/spacing_sm"
+            android:paddingVertical="3dp">
+
+            <ImageView
+              android:id="@+id/iv_privacy_icon"
+              android:layout_width="12dp"
+              android:layout_height="12dp"
+              android:contentDescription="@string/cd_privacy_icon"
+              android:src="@drawable/ic_public" />
+
+            <TextView
+              android:id="@+id/tv_privacy_label"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/spacing_xs"
+              android:text="@string/create_post_privacy_public"
+              android:textColor="@color/fb_text_secondary"
+              android:textSize="@dimen/text_size_caption"
+              android:textStyle="bold" />
+
+          </LinearLayout>
+        </LinearLayout>
+      </LinearLayout>
+
+      <!-- 2.2. Ô NHẬP VĂN BẢN KHÔNG VIỀN (BORDERLESS EDITTEXT - 17sp) -->
+      <EditText
+        android:id="@+id/et_post_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_lg"
+        android:background="@null"
+        android:gravity="top|start"
+        android:hint="@string/create_post_hint"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine|textCapSentences"
+        android:lineSpacingExtra="4dp"
+        android:minLines="5"
+        android:textColor="@color/fb_text_primary"
+        android:textColorHint="@color/fb_text_hint"
+        android:textSize="17sp" />
+
+      <!-- 2.3. KHUNG XEM TRƯỚC ẢNH ĐÍNH KÈM (MEDIA PREVIEW - Mặc định ẩn GONE) -->
+      <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_media_preview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/fb_surface_variant"
+        app:cardCornerRadius="@dimen/radius_md"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/fb_divider_light"
+        app:strokeWidth="1dp"
+        tools:visibility="visible">
+
+        <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+          <!-- Ảnh người dùng vừa chọn từ thư viện máy -->
+          <ImageView
+            android:id="@+id/iv_post_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/cd_post_image_preview"
+            android:maxHeight="360dp"
+            android:scaleType="centerCrop"
+            tools:layout_height="220dp" />
+
+          <!-- Nút [X] ở góc trên bên phải để xóa ảnh đã chọn -->
+          <ImageButton
+            android:id="@+id/ib_remove_image"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="top|end"
+            android:layout_margin="@dimen/spacing_sm"
+            android:background="@drawable/bg_remove_media_button"
+            android:contentDescription="@string/cd_remove_photo"
+            android:padding="6dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_close"
+            app:tint="@color/white" />
+
+        </FrameLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+  </androidx.core.widget.NestedScrollView>
+
+  <!-- Đường kẻ phân cách mỏng trên Thanh công cụ đáy -->
+  <View
+    android:id="@+id/view_bottom_divider"
+    android:layout_width="0dp"
+    android:layout_height="1dp"
+    android:background="@color/fb_divider_light"
+    app:layout_constraintBottom_toTopOf="@id/layout_add_photo_button"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+  <!-- ========================================================================= -->
+  <!-- 3. THANH CÔNG CỤ ĐÁY: NÚT ĐÍNH KÈM ẢNH DUY NHẤT CÓ ICON XANH LÁ          -->
+  <!-- ========================================================================= -->
+  <LinearLayout
+    android:id="@+id/layout_add_photo_button"
+    android:layout_width="0dp"
+    android:layout_height="52dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/spacing_lg"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
+
+    <!-- Icon thư viện ảnh màu xanh lá (@color/fb_online_green) -->
+    <ImageView
+      android:id="@+id/iv_add_photo_icon"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:contentDescription="@string/cd_photo_icon"
+      android:src="@drawable/ic_photo_library" />
+
+    <!-- Nhãn "Photo/video" -->
+    <TextView
+      android:id="@+id/tv_add_photo_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/spacing_md"
+      android:text="@string/create_post_add_photo"
+      android:textColor="@color/fb_text_primary"
+      android:textSize="@dimen/text_size_title"
+      android:textStyle="bold" />
+
+  </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

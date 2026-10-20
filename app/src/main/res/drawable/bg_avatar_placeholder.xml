@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Hình đại diện mặc định (Avatar Placeholder) dạng tròn nền xám nhạt kèm icon người dùng ở giữa.
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item>
+    <shape android:shape="oval">
+      <solid android:color="@color/fb_surface_variant" />
+      <size
+        android:width="44dp"
+        android:height="44dp" />
+    </shape>
+  </item>
+  <item
+    android:bottom="8dp"
+    android:drawable="@drawable/ic_profile"
+    android:left="8dp"
+    android:right="8dp"
+    android:top="8dp" />
+</layer-list>
+
