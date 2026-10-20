@@ -103,3 +103,9 @@ class NotificationResponse(BaseModel):
     createdAt: int
 
     model_config = ConfigDict(from_attributes=True)
+
+
+# 7. UPLOAD SCHEMAS
+class UploadResponse(BaseModel):
+    url: str
+    filename: str
