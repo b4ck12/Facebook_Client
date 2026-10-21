@@ -51,13 +51,13 @@
 - [x] `[D3-ML]` **Minh Lương:** Thiết kế layout `item_post.xml` (Header avatar, text nội dung, media, action bar).
 - [ ] `[D3-PD]` **Phúc Đức:** Thiết kế `fragment_friends.xml` và `item_friend_request.xml` (Confirm/Delete).
 - [x] `[D3-TQH]` **Tạ Quang Huy:** Thiết kế `fragment_notifications.xml` và `item_notification.xml`.
-- [ ] `[D3-AD]` **Ánh Dương:** Viết router `posts.py` trên FastAPI: triển khai endpoint `GET /api/posts` truy vấn SQLite.
+- [X] `[D3-AD]` **Ánh Dương:** Viết router `posts.py` trên FastAPI: triển khai endpoint `GET /api/posts` truy vấn SQLite.
 - [x] `[D3-MD]` **Minh Đức:** Viết router `users.py` trên FastAPI: triển khai endpoint `GET /api/users/{id}` lấy thông tin cá nhân.
 - [ ] `[D3-HDH]` **Hà Đăng Huy:** Viết router `friends.py` trên FastAPI: triển khai endpoint `GET /api/friends/requests`.
 
 #### Ngày 04 (Thứ Năm): Tương tác Like/Share, Form Đăng bài & Friends UI
 - [x] `[D4-TD]` **Tùng Dương:** Dựng màn hình `activity_create_post.xml` (ô nhập text, nút đính kèm ảnh duy nhất).
-- [ ] `[D4-ML]` **Minh Lương:** Viết `PostAdapter.java`, xử lý sự kiện click Like (Optimistic UI đổi màu xanh ngay).
+- [x] `[D4-ML]` **Minh Lương:** Viết `PostAdapter.java`, xử lý sự kiện click Like (Optimistic UI đổi màu xanh ngay).
 - [ ] `[D4-PD]` **Phúc Đức:** Viết `FriendRequestAdapter.java`, xử lý click Chấp nhận và Xóa lời mời kết bạn.
 - [ ] `[D4-TQH]` **Tạ Quang Huy:** Viết `NotificationAdapter.java`, xử lý trạng thái đã đọc / chưa đọc.
 - [ ] `[D4-AD]` **Ánh Dương:** Viết endpoint `POST /api/posts/{id}/like` trên FastAPI xử lý toggle like trong bảng `post_likes`.

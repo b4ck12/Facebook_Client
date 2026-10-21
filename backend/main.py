@@ -47,17 +47,17 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
 # Đăng ký các router
 try:
-    from routers import upload, users
+    from routers import upload, users, posts
 except ImportError:
-    from backend.routers import upload, users
+    from backend.routers import upload, users, posts
 
 app.include_router(upload.router, prefix="/api/upload", tags=["Media Upload"])
 app.include_router(users.router, prefix="/api/users", tags=["Profile & Photos"])
 
+app.include_router(posts.router, prefix="/api/posts", tags=["Feed & Posts"])
 # Các router tiếp theo (D3-D6)
 # from routers import auth, posts, comments, friends, notifications
 # app.include_router(auth.router, prefix="/api/auth", tags=["Authentication & Demo Users"])
-# app.include_router(posts.router, prefix="/api/posts", tags=["Feed & Posts"])
 # app.include_router(comments.router, prefix="/api/posts", tags=["Comments"])
 # app.include_router(friends.router, prefix="/api/friends", tags=["Friends & Search"])
 # app.include_router(notifications.router, prefix="/api/notifications", tags=["Notifications"])
