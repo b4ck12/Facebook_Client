@@ -41,4 +41,18 @@
   <string name="cd_search_notifications">Search notifications</string>
   <string name="cd_notification_badge">Notification badge</string>
   <string name="cd_notification_more">More options</string>
+
+  <!-- ========================================================================= -->
+  <!-- Chuỗi văn bản Chọn tài khoản Demo & Đăng nhập 1 chạm ([D6-TD])            -->
+  <!-- ========================================================================= -->
+  <string name="account_chooser_recent_logins">Recent logins</string>
+  <string name="account_chooser_subtitle">Click your picture or an account to log in.</string>
+  <string name="account_chooser_active_now">Active now</string>
+  <string name="account_chooser_login_other">Log Into Another Account</string>
+  <string name="account_chooser_footer_note">Demo mode • Facebook Mobile Client</string>
+  <string name="switch_account_title">Switch Demo Account</string>
+  <string name="logout_confirmation_title">Log out</string>
+  <string name="logout_confirmation_message">Are you sure you want to log out of this demo account?</string>
+  <string name="btn_logout">Log Out</string>
+  <string name="btn_cancel">Cancel</string>
 </resources>

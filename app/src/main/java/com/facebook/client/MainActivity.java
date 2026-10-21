@@ -1,11 +1,22 @@
 package com.facebook.client;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.widget.ImageButton;
+import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.facebook.client.core.base.BaseActivity;
+import com.facebook.client.core.utils.SessionManager;
+import com.facebook.client.data.mock.MockDataGenerator;
+import com.facebook.client.data.model.User;
 import com.facebook.client.databinding.ActivityMainBinding;
+import com.facebook.client.features.auth.AccountChooserActivity;
+
+import java.util.List;
 
 /**
  * Màn hình chính (Main Shell Activity) của ứng dụng Facebook Client ([D3-TD]).
@@ -15,17 +26,37 @@ import com.facebook.client.databinding.ActivityMainBinding;
  *   <li>Kế thừa {@link BaseActivity} để tự động khởi tạo ViewBinding ({@link ActivityMainBinding}).
  *   <li>Kết nối {@code BottomNavigationView} với {@code NavController} của Jetpack Navigation
  *       để điều hướng mượt mà giữa 4 Tab: Feed, Friends, Notifications, Profile.
- *   <li>Xử lý sự kiện trên thanh Top Bar (như nút Tìm kiếm bạn bè).
+ *   <li>Xử lý sự kiện trên thanh Top Bar (nút Tìm kiếm và nút Đổi tài khoản Demo).
  * </ul>
  */
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
   private NavController navController;
+  private SessionManager sessionManager;
 
   @Override
   protected ActivityMainBinding inflateBinding(LayoutInflater inflater) {
     // Khởi tạo ViewBinding từ layout res/layout/activity_main.xml
     return ActivityMainBinding.inflate(inflater);
+  }
+
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    sessionManager = SessionManager.getInstance(this);
+
+    // Kiểm tra phiên đăng nhập, nếu chưa chọn tài khoản thì điều hướng tới AccountChooserActivity
+    if (!sessionManager.isLoggedIn()) {
+      Intent intent = new Intent(this, AccountChooserActivity.class);
+      startActivity(intent);
+      finish();
+      super.onCreate(savedInstanceState);
+      return;
+    }
+
+    // Đồng bộ người dùng hiện tại vào MockDataGenerator
+    MockDataGenerator.getInstance().setCurrentUserId(sessionManager.getCurrentUserId());
+
+    super.onCreate(savedInstanceState);
   }
 
   @Override
@@ -59,12 +90,61 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
    * Thiết lập sự kiện click cho các nút chức năng trên thanh Top Bar.
    */
   private void setupTopBarActions() {
-    // Khi bấm nút kính lúp Tìm kiếm ở góc phải Top Bar -> Chuyển nhanh sang Tab Bạn bè (hoặc mở màn hình Search sau này)
+    // Khi bấm nút kính lúp Tìm kiếm ở Top Bar -> Chuyển nhanh sang Tab Bạn bè
     binding.ibTopSearch.setOnClickListener(
         v -> {
           if (navController != null) {
             binding.bottomNavigation.setSelectedItemId(R.id.nav_friends);
           }
         });
+
+    // Khi bấm nút Menu/Đổi tài khoản ở góc phải Top Bar -> Hiển thị hộp thoại chuyển đổi tài khoản
+    ImageButton ibSwitchAccount = binding.getRoot().findViewById(R.id.ib_top_switch_account);
+    if (ibSwitchAccount != null) {
+      ibSwitchAccount.setOnClickListener(v -> showSwitchAccountDialog());
+    }
+  }
+
+  /**
+   * Hộp thoại chuyển nhanh giữa các tài khoản Demo hoặc Đăng xuất.
+   */
+  private void showSwitchAccountDialog() {
+    List<User> accounts = MockDataGenerator.getInstance().getDemoAccounts();
+    String[] items = new String[accounts.size() + 1];
+    String currentId = MockDataGenerator.getInstance().getCurrentUserId();
+    int checkedItem = -1;
+
+    for (int i = 0; i < accounts.size(); i++) {
+      User u = accounts.get(i);
+      boolean isCurrent = u.getId().equals(currentId);
+      items[i] = u.getDisplayName() + (isCurrent ? " (Đang chọn)" : "");
+      if (isCurrent) {
+        checkedItem = i;
+      }
+    }
+    items[accounts.size()] = "Đăng xuất ra màn hình chính";
+
+    new MaterialAlertDialogBuilder(this)
+        .setTitle(R.string.switch_account_title)
+        .setSingleChoiceItems(items, checkedItem, (dialog, which) -> {
+          dialog.dismiss();
+          if (which < accounts.size()) {
+            User selectedUser = accounts.get(which);
+            sessionManager.saveLoginSession(selectedUser.getId());
+            MockDataGenerator.getInstance().setCurrentUserId(selectedUser.getId());
+            showToast("Đã chuyển sang tài khoản: " + selectedUser.getDisplayName());
+            recreate();
+          } else {
+            // Đăng xuất về AccountChooserActivity
+            sessionManager.clearSession();
+            Intent intent = new Intent(this, AccountChooserActivity.class);
+            intent.putExtra("EXTRA_FORCE_CHOOSER", true);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+          }
+        })
+        .setNegativeButton(R.string.btn_cancel, null)
+        .show();
   }
 }
