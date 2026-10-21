@@ -52,7 +52,7 @@
 - [ ] `[D3-PD]` **Phúc Đức:** Thiết kế `fragment_friends.xml` và `item_friend_request.xml` (Confirm/Delete).
 - [x] `[D3-TQH]` **Tạ Quang Huy:** Thiết kế `fragment_notifications.xml` và `item_notification.xml`.
 - [ ] `[D3-AD]` **Ánh Dương:** Viết router `posts.py` trên FastAPI: triển khai endpoint `GET /api/posts` truy vấn SQLite.
-- [ ] `[D3-MD]` **Minh Đức:** Viết router `users.py` trên FastAPI: triển khai endpoint `GET /api/users/{id}` lấy thông tin cá nhân.
+- [x] `[D3-MD]` **Minh Đức:** Viết router `users.py` trên FastAPI: triển khai endpoint `GET /api/users/{id}` lấy thông tin cá nhân.
 - [ ] `[D3-HDH]` **Hà Đăng Huy:** Viết router `friends.py` trên FastAPI: triển khai endpoint `GET /api/friends/requests`.
 
 #### Ngày 04 (Thứ Năm): Tương tác Like/Share, Form Đăng bài & Friends UI
