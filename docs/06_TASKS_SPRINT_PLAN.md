@@ -47,7 +47,7 @@
 - [ ] **Tùng Dương (FE Lead):** `[D2-TD]` Xây dựng `BaseActivity`, `BaseFragment`, khai báo Bảng màu Facebook (`colors.xml`), Font chữ Roboto (`dimens.xml`) và Theme Material.
 - [ ] **Ánh Dương (BE Lead):** `[D2-AD]` Viết SQLAlchemy models (`models.py`) và Pydantic schemas (`schemas.py`), tạo các bảng trên SQLite: `users`, `posts`, `comments`, `friendships`, `post_likes`, `notifications`.
 - [x] **Minh Đức (BE):** `[D2-MD]` Viết endpoint `POST /api/upload` trên FastAPI tiếp nhận ảnh upload dạng multipart, lưu file vào `static/uploads/` và trả về URL ảnh tĩnh phục vụ Android client.
-- [ ] **Hà Đăng Huy (BE + QA):** `[D2-HDH]` Xây dựng script `seed_data.py` (chèn dữ liệu mẫu vào SQLite) và class `MockDataGenerator.java` sinh sẵn 10 bài viết mẫu, 5 bạn bè, 5 thông báo trong bộ nhớ để FE dùng ngay.
+- [x] **Hà Đăng Huy (BE + QA):** `[D2-HDH]` Xây dựng script `seed_data.py` (chèn dữ liệu mẫu vào SQLite) và class `MockDataGenerator.java` sinh sẵn 10 bài viết mẫu, 5 bạn bè, 5 thông báo trong bộ nhớ để FE dùng ngay.
 - [ ] **Minh Lương (FE):** `[D2-ML]` Tạo class `MockPostRepository.java` thực thi `IPostRepository`, trả về danh sách bài viết giả lập từ `MockDataGenerator`.
 - [ ] **Phúc Đức (FE):** `[D2-PD]` Tạo class `MockFriendRepository.java` thực thi `IFriendRepository`, trả về danh sách bạn bè và lời mời kết bạn mẫu.
 - [x] **Tạ Quang Huy (FE + QA):** `[D2-TQH]` Tạo class `MockNotificationRepository.java`, dựng sẵn bộ dữ liệu thông báo mẫu; import đầy đủ 21 vector icons Facebook vào `res/drawable`.
@@ -60,7 +60,7 @@
 - [ ] **Tùng Dương (FE Lead):** `[D3-TD]` Dựng `MainActivity.xml`, gắn `BottomNavigationView` với 4 Tab: Feed, Friends, Notifications, Profile; tạo `NavigationComponent` chuyển tab mượt mà.
 - [ ] **Minh Lương (FE):** `[D3-ML]` Thiết kế layout `item_post.xml` (Header avatar tròn, tên, thời gian, text nội dung, khung ảnh đính kèm, stats lượt like/comment).
 - [ ] **Phúc Đức (FE):** `[D3-PD]` Thiết kế layout `fragment_friends.xml` và `item_friend_request.xml` (Avatar, tên người gửi, nút Confirm màu xanh, nút Delete màu xám).
-- [ ] **Tạ Quang Huy (FE + QA):** `[D3-TQH]` Thiết kế layout `fragment_notifications.xml` và `item_notification.xml` (Avatar người tương tác, nội dung thông báo, icon loại tương tác).
+- [x] **Tạ Quang Huy (FE + QA):** `[D3-TQH]` Thiết kế layout `fragment_notifications.xml` và `item_notification.xml` (Avatar người tương tác, nội dung thông báo, icon loại tương tác).
 - [ ] **Ánh Dương (BE Lead):** `[D3-AD]` Viết router `posts.py` trên FastAPI: Triển khai endpoint `GET /api/posts` truy vấn bảng `posts` trong SQLite kèm số like, số comment sắp xếp theo `created_at DESC`.
 - [ ] **Minh Đức (BE):** `[D3-MD]` Viết router `users.py` trên FastAPI: Triển khai endpoint `GET /api/users/{id}` lấy thông tin cá nhân từ SQLite.
 - [ ] **Hà Đăng Huy (BE + QA):** `[D3-HDH]` Viết router `friends.py` trên FastAPI: Triển khai endpoint `GET /api/friends/requests` lấy danh sách lời mời kết bạn từ SQLite.

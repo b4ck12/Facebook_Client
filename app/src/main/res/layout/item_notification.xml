@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Giao diện Một dòng Thông báo (Notification Item - [D3-TQH]).
+  Tuân thủ chuẩn Facebook Client Design System (03_DESIGN_SYSTEM.md):
+  1. Avatar tròn 48dp bên trái (iv_sender_avatar).
+  2. Huy hiệu badge mini đè góc dưới avatar (iv_notification_badge: Like, Comment, Friend).
+  3. Nội dung thông báo ở giữa (tv_notification_content: Tên người gửi + Hành động).
+  4. Thời gian tương đối (tv_notification_time: "5 phút trước", "2 giờ trước").
+  5. Chấm tròn xanh chỉ thị chưa đọc (view_unread_dot).
+  6. Nút tùy chọn ba chấm ngang (ib_more_options).
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/layout_notification_root"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@color/fb_surface"
+  android:foreground="?attr/selectableItemBackground"
+  android:paddingHorizontal="@dimen/spacing_lg"
+  android:paddingVertical="@dimen/spacing_md">
+
+  <!-- ========================================================================= -->
+  <!-- 1. KHUNG ẢNH ĐẠI DIỆN & HUY HIỆU BADGE LOẠI TƯƠNG TÁC                    -->
+  <!-- ========================================================================= -->
+
+  <!-- 
+    Ảnh đại diện người gửi thông báo (48dp x 48dp):
+    - layout_constraintVertical_bias="0.0": Cố định avatar luôn bám sát đỉnh trên cùng (Top) của dòng,
+      ngăn avatar bị kéo trôi xuống giữa khi phần nội dung văn bản bên cạnh dài nhiều dòng.
+  -->
+  <ImageView
+    android:id="@+id/iv_sender_avatar"
+    android:layout_width="@dimen/avatar_size_notification"
+    android:layout_height="@dimen/avatar_size_notification"
+    android:contentDescription="@string/cd_author_avatar"
+    android:scaleType="centerCrop"
+    android:src="@drawable/bg_avatar_placeholder"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.0" />
+
+  <!-- 
+    Huy hiệu loại tương tác (Like, Comment, Friend) đè góc dưới bên phải avatar (22dp x 22dp):
+    - marginEnd="-2dp", marginBottom="-2dp": Kỹ thuật lề âm (Negative Margin) giúp icon badge 
+      nằm đè 1 phần lên góc avatar một cách tự nhiên theo đúng giao diện Facebook chuẩn.
+  -->
+  <ImageView
+    android:id="@+id/iv_notification_badge"
+    android:layout_width="22dp"
+    android:layout_height="22dp"
+    android:layout_marginEnd="-2dp"
+    android:layout_marginBottom="-2dp"
+    android:contentDescription="@string/cd_notification_badge"
+    android:src="@drawable/ic_notif_like"
+    app:layout_constraintBottom_toBottomOf="@id/iv_sender_avatar"
+    app:layout_constraintEnd_toEndOf="@id/iv_sender_avatar"
+    tools:src="@drawable/ic_notif_like" />
+
+  <!-- ========================================================================= -->
+  <!-- 2. NỘI DUNG VĂN BẢN THÔNG BÁO VÀ THỜI GIAN                               -->
+  <!-- ========================================================================= -->
+
+  <!-- 
+    Nội dung thông báo (Tên người gửi in đậm + văn bản tương tác):
+    - layout_width="0dp" (MATCH_CONSTRAINT): Tự co giãn lấp đầy khoảng trống giữa avatar và cụm nút phải.
+    - maxLines="3" & ellipsize="end": Chống vỡ giao diện nếu comment hoặc nội dung bài viết quá dài (tự động cắt thêm dấu '...').
+    - lineSpacingExtra="2dp": Giãn cách dòng thoáng mắt theo chuẩn Typography Material Design.
+  -->
+  <TextView
+    android:id="@+id/tv_notification_content"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_md"
+    android:layout_marginEnd="@dimen/spacing_sm"
+    android:ellipsize="end"
+    android:lineSpacingExtra="2dp"
+    android:maxLines="3"
+    android:textColor="@color/fb_text_primary"
+    android:textSize="@dimen/text_size_body"
+    app:layout_constraintEnd_toStartOf="@id/layout_notification_actions"
+    app:layout_constraintStart_toEndOf="@id/iv_sender_avatar"
+    app:layout_constraintTop_toTopOf="@id/iv_sender_avatar"
+    tools:text="Nguyễn Văn An đã thích bài viết của bạn: Chuyến đi tuyệt vời quá bạn ơi!" />
+
+  <!-- 
+    Thời gian hiển thị tương đối ("5 phút trước", "Hôm qua"):
+    - textColor="@color/fb_text_secondary": Màu xám Facebook (#65676B) phân cấp thị giác rõ ràng với nội dung chính.
+  -->
+  <TextView
+    android:id="@+id/tv_notification_time"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:textColor="@color/fb_text_secondary"
+    android:textSize="@dimen/text_size_caption"
+    app:layout_constraintStart_toStartOf="@id/tv_notification_content"
+    app:layout_constraintTop_toBottomOf="@id/tv_notification_content"
+    tools:text="5 phút trước" />
+
+  <!-- ========================================================================= -->
+  <!-- 3. CỘT HÀNH ĐỘNG BÊN PHẢI (CHẤM CHƯA ĐỌC + NÚT TÙY CHỌN 3 CHẤM)          -->
+  <!-- ========================================================================= -->
+  <LinearLayout
+    android:id="@+id/layout_notification_actions"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <!-- 
+      Chấm tròn màu xanh báo hiệu thông báo chưa đọc (Unread Indicator):
+      - Khi is_read = false -> Adapter hiển thị view này (VISIBLE).
+      - Khi is_read = true  -> Adapter ẩn view này (GONE).
+    -->
+    <View
+      android:id="@+id/view_unread_dot"
+      android:layout_width="8dp"
+      android:layout_height="8dp"
+      android:layout_marginEnd="@dimen/spacing_xs"
+      android:background="@drawable/bg_unread_dot"
+      android:visibility="visible"
+      tools:visibility="visible" />
+
+    <!-- 
+      Nút tùy chọn 3 chấm ngang:
+      - background="?attr/selectableItemBackgroundBorderless": Hiệu ứng gợn sóng tròn không viền khi bấm.
+    -->
+    <ImageButton
+      android:id="@+id/ib_more_options"
+      android:layout_width="32dp"
+      android:layout_height="32dp"
+      android:background="?attr/selectableItemBackgroundBorderless"
+      android:contentDescription="@string/cd_notification_more"
+      android:padding="6dp"
+      android:scaleType="fitCenter"
+      android:src="@drawable/ic_more_horiz"
+      app:tint="@color/fb_action_gray" />
+
+  </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

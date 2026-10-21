@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Layout khung (Skeleton) cho Màn hình Thông báo (Notifications).
-  Thành viên phụ trách mở rộng chi tiết ([D3-TQH]): Tạ Quang Huy (FE + QA).
+  Giao diện Màn hình Thông báo (Notifications - [D3-TQH]).
+  Tuân thủ chuẩn Facebook Client Design System (03_DESIGN_SYSTEM.md):
+  1. Header đỉnh: Tiêu đề "Notifications" (22sp bold) + Icon Tìm kiếm tròn.
+  2. Đường kẻ phân cách 1dp màu xám nhạt (#E4E6EB).
+  3. Danh sách thông báo (RecyclerView: rv_notifications) hiển thị các item_notification.xml.
+  4. Trạng thái đang tải (ProgressBar: pb_loading) và Trạng thái trống (layout_empty_state).
 -->
 <androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,22 +14,159 @@
   android:id="@+id/layout_notifications_root"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@color/fb_background"
+  android:background="@color/fb_surface"
   tools:context=".features.notifications.NotificationsFragment">
 
-  <!-- Tiêu đề hiển thị tạm thời để kiểm tra chuyển Tab điều hướng -->
-  <TextView
-    android:id="@+id/tv_notifications_placeholder"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/placeholder_notifications_title"
-    android:textColor="@color/fb_text_primary"
-    android:textSize="@dimen/text_size_title"
-    android:textStyle="bold"
+  <!-- ========================================================================= -->
+  <!-- 1. THANH TIÊU ĐỀ ĐỈNH (TOP NOTIFICATIONS HEADER)                          -->
+  <!-- ========================================================================= -->
+  <!-- 
+    Header bar 56dp cố định trên đỉnh, không bị cuộn mất khi người dùng cuộn danh sách:
+  -->
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/layout_notifications_header"
+    android:layout_width="0dp"
+    android:layout_height="@dimen/top_bar_height"
+    android:background="@color/fb_surface"
+    android:paddingHorizontal="@dimen/spacing_lg"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <!-- Tiêu đề lớn "Notifications" (22sp Bold) -->
+    <TextView
+      android:id="@+id/tv_notifications_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/notifications_title"
+      android:textColor="@color/fb_text_primary"
+      android:textSize="@dimen/text_size_headline"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Nút Tìm kiếm tròn bên phải -->
+    <ImageView
+      android:id="@+id/iv_notifications_search"
+      android:layout_width="36dp"
+      android:layout_height="36dp"
+      android:background="?attr/selectableItemBackgroundBorderless"
+      android:clickable="true"
+      android:contentDescription="@string/cd_search_notifications"
+      android:focusable="true"
+      android:padding="6dp"
+      android:src="@drawable/ic_search"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:tint="@color/fb_text_primary" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <!-- Đường phân cách 1dp dưới Header -->
+  <View
+    android:id="@+id/view_header_divider"
+    android:layout_width="0dp"
+    android:layout_height="1dp"
+    android:background="@color/fb_divider_light"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/layout_notifications_header" />
+
+  <!-- ========================================================================= -->
+  <!-- 2. DANH SÁCH THÔNG BÁO (RECYCLERVIEW)                                     -->
+  <!-- ========================================================================= -->
+  <!--
+    RecyclerView hiển thị danh sách các item_notification:
+    - layout_height="0dp" (MATCH_CONSTRAINT): Giữ danh sách cuộn linh hoạt trong khoảng giữa Header và đáy.
+    - overScrollMode="never": Loại bỏ hiệu ứng bóng kéo giãn mặc định cũ của Android, chuẩn phong cách iOS/Facebook.
+    - tools:listitem: Hỗ trợ Android Studio hiển thị xem trước giao diện 1 dòng thông báo trong tab Design preview.
+  -->
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rv_notifications"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:clipToPadding="false"
+    android:overScrollMode="never"
+    android:scrollbars="vertical"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    app:layout_constraintTop_toBottomOf="@id/view_header_divider"
+    tools:listitem="@layout/item_notification" />
+
+  <!-- ========================================================================= -->
+  <!-- 3. TRẠNG THÁI ĐANG TẢI DỮ LIỆU (LOADING STATE)                            -->
+  <!-- ========================================================================= -->
+  <!--
+    ProgressBar hiển thị xoay tròn ở chính giữa màn hình:
+    - indeterminateTint="@color/fb_blue": Màu xanh Facebook (#1877F2).
+    - visibility="gone": Mặc định ẩn, chỉ hiển thị khi ViewModel đang tải dữ liệu (Status.LOADING).
+  -->
+  <ProgressBar
+    android:id="@+id/pb_loading"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:indeterminateTint="@color/fb_blue"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/view_header_divider"
+    tools:visibility="visible" />
+
+  <!-- ========================================================================= -->
+  <!-- 4. TRẠNG THÁI KHÔNG CÓ THÔNG BÁO NÀO (EMPTY STATE)                       -->
+  <!-- ========================================================================= -->
+  <!--
+    Giao diện khi danh sách thông báo trống:
+    - Hiển thị icon quả chuông xám lớn và lời nhắn thân thiện.
+    - Tự động bật sáng khi danh sách từ Repository trả về 0 phần tử.
+  -->
+  <LinearLayout
+    android:id="@+id/layout_empty_state"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/spacing_xl"
+    android:paddingVertical="@dimen/spacing_xl"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/view_header_divider">
+
+    <ImageView
+      android:id="@+id/iv_empty_icon"
+      android:layout_width="64dp"
+      android:layout_height="64dp"
+      android:contentDescription="@string/notifications_empty_title"
+      android:src="@drawable/ic_notifications"
+      app:tint="@color/fb_action_gray" />
+
+    <TextView
+      android:id="@+id/tv_empty_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/spacing_md"
+      android:text="@string/notifications_empty_title"
+      android:textColor="@color/fb_text_primary"
+      android:textSize="@dimen/text_size_title"
+      android:textStyle="bold" />
+
+    <TextView
+      android:id="@+id/tv_empty_message"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/spacing_xs"
+      android:gravity="center"
+      android:text="@string/notifications_empty_message"
+      android:textColor="@color/fb_text_secondary"
+      android:textSize="@dimen/text_size_body" />
+
+  </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

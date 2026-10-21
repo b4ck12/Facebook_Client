@@ -31,4 +31,14 @@
   <string name="create_post_privacy_public">Public</string>
   <string name="create_post_hint">What\'s on your mind?</string>
   <string name="create_post_add_photo">Photo/video</string>
+
+  <!-- ========================================================================= -->
+  <!-- Chuỗi văn bản phân hệ Thông báo ([D3-TQH] - Notifications UI)             -->
+  <!-- ========================================================================= -->
+  <string name="notifications_title">Notifications</string>
+  <string name="notifications_empty_title">No notifications yet</string>
+  <string name="notifications_empty_message">You have no new notifications. We\'ll notify you when someone likes or comments on your posts.</string>
+  <string name="cd_search_notifications">Search notifications</string>
+  <string name="cd_notification_badge">Notification badge</string>
+  <string name="cd_notification_more">More options</string>
 </resources>

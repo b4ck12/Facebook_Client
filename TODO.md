@@ -41,7 +41,7 @@
 - [x] `[D2-TD]` **Tùng Dương:** Xây dựng BaseActivity, BaseFragment, Theme Facebook, `colors.xml`, `dimens.xml`.
 - [X] `[D2-AD]` **Ánh Dương:** Viết SQLAlchemy models (`models.py`) và Pydantic schemas (`schemas.py`), tạo các bảng SQLite.
 - [x] `[D2-MD]` **Minh Đức:** Viết endpoint `POST /api/upload` tiếp nhận ảnh multipart, lưu vào `static/uploads/` và trả URL ảnh.
-- [ ] `[D2-HDH]` **Hà Đăng Huy:** Xây dựng script `seed_data.py` (chèn dữ liệu mẫu SQLite) và `MockDataGenerator.java` cho FE.
+- [x] `[D2-HDH]` **Hà Đăng Huy:** Xây dựng script `seed_data.py` (chèn dữ liệu mẫu SQLite) và `MockDataGenerator.java` cho FE.
 - [x] `[D2-ML]` **Minh Lương:** Tạo `MockPostRepository.java` trả về danh sách bài viết giả lập.
 - [ ] `[D2-PD]` **Phúc Đức:** Tạo `MockFriendRepository.java` trả về danh sách bạn bè mẫu.
 - [x] `[D2-TQH]` **Tạ Quang Huy:** Tạo `MockNotificationRepository.java`, import 21 vector icons vào drawable.
@@ -50,7 +50,7 @@
 - [x] `[D3-TD]` **Tùng Dương:** Dựng `MainActivity` với `BottomNavigationView` 4 tab (Feed, Friends, Notifications, Profile).
 - [x] `[D3-ML]` **Minh Lương:** Thiết kế layout `item_post.xml` (Header avatar, text nội dung, media, action bar).
 - [ ] `[D3-PD]` **Phúc Đức:** Thiết kế `fragment_friends.xml` và `item_friend_request.xml` (Confirm/Delete).
-- [ ] `[D3-TQH]` **Tạ Quang Huy:** Thiết kế `fragment_notifications.xml` và `item_notification.xml`.
+- [x] `[D3-TQH]` **Tạ Quang Huy:** Thiết kế `fragment_notifications.xml` và `item_notification.xml`.
 - [ ] `[D3-AD]` **Ánh Dương:** Viết router `posts.py` trên FastAPI: triển khai endpoint `GET /api/posts` truy vấn SQLite.
 - [ ] `[D3-MD]` **Minh Đức:** Viết router `users.py` trên FastAPI: triển khai endpoint `GET /api/users/{id}` lấy thông tin cá nhân.
 - [ ] `[D3-HDH]` **Hà Đăng Huy:** Viết router `friends.py` trên FastAPI: triển khai endpoint `GET /api/friends/requests`.
