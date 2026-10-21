@@ -50,7 +50,7 @@
 - [x] `[D3-TD]` **Tùng Dương:** Dựng `MainActivity` với `BottomNavigationView` 4 tab (Feed, Friends, Notifications, Profile).
 - [x] `[D3-ML]` **Minh Lương:** Thiết kế layout `item_post.xml` (Header avatar, text nội dung, media, action bar).
 - [ ] `[D3-PD]` **Phúc Đức:** Thiết kế `fragment_friends.xml` và `item_friend_request.xml` (Confirm/Delete).
-- [ ] `[D3-TQH]` **Tạ Quang Huy:** Thiết kế `fragment_notifications.xml` và `item_notification.xml`.
+- [x] `[D3-TQH]` **Tạ Quang Huy:** Thiết kế `fragment_notifications.xml` và `item_notification.xml`.
 - [ ] `[D3-AD]` **Ánh Dương:** Viết router `posts.py` trên FastAPI: triển khai endpoint `GET /api/posts` truy vấn SQLite.
 - [ ] `[D3-MD]` **Minh Đức:** Viết router `users.py` trên FastAPI: triển khai endpoint `GET /api/users/{id}` lấy thông tin cá nhân.
 - [ ] `[D3-HDH]` **Hà Đăng Huy:** Viết router `friends.py` trên FastAPI: triển khai endpoint `GET /api/friends/requests`.

@@ -40,6 +40,12 @@ Hỗ trợ đa màn hình (Responsive / Tablet Support): Bạn có thể tạo c
     <dimen name="avatar_size_medium">40dp</dimen>
     <dimen name="avatar_size_large">60dp</dimen>
     <dimen name="avatar_size_profile">120dp</dimen>
+
+    <!-- Kích thước riêng cho phân hệ Thông báo [D3-TQH]: 48dp chuẩn Facebook cho dòng thông báo có 2-3 dòng chữ -->
+    <dimen name="avatar_size_notification">48dp</dimen>
+    <!-- Kích thước huy hiệu icon tương tác (Like, Comment, Friend) đè góc dưới avatar -->
+    <dimen name="badge_size_notification">20dp</dimen>
+
     <dimen name="cover_height_profile">200dp</dimen>
     <dimen name="top_bar_height">56dp</dimen>
 </resources>
