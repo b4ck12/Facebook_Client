@@ -1,5 +1,16 @@
 from typing import Optional, List
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, AliasGenerator, AliasChoices
+from pydantic.alias_generators import to_snake
+
+# Cấu hình tự động chuyển đổi giữa snake_case (SQLAlchemy) và camelCase (JSON/Android)
+ORMBaseConfig = ConfigDict(
+    from_attributes=True,
+    populate_by_name=True,
+    alias_generator=AliasGenerator(
+        validation_alias=lambda field_name: AliasChoices(field_name, to_snake(field_name)),
+        serialization_alias=lambda field_name: field_name
+    )
+)
 
 #Xác thực dữ liệu đầu vào và định dạng đầu ra 
 
@@ -24,7 +35,7 @@ class UserResponse(UserBase):
     createdAt: int
 
     # Cho phép đọc dữ liệu trực tiếp từ SQLAlchemy ORM Model
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ORMBaseConfig
 
 #2.POST SCHEMAS
 

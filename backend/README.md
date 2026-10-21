@@ -10,9 +10,13 @@ backend/
 ├── database.py          # Kết nối CSDL SQLite facebook.db (kèm chế độ WAL và Foreign Keys)
 ├── models.py            # SQLAlchemy ORM Models (User, Post, Comment, Friendship, PostLike, Notification)
 ├── schemas.py           # Pydantic Schemas xác thực dữ liệu đầu vào và định dạng đầu ra
+├── crud/
+│   ├── __init__.py      # CRUD package init
+│   └── crud_user.py     # Nghiệp vụ truy vấn CSDL phân hệ User
 ├── routers/
 │   ├── __init__.py      # Routers package init
-│   └── upload.py        # Router xử lý POST /api/upload tiếp nhận ảnh multipart
+│   ├── upload.py        # Router xử lý POST /api/upload tiếp nhận ảnh multipart
+│   └── users.py         # Router xử lý GET /api/users/{id} lấy thông tin cá nhân
 ├── requirements.txt     # Danh sách thư viện Python cần thiết
 ├── static/
 │   └── uploads/         # Thư mục lưu trữ hình ảnh tải lên (/static/uploads/)
