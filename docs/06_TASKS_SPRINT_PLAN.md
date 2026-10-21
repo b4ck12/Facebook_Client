@@ -96,7 +96,7 @@
 ### NGÀY 06 (Thứ Bảy): Hoàn thiện 100% Giao diện Mock & Test Độc lập từng Module
 *Mục tiêu ngày 6: Tất cả các màn hình bấm được, chạy mượt mà trên máy ảo Pixel 10a; API Swagger UI test xanh 100%.*
 
-- [ ] **Tùng Dương (FE Lead):** `[D6-TD]` Rà soát toàn bộ luồng Auth giả lập, chuyển tab tại `MainActivity`, kết nối hiển thị bài viết mới tạo vào đầu danh sách Feed.
+- [x] **Tùng Dương (FE Lead):** `[D6-TD]` Xây dựng màn hình Đăng nhập 1 chạm (`AccountChooserActivity`), quản lý phiên `SessionManager` và hộp thoại Đổi tài khoản Demo.
 - [ ] **Minh Lương (FE):** `[D6-ML]` Kết nối `CommentViewModel` với `CommentBottomSheetDialog`, gửi comment text và hiển thị ngay vào RecyclerView; làm AlertDialog "Chia sẻ ngay" khi bấm nút Share.
 - [ ] **Phúc Đức (FE):** `[D6-PD]` Dựng màn hình `activity_search_friends.xml`, gắn ô tìm kiếm với danh sách bạn bè mẫu, xử lý debounce nhập liệu 300ms.
 - [ ] **Tạ Quang Huy (FE + QA):** `[D6-TQH]` Ghép `PhotoGridAdapter` vào Tab Photos của Profile; chạy thử nghiệm toàn bộ giao diện trên máy ảo `Pixel_10a_API_37`, chụp ảnh các màn hình báo cáo.

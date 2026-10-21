@@ -2,7 +2,7 @@
 <!--
   Khung giao diện chính (Main Shell) của ứng dụng Facebook Client ([D3-TD]).
   Bao gồm 3 phần chính:
-  1. Thanh điều hướng đỉnh (Top Bar): Chiều cao 56dp, hiển thị logo "facebook" và nút Tìm kiếm.
+  1. Thanh điều hướng đỉnh (Top Bar): Chiều cao 56dp, hiển thị logo "facebook", nút Tìm kiếm và nút Đổi tài khoản.
   2. Vùng chứa màn hình con (FragmentContainerView): Tích hợp NavHostFragment để hiển thị 4 Tab.
   3. Thanh điều hướng đáy (BottomNavigationView): Chứa 4 Tab (Feed, Friends, Notifications, Profile).
 -->
@@ -48,11 +48,26 @@
       android:id="@+id/ib_top_search"
       android:layout_width="36dp"
       android:layout_height="36dp"
+      android:layout_marginEnd="@dimen/spacing_sm"
       android:background="@drawable/bg_circle_button"
       android:contentDescription="@string/cd_search_button"
       android:padding="@dimen/spacing_sm"
       android:scaleType="centerInside"
       android:src="@drawable/ic_search"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/ib_top_switch_account"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Nút Đổi tài khoản demo / Menu đăng xuất (icon menu) -->
+    <ImageButton
+      android:id="@+id/ib_top_switch_account"
+      android:layout_width="36dp"
+      android:layout_height="36dp"
+      android:background="@drawable/bg_circle_button"
+      android:contentDescription="@string/switch_account_title"
+      android:padding="@dimen/spacing_sm"
+      android:scaleType="centerInside"
+      android:src="@drawable/ic_menu"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent" />

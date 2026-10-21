@@ -269,8 +269,32 @@ public class MockDataGenerator {
         return new ArrayList<>(users);
     }
 
+    private volatile String currentUserId = "user_current";
+
+    public String getCurrentUserId() {
+        return currentUserId;
+    }
+
+    public void setCurrentUserId(String userId) {
+        if (userId != null && getUserById(userId) != null) {
+            this.currentUserId = userId;
+        }
+    }
+
     public User getCurrentUser() {
-        return getUserById("user_current");
+        User u = getUserById(currentUserId);
+        return u != null ? u : getUserById("user_current");
+    }
+
+    public List<User> getDemoAccounts() {
+        List<User> demoList = new ArrayList<>();
+        User u1 = getUserById("user_101");
+        User u2 = getUserById("user_102");
+        User u3 = getUserById("user_103");
+        if (u1 != null) demoList.add(u1);
+        if (u2 != null) demoList.add(u2);
+        if (u3 != null) demoList.add(u3);
+        return demoList;
     }
 
     public User getUserById(String userId) {
@@ -479,6 +503,7 @@ public class MockDataGenerator {
      * Khôi phục toàn bộ dữ liệu về trạng thái ban đầu phục vụ Unit Test hoặc làm mới ứng dụng.
      */
     public synchronized void resetData() {
+        currentUserId = "user_current";
         initData();
     }
 }

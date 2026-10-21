@@ -74,7 +74,7 @@
 - [ ] `[D5-HDH]` **Hà Đăng Huy:** Viết endpoint `GET /api/friends/search?q=` tìm kiếm bạn bè theo tên trong SQLite.
 
 #### Ngày 06 (Thứ Bảy): Hoàn thiện 100% Giao diện Mock & Test Độc lập
-- [ ] `[D6-TD]` **Tùng Dương:** Rà soát chuyển tab, hiển thị bài viết mới tạo lên đầu Feed.
+- [x] `[D6-TD]` **Tùng Dương:** Xây dựng màn hình Đăng nhập 1 chạm (`AccountChooserActivity`), quản lý phiên `SessionManager` và hộp thoại Đổi tài khoản Demo.
 - [ ] `[D6-ML]` **Minh Lương:** Kết nối `CommentViewModel`, gửi comment hiển thị ngay; làm AlertDialog Chia sẻ ngay.
 - [ ] `[D6-PD]` **Phúc Đức:** Dựng màn hình `SearchFriendsActivity.xml`, ô tìm kiếm debounce 300ms.
 - [ ] `[D6-TQH]` **Tạ Quang Huy:** Ghép PhotoGrid vào Tab Photos của Profile; chạy test toàn bộ UI trên máy ảo Pixel 10a.
