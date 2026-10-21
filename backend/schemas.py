@@ -87,7 +87,13 @@ class FriendRequestCreate(BaseModel):
     receiverId: str
 
 class FriendActionRequest(BaseModel):
-    userId: str
+    requestId: Optional[str] = None
+    userId: Optional[str] = None
+
+class FriendActionResponse(BaseModel):
+    success: bool
+    message: str
+    status: str
 
 class FriendRequestResponse(BaseModel):
     id: str
