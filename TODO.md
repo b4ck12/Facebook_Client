@@ -43,7 +43,7 @@
 - [x] `[D2-MD]` **Minh Đức:** Viết endpoint `POST /api/upload` tiếp nhận ảnh multipart, lưu vào `static/uploads/` và trả URL ảnh.
 - [x] `[D2-HDH]` **Hà Đăng Huy:** Xây dựng script `seed_data.py` (chèn dữ liệu mẫu SQLite) và `MockDataGenerator.java` cho FE.
 - [x] `[D2-ML]` **Minh Lương:** Tạo `MockPostRepository.java` trả về danh sách bài viết giả lập.
-- [ ] `[D2-PD]` **Phúc Đức:** Tạo `MockFriendRepository.java` trả về danh sách bạn bè mẫu.
+- [x] `[D2-PD]` **Phúc Đức:** Hoàn thiện `MockFriendRepository.java`, đồng bộ dữ liệu bạn bè từ `MockDataGenerator`.
 - [x] `[D2-TQH]` **Tạ Quang Huy:** Tạo `MockNotificationRepository.java`, import 21 vector icons vào drawable.
 
 #### Ngày 03 (Thứ Tư): Khung Điều hướng 4 Tab & Giao diện Thẻ Bài viết
