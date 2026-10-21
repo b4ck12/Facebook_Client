@@ -62,7 +62,7 @@
 - [ ] **Phúc Đức (FE):** `[D3-PD]` Thiết kế layout `fragment_friends.xml` và `item_friend_request.xml` (Avatar, tên người gửi, nút Confirm màu xanh, nút Delete màu xám).
 - [x] **Tạ Quang Huy (FE + QA):** `[D3-TQH]` Thiết kế layout `fragment_notifications.xml` và `item_notification.xml` (Avatar người tương tác, nội dung thông báo, icon loại tương tác).
 - [ ] **Ánh Dương (BE Lead):** `[D3-AD]` Viết router `posts.py` trên FastAPI: Triển khai endpoint `GET /api/posts` truy vấn bảng `posts` trong SQLite kèm số like, số comment sắp xếp theo `created_at DESC`.
-- [ ] **Minh Đức (BE):** `[D3-MD]` Viết router `users.py` trên FastAPI: Triển khai endpoint `GET /api/users/{id}` lấy thông tin cá nhân từ SQLite.
+- [x] **Minh Đức (BE):** `[D3-MD]` Viết router `users.py` trên FastAPI: Triển khai endpoint `GET /api/users/{id}` lấy thông tin cá nhân từ SQLite.
 - [ ] **Hà Đăng Huy (BE + QA):** `[D3-HDH]` Viết router `friends.py` trên FastAPI: Triển khai endpoint `GET /api/friends/requests` lấy danh sách lời mời kết bạn từ SQLite.
 
 ---
