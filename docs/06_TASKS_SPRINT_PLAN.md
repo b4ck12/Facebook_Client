@@ -49,7 +49,7 @@
 - [x] **Minh Đức (BE):** `[D2-MD]` Viết endpoint `POST /api/upload` trên FastAPI tiếp nhận ảnh upload dạng multipart, lưu file vào `static/uploads/` và trả về URL ảnh tĩnh phục vụ Android client.
 - [x] **Hà Đăng Huy (BE + QA):** `[D2-HDH]` Xây dựng script `seed_data.py` (chèn dữ liệu mẫu vào SQLite) và class `MockDataGenerator.java` sinh sẵn 10 bài viết mẫu, 5 bạn bè, 5 thông báo trong bộ nhớ để FE dùng ngay.
 - [ ] **Minh Lương (FE):** `[D2-ML]` Tạo class `MockPostRepository.java` thực thi `IPostRepository`, trả về danh sách bài viết giả lập từ `MockDataGenerator`.
-- [ ] **Phúc Đức (FE):** `[D2-PD]` Tạo class `MockFriendRepository.java` thực thi `IFriendRepository`, trả về danh sách bạn bè và lời mời kết bạn mẫu.
+- [x] **Phúc Đức (FE):** `[D2-PD]` Hoàn thiện class `MockFriendRepository.java` thực thi `IFriendRepository`, đồng bộ dữ liệu bạn bè và lời mời kết bạn từ `MockDataGenerator`.
 - [x] **Tạ Quang Huy (FE + QA):** `[D2-TQH]` Tạo class `MockNotificationRepository.java`, dựng sẵn bộ dữ liệu thông báo mẫu; import đầy đủ 21 vector icons Facebook vào `res/drawable`.
 
 ---
@@ -63,7 +63,7 @@
 - [x] **Tạ Quang Huy (FE + QA):** `[D3-TQH]` Thiết kế layout `fragment_notifications.xml` và `item_notification.xml` (Avatar người tương tác, nội dung thông báo, icon loại tương tác).
 - [ ] **Ánh Dương (BE Lead):** `[D3-AD]` Viết router `posts.py` trên FastAPI: Triển khai endpoint `GET /api/posts` truy vấn bảng `posts` trong SQLite kèm số like, số comment sắp xếp theo `created_at DESC`.
 - [x] **Minh Đức (BE):** `[D3-MD]` Viết router `users.py` trên FastAPI: Triển khai endpoint `GET /api/users/{id}` lấy thông tin cá nhân từ SQLite.
-- [ ] **Hà Đăng Huy (BE + QA):** `[D3-HDH]` Viết router `friends.py` trên FastAPI: Triển khai endpoint `GET /api/friends/requests` lấy danh sách lời mời kết bạn từ SQLite.
+- [x] **Hà Đăng Huy (BE + QA):** `[D3-HDH]` Viết router `friends.py` trên FastAPI: Triển khai endpoint `GET /api/friends/requests` lấy danh sách lời mời kết bạn từ SQLite.
 
 ---
 
@@ -76,7 +76,7 @@
 - [ ] **Tạ Quang Huy (FE + QA):** `[D4-TQH]` Viết `NotificationAdapter.java`, xử lý hiển thị trạng thái đã đọc / chưa đọc (nền xám nhạt) và thời gian tương đối ("5 phút trước").
 - [ ] **Ánh Dương (BE Lead):** `[D4-AD]` Viết endpoint `POST /api/posts/{id}/like` trên FastAPI xử lý thêm/xóa bản ghi trong bảng `post_likes` (Toggle Like transaction trong SQLite).
 - [ ] **Minh Đức (BE):** `[D4-MD]` Viết endpoint `PUT /api/users/{id}` trên FastAPI cập nhật `avatar_url` và `cover_url` vào bảng `users`.
-- [ ] **Hà Đăng Huy (BE + QA):** `[D4-HDH]` Viết endpoint `POST /api/friends/accept` và `POST /api/friends/reject` cập nhật trạng thái trong bảng `friendships` của SQLite.
+- [x] **Hà Đăng Huy (BE + QA):** `[D4-HDH]` Viết endpoint `POST /api/friends/accept` và `POST /api/friends/reject` cập nhật trạng thái trong bảng `friendships` của SQLite.
 
 ---
 
@@ -89,14 +89,14 @@
 - [ ] **Tạ Quang Huy (FE + QA):** `[D5-TQH]` Thiết kế `item_photo_grid.xml` (ảnh tỷ lệ 1:1) và `PhotoGridAdapter.java` dạng lưới 3 cột (`GridLayoutManager`) phục vụ Tab ảnh của Profile.
 - [ ] **Ánh Dương (BE Lead):** `[D5-AD]` Viết endpoint `POST /api/posts` (tạo bài viết) và `POST /api/posts/{id}/share` (chia sẻ bài viết) trên FastAPI.
 - [ ] **Minh Đức (BE):** `[D5-MD]` Viết endpoint `GET /api/users/{id}/posts` và `GET /api/users/{id}/photos` (lọc các bài viết có `media_url IS NOT NULL`).
-- [ ] **Hà Đăng Huy (BE + QA):** `[D5-HDH]` Viết endpoint `GET /api/friends/search?q=` trên FastAPI tìm kiếm bạn bè theo tên trong SQLite (câu lệnh SQL `LIKE %query%`).
+- [x] **Hà Đăng Huy (BE + QA):** `[D5-HDH]` Viết endpoint `GET /api/friends/search?q=` trên FastAPI tìm kiếm bạn bè theo tên trong SQLite (câu lệnh SQL `LIKE %query%`).
 
 ---
 
 ### NGÀY 06 (Thứ Bảy): Hoàn thiện 100% Giao diện Mock & Test Độc lập từng Module
 *Mục tiêu ngày 6: Tất cả các màn hình bấm được, chạy mượt mà trên máy ảo Pixel 10a; API Swagger UI test xanh 100%.*
 
-- [ ] **Tùng Dương (FE Lead):** `[D6-TD]` Rà soát toàn bộ luồng Auth giả lập, chuyển tab tại `MainActivity`, kết nối hiển thị bài viết mới tạo vào đầu danh sách Feed.
+- [x] **Tùng Dương (FE Lead):** `[D6-TD]` Xây dựng màn hình Đăng nhập 1 chạm (`AccountChooserActivity`), quản lý phiên `SessionManager` và hộp thoại Đổi tài khoản Demo.
 - [ ] **Minh Lương (FE):** `[D6-ML]` Kết nối `CommentViewModel` với `CommentBottomSheetDialog`, gửi comment text và hiển thị ngay vào RecyclerView; làm AlertDialog "Chia sẻ ngay" khi bấm nút Share.
 - [ ] **Phúc Đức (FE):** `[D6-PD]` Dựng màn hình `activity_search_friends.xml`, gắn ô tìm kiếm với danh sách bạn bè mẫu, xử lý debounce nhập liệu 300ms.
 - [ ] **Tạ Quang Huy (FE + QA):** `[D6-TQH]` Ghép `PhotoGridAdapter` vào Tab Photos của Profile; chạy thử nghiệm toàn bộ giao diện trên máy ảo `Pixel_10a_API_37`, chụp ảnh các màn hình báo cáo.

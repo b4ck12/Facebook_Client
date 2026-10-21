@@ -9,16 +9,21 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.FacebookClient">
 
-    <!-- Màn hình chính (Main Shell 4 Tab) -->
+    <!-- Màn hình Đăng nhập 1 chạm / Chọn tài khoản Demo ([D6-TD]) -->
     <activity
-      android:name=".MainActivity"
-      android:exported="true"
-      android:windowSoftInputMode="adjustPan">
+      android:name=".features.auth.AccountChooserActivity"
+      android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+    <!-- Màn hình chính (Main Shell 4 Tab) -->
+    <activity
+      android:name=".MainActivity"
+      android:exported="false"
+      android:windowSoftInputMode="adjustPan" />
 
     <!--
       Màn hình Tạo bài viết mới ([D4-TD]):

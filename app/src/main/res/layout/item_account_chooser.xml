@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_marginHorizontal="@dimen/spacing_lg"
+  android:layout_marginVertical="@dimen/spacing_sm"
+  android:clickable="true"
+  android:focusable="true"
+  android:foreground="?attr/selectableItemBackground"
+  app:cardBackgroundColor="@color/fb_surface"
+  app:cardCornerRadius="@dimen/radius_md"
+  app:cardElevation="@dimen/elevation_card"
+  app:strokeColor="@color/fb_divider_light"
+  app:strokeWidth="1dp">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/spacing_md">
+
+    <!-- Avatar tròn của tài khoản demo (60dp) -->
+    <com.google.android.material.imageview.ShapeableImageView
+      android:id="@+id/iv_account_avatar"
+      android:layout_width="@dimen/avatar_size_large"
+      android:layout_height="@dimen/avatar_size_large"
+      android:scaleType="centerCrop"
+      android:src="@drawable/bg_avatar_placeholder"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+
+    <!-- Tên người dùng -->
+    <TextView
+      android:id="@+id/tv_account_name"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/spacing_md"
+      android:layout_marginEnd="@dimen/spacing_sm"
+      android:textColor="@color/fb_text_primary"
+      android:textSize="@dimen/text_size_title"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toTopOf="@id/tv_account_email"
+      app:layout_constraintEnd_toStartOf="@id/iv_online_status"
+      app:layout_constraintStart_toEndOf="@id/iv_account_avatar"
+      app:layout_constraintTop_toTopOf="@id/iv_account_avatar"
+      app:layout_constraintVertical_chainStyle="packed"
+      tools:text="Nguyễn Văn An" />
+
+    <!-- Email / Ghi chú vai trò -->
+    <TextView
+      android:id="@+id/tv_account_email"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/spacing_md"
+      android:layout_marginEnd="@dimen/spacing_sm"
+      android:layout_marginTop="2dp"
+      android:textColor="@color/fb_text_secondary"
+      android:textSize="@dimen/text_size_caption"
+      app:layout_constraintBottom_toBottomOf="@id/iv_account_avatar"
+      app:layout_constraintEnd_toStartOf="@id/iv_online_status"
+      app:layout_constraintStart_toEndOf="@id/iv_account_avatar"
+      app:layout_constraintTop_toBottomOf="@id/tv_account_name"
+      tools:text="an.nguyen@facebook.com • Active now" />
+
+    <!-- Chấm trạng thái xanh hoạt động -->
+    <ImageView
+      android:id="@+id/iv_online_status"
+      android:layout_width="10dp"
+      android:layout_height="10dp"
+      android:layout_marginEnd="@dimen/spacing_sm"
+      android:contentDescription="@null"
+      android:src="@drawable/bg_unread_dot"
+      app:tint="@color/fb_online_green"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
+

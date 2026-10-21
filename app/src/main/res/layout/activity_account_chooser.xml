@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/fb_background">
+
+  <!-- Logo Facebook lớn màu xanh thương hiệu (#1877F2) -->
+  <TextView
+    android:id="@+id/tv_logo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="56dp"
+    android:text="@string/fb_logo_title"
+    android:textColor="@color/fb_blue"
+    android:textSize="36sp"
+    android:textStyle="bold"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <!-- Tiêu đề: Recent logins -->
+  <TextView
+    android:id="@+id/tv_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="32dp"
+    android:text="@string/account_chooser_recent_logins"
+    android:textColor="@color/fb_text_primary"
+    android:textSize="@dimen/text_size_headline"
+    android:textStyle="bold"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/tv_logo" />
+
+  <!-- Phụ đề hướng dẫn -->
+  <TextView
+    android:id="@+id/tv_subtitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_xs"
+    android:text="@string/account_chooser_subtitle"
+    android:textColor="@color/fb_text_secondary"
+    android:textSize="@dimen/text_size_body"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+  <!-- Danh sách tài khoản Demo (RecyclerView) -->
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rv_accounts"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginTop="@dimen/spacing_lg"
+    android:layout_marginBottom="@dimen/spacing_md"
+    android:clipToPadding="false"
+    app:layout_constraintBottom_toTopOf="@id/btn_login_other"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
+    tools:listitem="@layout/item_account_chooser" />
+
+  <!-- Nút phụ: Đăng nhập bằng tài khoản khác -->
+  <com.google.android.material.button.MaterialButton
+    android:id="@+id/btn_login_other"
+    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+    android:layout_width="0dp"
+    android:layout_height="48dp"
+    android:layout_marginHorizontal="@dimen/spacing_lg"
+    android:layout_marginBottom="@dimen/spacing_md"
+    android:text="@string/account_chooser_login_other"
+    android:textColor="@color/fb_blue"
+    android:textSize="@dimen/text_size_body"
+    android:textStyle="bold"
+    app:cornerRadius="@dimen/radius_sm"
+    app:strokeColor="@color/fb_blue"
+    app:layout_constraintBottom_toTopOf="@id/tv_footer_note"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+  <!-- Ghi chú chân trang: Demo mode -->
+  <TextView
+    android:id="@+id/tv_footer_note"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_xl"
+    android:text="@string/account_chooser_footer_note"
+    android:textColor="@color/fb_text_hint"
+    android:textSize="@dimen/text_size_caption"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

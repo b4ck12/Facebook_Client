@@ -64,6 +64,26 @@ public class MockDataGeneratorTest {
     }
 
     @Test
+    public void testSwitchDemoAccount() {
+        assertEquals("user_current", generator.getCurrentUserId());
+
+        generator.setCurrentUserId("user_101");
+        assertEquals("user_101", generator.getCurrentUserId());
+        assertEquals("Nguyễn Văn An", generator.getCurrentUser().getDisplayName());
+
+        generator.setCurrentUserId("user_102");
+        assertEquals("user_102", generator.getCurrentUserId());
+        assertEquals("Trần Thị Mai", generator.getCurrentUser().getDisplayName());
+
+        List<User> demoAccounts = generator.getDemoAccounts();
+        assertEquals("Phải có 3 tài khoản demo chính", 3, demoAccounts.size());
+
+        // Test khôi phục trạng thái ban đầu
+        generator.resetData();
+        assertEquals("Sau khi reset phải về user_current", "user_current", generator.getCurrentUserId());
+    }
+
+    @Test
     public void testToggleLike() {
         Post post1 = generator.getPostById("post_1001");
         assertNotNull(post1);
