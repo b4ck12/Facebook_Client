@@ -30,6 +30,8 @@ class UserUpdate(BaseModel):
     avatarUrl: Optional[str] = None
     coverUrl: Optional[str] = None
 
+    model_config = ORMBaseConfig
+
 class UserResponse(UserBase):
     id: str
     createdAt: int

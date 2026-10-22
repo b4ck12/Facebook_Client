@@ -41,3 +41,22 @@ def get_user_profile(id: str, db: Session = Depends(get_db)):
             detail=f"Không tìm thấy người dùng có ID '{id}'"
         )
     return user
+
+
+@router.put("/{id}", response_model=schemas.UserResponse, status_code=status.HTTP_200_OK)
+def update_user_profile(
+    id: str,
+    update_data: schemas.UserUpdate,
+    db: Session = Depends(get_db)
+):
+    """
+    Cập nhật thông tin người dùng (avatar_url, cover_url, display_name) trong CSDL SQLite.
+    Trả về thông tin người dùng sau khi đã cập nhật thành công.
+    """
+    user = crud_user.update_user(db, id, update_data)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Không tìm thấy người dùng có ID '{id}'"
+        )
+    return user
