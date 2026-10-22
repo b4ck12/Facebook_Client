@@ -61,7 +61,7 @@
 - [ ] `[D4-PD]` **Phúc Đức:** Viết `FriendRequestAdapter.java`, xử lý click Chấp nhận và Xóa lời mời kết bạn.
 - [ ] `[D4-TQH]` **Tạ Quang Huy:** Viết `NotificationAdapter.java`, xử lý trạng thái đã đọc / chưa đọc.
 - [ ] `[D4-AD]` **Ánh Dương:** Viết endpoint `POST /api/posts/{id}/like` trên FastAPI xử lý toggle like trong bảng `post_likes`.
-- [ ] `[D4-MD]` **Minh Đức:** Viết endpoint `PUT /api/users/{id}` trên FastAPI cập nhật `avatar_url` và `cover_url`.
+- [x] `[D4-MD]` **Minh Đức:** Viết endpoint `PUT /api/users/{id}` trên FastAPI cập nhật `avatar_url` và `cover_url`.
 - [x] `[D4-HDH]` **Hà Đăng Huy:** Viết endpoint `POST /api/friends/accept` và `POST /api/friends/reject` cập nhật trạng thái trong SQLite.
 
 #### Ngày 05 (Thứ Sáu): Validation Đăng bài, Comment Text-only & Profile Layout

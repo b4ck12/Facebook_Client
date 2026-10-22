@@ -5,6 +5,11 @@ from typing import Optional, List
 from sqlalchemy.orm import Session
 import models
 
+try:
+    import schemas
+except ImportError:
+    from backend import schemas
+
 
 def get_user_by_id(db: Session, user_id: str) -> Optional[models.User]:
     """
@@ -25,3 +30,23 @@ def get_all_users(db: Session, skip: int = 0, limit: int = 100) -> List[models.U
     Lấy danh sách các tài khoản người dùng demo.
     """
     return db.query(models.User).offset(skip).limit(limit).all()
+
+
+def update_user(db: Session, user_id: str, update_data: schemas.UserUpdate) -> Optional[models.User]:
+    """
+    Cập nhật thông tin người dùng (avatar_url, cover_url, display_name) trong SQLite.
+    """
+    user = get_user_by_id(db, user_id)
+    if not user:
+        return None
+
+    if update_data.displayName is not None:
+        user.display_name = update_data.displayName
+    if update_data.avatarUrl is not None:
+        user.avatar_url = update_data.avatarUrl
+    if update_data.coverUrl is not None:
+        user.cover_url = update_data.coverUrl
+
+    db.commit()
+    db.refresh(user)
+    return user
