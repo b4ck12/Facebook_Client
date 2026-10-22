@@ -88,7 +88,7 @@
 - [ ] **Phúc Đức (FE):** `[D5-PD]` Dựng `fragment_profile.xml`: Hiển thị ảnh bìa 200dp, avatar tròn 120dp đè 50% lên ảnh bìa, tên hiển thị, và `TabLayout` (Tab All Posts, Tab Photos/Videos).
 - [ ] **Tạ Quang Huy (FE + QA):** `[D5-TQH]` Thiết kế `item_photo_grid.xml` (ảnh tỷ lệ 1:1) và `PhotoGridAdapter.java` dạng lưới 3 cột (`GridLayoutManager`) phục vụ Tab ảnh của Profile.
 - [ ] **Ánh Dương (BE Lead):** `[D5-AD]` Viết endpoint `POST /api/posts` (tạo bài viết) và `POST /api/posts/{id}/share` (chia sẻ bài viết) trên FastAPI.
-- [ ] **Minh Đức (BE):** `[D5-MD]` Viết endpoint `GET /api/users/{id}/posts` và `GET /api/users/{id}/photos` (lọc các bài viết có `media_url IS NOT NULL`).
+- [x] **Minh Đức (BE):** `[D5-MD]` Viết endpoint `GET /api/users/{id}/posts` và `GET /api/users/{id}/photos` (lọc các bài viết có `media_url IS NOT NULL`).
 - [x] **Hà Đăng Huy (BE + QA):** `[D5-HDH]` Viết endpoint `GET /api/friends/search?q=` trên FastAPI tìm kiếm bạn bè theo tên trong SQLite (câu lệnh SQL `LIKE %query%`).
 
 ---

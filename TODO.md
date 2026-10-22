@@ -70,7 +70,7 @@
 - [ ] `[D5-PD]` **Phúc Đức:** Dựng `fragment_profile.xml` (Cover 200dp, Avatar tròn 120dp, Tên, TabLayout).
 - [ ] `[D5-TQH]` **Tạ Quang Huy:** Thiết kế `item_photo_grid.xml` và `PhotoGridAdapter.java` lưới 3 cột cho Profile.
 - [ ] `[D5-AD]` **Ánh Dương:** Viết endpoint `POST /api/posts` (tạo bài viết) và `POST /api/posts/{id}/share` (chia sẻ bài viết).
-- [ ] `[D5-MD]` **Minh Đức:** Viết endpoint `GET /api/users/{id}/posts` và `GET /api/users/{id}/photos` lọc bài có ảnh.
+- [x] `[D5-MD]` **Minh Đức:** Viết endpoint `GET /api/users/{id}/posts` và `GET /api/users/{id}/photos` lọc bài có ảnh.
 - [x] `[D5-HDH]` **Hà Đăng Huy:** Viết endpoint `GET /api/friends/search?q=` tìm kiếm bạn bè theo tên trong SQLite.
 
 #### Ngày 06 (Thứ Bảy): Hoàn thiện 100% Giao diện Mock & Test Độc lập
