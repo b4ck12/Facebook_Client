@@ -2,7 +2,7 @@
 Router xử lý các API liên quan đến Bảng tin và Bài viết (Feed & Posts).
 """
 from typing import List, Optional
-from fastapi import APIRouter, Depends, Query, status
+from fastapi import APIRouter, Depends, Query, status, HTTPException, Body
 from sqlalchemy.orm import Session
 
 try:
@@ -33,3 +33,28 @@ def get_feed_posts(
         skip=skip,
         limit=limit
     )
+
+@router.post(
+    "/{id}/like",
+    response_model=schemas.LikeToggleResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Bật/tắt trạng thái thích bài viết "
+)
+
+def toggle_like(
+    id: str,
+    user_id: Optional[str] = Query(None, description="Mã ID người dùng thích bài viết (snake_case)"),
+    userId: Optional[str] = Query(None, description="Mã ID người dùng thích bài viết (camelCase)"),
+    db: Session = Depends(get_db)
+):
+    """
+    Toggle Like: Thêm hoặc xóa lượt thích của người dùng cho bài viết.
+    Trả về isLiked và likesCount sau khi xử lý.
+    """
+    target_user_id = user_id or userId
+    if not target_user_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Thiếu mã người dùng(user_id). Vui lòng truyền qua query param ?user_id=..."
+        )
+    return crud_post.toggle_like(db=db, post_id=id, user_id=target_user_id)
