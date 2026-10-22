@@ -73,7 +73,7 @@
 - [ ] **Tùng Dương (FE Lead):** `[D4-TD]` Dựng giao diện `activity_create_post.xml` (Top bar có nút ĐĂNG, Header người dùng Public, ô nhập text không viền, nút đính kèm ảnh duy nhất có icon xanh).
 - [ ] **Minh Lương (FE):** `[D4-ML]` Viết `PostAdapter.java` kết nối RecyclerView cho Feed; gắn sự kiện click nút Thích (Optimistic UI: đổi icon xanh và tăng số like ngay lập tức mà không chờ mạng).
 - [ ] **Phúc Đức (FE):** `[D4-PD]` Viết `FriendRequestAdapter.java`, xử lý sự kiện bấm nút "Chấp nhận" (Confirm) và "Xóa" (Delete) trên danh sách lời mời kết bạn.
-- [ ] **Tạ Quang Huy (FE + QA):** `[D4-TQH]` Viết `NotificationAdapter.java`, xử lý hiển thị trạng thái đã đọc / chưa đọc (nền xám nhạt) và thời gian tương đối ("5 phút trước").
+- [x] **Tạ Quang Huy (FE + QA):** `[D4-TQH]` Viết `NotificationAdapter.java`, xử lý hiển thị trạng thái đã đọc / chưa đọc (nền xám nhạt) và thời gian tương đối ("5 phút trước").
 - [ ] **Ánh Dương (BE Lead):** `[D4-AD]` Viết endpoint `POST /api/posts/{id}/like` trên FastAPI xử lý thêm/xóa bản ghi trong bảng `post_likes` (Toggle Like transaction trong SQLite).
 - [x] **Minh Đức (BE):** `[D4-MD]` Viết endpoint `PUT /api/users/{id}` trên FastAPI cập nhật `avatar_url` và `cover_url` vào bảng `users`.
 - [x] **Hà Đăng Huy (BE + QA):** `[D4-HDH]` Viết endpoint `POST /api/friends/accept` và `POST /api/friends/reject` cập nhật trạng thái trong bảng `friendships` của SQLite.
