@@ -1,6 +1,9 @@
 from typing import Optional, List
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import select, func, desc, literal
+import uuid
+import time
+from fastapi import HTTPException, status
 
 try:
     import models
@@ -96,3 +99,70 @@ def get_feed_posts(
         )
 
     return feed_items
+
+def toggle_like(db: Session, post_id: str, user_id: str) -> schemas.LikeToggleResponse:
+    """
+    Xử lý bật/tắt trạng thái Thích của bài viết trong SQLite:
+    - Nếu đã like -> Xóa khỏi bảng post_likes
+    - Nếu chưa like -> Thêm vào bảng post_likes + gửi thông báo cho tác giả
+    """
+
+    #1. Kiểm tra bài viết tồn tại
+    post = db.query(models.Post).filter(models.Post.id == post_id).first()
+    if not post:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Không tìm thấy bài viết ID'{post_id}'"
+        )
+
+    #2. Kiểm tra người dùng tồn tại
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Không tìm thấy người dùng ID'{user_id}'"
+        )
+
+    #3. Kiểm tra xem người dùng đã like bài này chưa
+    existing_like = db.query(models.PostLike).filter(
+        models.PostLike.post_id == post_id,
+        models.PostLike.user_id == user_id
+    ).first()
+
+    if existing_like:
+        db.delete(existing_like)
+        db.commit()
+        is_liked = False
+    else:
+        new_like = models.PostLike(
+            post_id = post_id,
+            user_id = user_id,
+            created_at = int(time.time() * 1000)
+        )
+        db.add(new_like)
+
+        #Tạo thông báo cho tác giả bài viết (nếu không phải tự like)
+        if post.author_id != user_id:
+            sender_name = user.display_name if user.display_name else "Một người bạn"
+            notif = models.Notification(
+                id=f"notif_{uuid.uuid4().hex[:8]}",
+                recipient_id=post.author_id,
+                sender_id=user_id,
+                type="LIKE",
+                post_id=post_id,
+                message=f"{sender_name} đã thích bài viết của bạn.",
+                is_read=False,
+                created_at=int(time.time() * 1000)
+            )
+            db.add(notif)
+        is_liked = True
+
+    db.commit()
+    
+    #4. Đếm tổng số Like hiện tại
+    likes_count = db.query(models.PostLike).filter(models.PostLike.post_id == post_id).count()
+
+    return schemas.LikeToggleResponse(
+        isLiked=is_liked,
+        likesCount=likes_count
+    )
