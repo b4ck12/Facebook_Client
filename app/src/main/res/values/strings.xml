@@ -61,4 +61,7 @@
   <string name="Friend_header">Friends</string>
   <string name="btn_your_friends">your friends</string>
   <string name="FriendRequest_title">Friends request</string>
+
+  <!-- Chuỗi văn bản cho Lưới Ảnh Profile ([D5-TQH]) -->
+  <string name="cd_grid_photo">Photo thumbnail</string>
 </resources>
