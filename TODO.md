@@ -65,7 +65,7 @@
 - [x] `[D4-HDH]` **Hà Đăng Huy:** Viết endpoint `POST /api/friends/accept` và `POST /api/friends/reject` cập nhật trạng thái trong SQLite.
 
 #### Ngày 05 (Thứ Sáu): Validation Đăng bài, Comment Text-only & Profile Layout
-- [ ] `[D5-TD]` **Tùng Dương:** Xử lý chọn 1 ảnh từ thư viện, validate **khóa nút ĐĂNG nếu cả text và ảnh đều rỗng**.
+- [x] `[D5-TD]` **Tùng Dương:** Xử lý chọn 1 ảnh từ thư viện bằng ActivityResultContracts, validate **khóa nút ĐĂNG nếu cả text và ảnh đều rỗng**.
 - [ ] `[D5-ML]` **Minh Lương:** Dựng `bottom_sheet_comments.xml` text-only (**không reply, không react, không ảnh/sticker**).
 - [ ] `[D5-PD]` **Phúc Đức:** Dựng `fragment_profile.xml` (Cover 200dp, Avatar tròn 120dp, Tên, TabLayout).
 - [ ] `[D5-TQH]` **Tạ Quang Huy:** Thiết kế `item_photo_grid.xml` và `PhotoGridAdapter.java` lưới 3 cột cho Profile.

@@ -83,7 +83,7 @@
 ### NGÀY 05 (Thứ Sáu): Validation Đăng bài, Comment Text-only & Profile Layout
 *Mục tiêu ngày 5: Khóa nút Đăng khi rỗng (chuẩn PDF), mở bottom sheet comment text-only, API Create Post & Search.*
 
-- [ ] **Tùng Dương (FE Lead):** `[D5-TD]` Xử lý logic chọn 1 ảnh từ thư viện máy bằng `ActivityResultContracts.GetContent()`; viết hàm kiểm tra validation: **nếu text rỗng VÀ chưa chọn ảnh thì nút ĐĂNG bị mờ/khóa (disable)**.
+- [x] **Tùng Dương (FE Lead):** `[D5-TD]` Xử lý logic chọn 1 ảnh từ thư viện máy bằng `ActivityResultContracts.GetContent()`; viết hàm kiểm tra validation: **nếu text rỗng VÀ chưa chọn ảnh thì nút ĐĂNG bị mờ/khóa (disable)**.
 - [ ] **Minh Lương (FE):** `[D5-ML]` Dựng `bottom_sheet_comments.xml` và `item_comment.xml` (Bong bóng xám text-only, **không reply, không reaction, không đính kèm ảnh/video, không emoji picker** theo đúng đặc tả PDF).
 - [ ] **Phúc Đức (FE):** `[D5-PD]` Dựng `fragment_profile.xml`: Hiển thị ảnh bìa 200dp, avatar tròn 120dp đè 50% lên ảnh bìa, tên hiển thị, và `TabLayout` (Tab All Posts, Tab Photos/Videos).
 - [ ] **Tạ Quang Huy (FE + QA):** `[D5-TQH]` Thiết kế `item_photo_grid.xml` (ảnh tỷ lệ 1:1) và `PhotoGridAdapter.java` dạng lưới 3 cột (`GridLayoutManager`) phục vụ Tab ảnh của Profile.
