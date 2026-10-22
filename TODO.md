@@ -59,7 +59,7 @@
 - [x] `[D4-TD]` **Tùng Dương:** Dựng màn hình `activity_create_post.xml` (ô nhập text, nút đính kèm ảnh duy nhất).
 - [x] `[D4-ML]` **Minh Lương:** Viết `PostAdapter.java`, xử lý sự kiện click Like (Optimistic UI đổi màu xanh ngay).
 - [ ] `[D4-PD]` **Phúc Đức:** Viết `FriendRequestAdapter.java`, xử lý click Chấp nhận và Xóa lời mời kết bạn.
-- [ ] `[D4-TQH]` **Tạ Quang Huy:** Viết `NotificationAdapter.java`, xử lý trạng thái đã đọc / chưa đọc.
+- [x] `[D4-TQH]` **Tạ Quang Huy:** Viết `NotificationAdapter.java`, xử lý trạng thái đã đọc / chưa đọc.
 - [X] `[D4-AD]` **Ánh Dương:** Viết endpoint `POST /api/posts/{id}/like` trên FastAPI xử lý toggle like trong bảng `post_likes`.
 - [x] `[D4-MD]` **Minh Đức:** Viết endpoint `PUT /api/users/{id}` trên FastAPI cập nhật `avatar_url` và `cover_url`.
 - [x] `[D4-HDH]` **Hà Đăng Huy:** Viết endpoint `POST /api/friends/accept` và `POST /api/friends/reject` cập nhật trạng thái trong SQLite.
