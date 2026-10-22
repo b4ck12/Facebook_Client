@@ -17,4 +17,7 @@
   <string name="placeholder_friends_title">Màn hình Bạn bè (Friends)</string>
   <string name="placeholder_notifications_title">Màn hình Thông báo (Notifications)</string>
   <string name="placeholder_profile_title">Màn hình Trang cá nhân (Profile)</string>
+<!-- van ban cho item friend -->
+  <string name="btn_acp">Accept</string>
+  <string name="btn_del">Decline</string>
 </resources>

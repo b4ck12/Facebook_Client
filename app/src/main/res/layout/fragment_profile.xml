@@ -28,10 +28,13 @@
     android:layout_width="120dp"
     android:layout_height="120dp"
     android:src="@drawable/ic_profile"
+    android:scaleType="centerCrop"
     app:layout_constraintBottom_toBottomOf="@id/iv_profile_cover"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+    app:strokeColor="@color/fb_surface"
+    app:strokeWidth="2dp"
     />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
