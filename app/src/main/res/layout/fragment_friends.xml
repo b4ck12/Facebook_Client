@@ -4,28 +4,102 @@
   Thành viên phụ trách mở rộng chi tiết ([D3-PD]): Phúc Đức (FE).
 -->
 <androidx.constraintlayout.widget.ConstraintLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/layout_friends_root"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="@color/fb_background"
-  tools:context=".features.friends.FriendsFragment">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_friends_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fb_background"
+    tools:context=".features.friends.FriendsFragment">
 
-  <!-- Tiêu đề hiển thị tạm thời để kiểm tra chuyển Tab điều hướng -->
   <TextView
-    android:id="@+id/tv_friends_placeholder"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/placeholder_friends_title"
-    android:textColor="@color/fb_text_primary"
-    android:textSize="@dimen/text_size_title"
-    android:textStyle="bold"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginTop="16dp"
+      android:layout_marginStart="16dp"
+      android:id="@+id/Friend_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/Friend_header"
+      android:textColor="@color/fb_text_primary"
+      android:textSize="40sp"
+      android:textStyle="bold" />
+  <!-- day la chu FaceBook -->
+  <Button
+      android:id="@+id/your_friends_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="48dp"
+      android:text="@string/btn_your_friends"
+      android:textSize="14sp"
+      android:textStyle="bold"
+      android:textColor="@color/fb_text_primary"
+      android:paddingEnd="16dp"
+      android:paddingStart="16dp"
+      app:layout_constraintTop_toBottomOf="@+id/Friend_text"
+      app:backgroundTint="#E2E5E9"
+      android:insetTop="0dp"
+      android:insetBottom="0dp"
+      android:minHeight="0dp"
+      android:minWidth="0dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="12dp"
+      app:cornerRadius="18dp"
+      app:strokeWidth="0dp"
+      app:layout_constraintStart_toStartOf="parent" />
+  <!-- button your friends -->
+  <android.view.View
+      android:id="@+id/friends_divider"
+      android:layout_width="0dp"
+      android:layout_height="1dp"
+      android:background="#DADDE1"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
+      app:layout_constraintTop_toBottomOf="@+id/your_friends_btn"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginTop="10dp" />
+  <!-- ke ngan cach giua button your friends va text FriendRequest -->
+  <LinearLayout
+      android:id="@+id/FriendRequest_header"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="center_vertical"
+      app:layout_constraintTop_toBottomOf="@id/friends_divider"
+      app:layout_constraintStart_toStartOf="parent"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="10dp">
+    <TextView
+        android:id="@+id/FriendRequest_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/FriendRequest_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/fb_text_primary"/>
+    <TextView
+        android:id="@+id/FriendRequest_Count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="2"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#E41E3F"/>
 
+  </LinearLayout>
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rv_FriendRequest"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginStart="12dp"
+      app:layout_constraintTop_toBottomOf="@id/FriendRequest_header"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      tools:listitem="@layout/item_friend_request"
+      tools:itemCount="2"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
