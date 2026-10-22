@@ -16,7 +16,7 @@ backend/
 ├── routers/
 │   ├── __init__.py      # Routers package init
 │   ├── upload.py        # Router xử lý POST /api/upload tiếp nhận ảnh multipart
-│   └── users.py         # Router xử lý GET /api/users/{id} lấy thông tin cá nhân
+│   └── users.py         # Router xử lý GET /api/users/{id} và PUT /api/users/{id} (cập nhật avatar/cover)
 ├── requirements.txt     # Danh sách thư viện Python cần thiết
 ├── static/
 │   └── uploads/         # Thư mục lưu trữ hình ảnh tải lên (/static/uploads/)
