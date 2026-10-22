@@ -55,4 +55,10 @@
   <string name="logout_confirmation_message">Are you sure you want to log out of this demo account?</string>
   <string name="btn_logout">Log Out</string>
   <string name="btn_cancel">Cancel</string>
+<!-- string cho friends va profile -->
+  <string name="btn_accept">Accept</string>
+  <string name="btn_decline">Decline</string>
+  <string name="Friend_header">Friends</string>
+  <string name="btn_your_friends">your friends</string>
+  <string name="FriendRequest_title">Friends request</string>"
 </resources>
