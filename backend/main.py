@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from database import engine, Base
+import models
 
 # Đảm bảo thư mục upload tĩnh tồn tại
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -44,16 +45,22 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         content={"detail": error_msg}
     )
 
-# Đăng ký các router khi sẵn sàng (các task tiếp theo D2-D6)
-# Ví dụ:
-# from routers import auth, posts, comments, friends, profile, notifications, upload
+# Đăng ký các router
+try:
+    from routers import upload, users, posts, friends
+except ImportError:
+    from backend.routers import upload, users, posts, friends
+
+app.include_router(upload.router, prefix="/api/upload", tags=["Media Upload"])
+app.include_router(users.router, prefix="/api/users", tags=["Profile & Photos"])
+app.include_router(posts.router, prefix="/api/posts", tags=["Feed & Posts"])
+app.include_router(friends.router, prefix="/api/friends", tags=["Friends & Search"])
+
+# Các router tiếp theo (D3-D6)
+# from routers import auth, comments, notifications
 # app.include_router(auth.router, prefix="/api/auth", tags=["Authentication & Demo Users"])
-# app.include_router(posts.router, prefix="/api/posts", tags=["Feed & Posts"])
 # app.include_router(comments.router, prefix="/api/posts", tags=["Comments"])
-# app.include_router(friends.router, prefix="/api/friends", tags=["Friends & Search"])
-# app.include_router(profile.router, prefix="/api/users", tags=["Profile & Photos"])
 # app.include_router(notifications.router, prefix="/api/notifications", tags=["Notifications"])
-# app.include_router(upload.router, prefix="/api/upload", tags=["Media Upload"])
 
 @app.get("/", tags=["Health Check"])
 def health_check():

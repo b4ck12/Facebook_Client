@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Layout khung (Skeleton) cho Màn hình Bảng tin (Home Feed).
-  Thành viên phụ trách mở rộng chi tiết: Minh Lương (FE).
+  Giao diện Màn hình Bảng tin Trang chủ (Home Feed - [D3-ML]).
+ (03_DESIGN_SYSTEM.md mục 5.3 & 5.5):
+  1. Thanh tạo bài viết nhanh ở trên cùng (Avatar 36dp + Ô tròn "What's on your mind?" + Icon Ảnh).
+  2. Dải phân cách dày 8dp màu xám nhạt (#F0F2F5).
+  3. Danh sách bài viết (RecyclerView: rv_feed_posts) hiển thị các thẻ item_post.xml.
+  4. Trạng thái đang tải (ProgressBar: pb_loading) và Trạng thái trống (layout_empty_state).
 -->
 <androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,19 +17,130 @@
   android:background="@color/fb_background"
   tools:context=".features.feed.FeedFragment">
 
-  <!-- Tiêu đề hiển thị tạm thời để kiểm tra chuyển Tab điều hướng -->
-  <TextView
-    android:id="@+id/tv_feed_placeholder"
-    android:layout_width="wrap_content"
+  <!-- ========================================================================= -->
+  <!-- 1. THANH TẠO BÀI VIẾT NHANH (QUICK CREATE POST BAR)                       -->
+  <!-- ========================================================================= -->
+  <LinearLayout
+    android:id="@+id/layout_create_post_bar"
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:text="@string/placeholder_feed_title"
-    android:textColor="@color/fb_text_primary"
-    android:textSize="@dimen/text_size_title"
-    android:textStyle="bold"
+    android:background="@color/fb_surface"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/spacing_md"
+    android:paddingVertical="10dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <!-- Ảnh đại diện người dùng hiện tại (36dp x 36dp) -->
+    <ImageView
+      android:id="@+id/iv_current_user_avatar"
+      android:layout_width="36dp"
+      android:layout_height="36dp"
+      android:contentDescription="@string/cd_author_avatar"
+      android:scaleType="centerCrop"
+      android:src="@drawable/bg_avatar_placeholder" />
+
+    <!-- Ô bấm mở màn hình Tạo bài viết (CreatePostActivity của Tùng Dương) -->
+    <TextView
+      android:id="@+id/tv_create_post_prompt"
+      android:layout_width="0dp"
+      android:layout_height="36dp"
+      android:layout_marginHorizontal="10dp"
+      android:layout_weight="1"
+      android:background="@drawable/bg_public_badge"
+      android:clickable="true"
+      android:focusable="true"
+      android:gravity="center_vertical"
+      android:paddingHorizontal="@dimen/spacing_lg"
+      android:text="@string/create_post_hint"
+      android:textColor="@color/fb_text_secondary"
+      android:textSize="@dimen/text_size_body" />
+
+    <!-- Icon chọn ảnh nhanh bên phải -->
+    <ImageView
+      android:id="@+id/iv_add_photo"
+      android:layout_width="28dp"
+      android:layout_height="28dp"
+      android:background="?attr/selectableItemBackgroundBorderless"
+      android:clickable="true"
+      android:contentDescription="@string/cd_photo_icon"
+      android:focusable="true"
+      android:padding="2dp"
+      android:src="@drawable/ic_photo_library"
+      app:tint="@color/fb_online_green" />
+
+  </LinearLayout>
+
+  <!-- Dải phân cách 8dp giữa thanh tạo bài viết và danh sách bài đăng -->
+  <View
+    android:id="@+id/view_create_post_divider"
+    android:layout_width="0dp"
+    android:layout_height="@dimen/spacing_sm"
+    android:background="@color/fb_background"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/layout_create_post_bar" />
+
+  <!-- ========================================================================= -->
+  <!-- 2. DANH SÁCH BÀI VIẾT TRÊN BẢNG TIN (FEED RECYCLERVIEW)                   -->
+  <!-- ========================================================================= -->
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rv_feed_posts"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:clipToPadding="false"
+    android:overScrollMode="never"
+    android:scrollbars="vertical"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    app:layout_constraintTop_toBottomOf="@id/view_create_post_divider"
+    tools:listitem="@layout/item_post" />
+
+  <!-- ========================================================================= -->
+  <!-- 3. TRẠNG THÁI ĐANG TẢI DỮ LIỆU (LOADING STATE)                            -->
+  <!-- ========================================================================= -->
+  <ProgressBar
+    android:id="@+id/pb_loading"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:indeterminateTint="@color/fb_blue"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/view_create_post_divider"
+    tools:visibility="visible" />
+
+  <!-- ========================================================================= -->
+  <!-- 4. TRẠNG THÁI BẢNG TIN TRỐNG / LỖI MẠNG (EMPTY STATE)                     -->
+  <!-- ========================================================================= -->
+  <LinearLayout
+    android:id="@+id/layout_empty_state"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_xl"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/view_create_post_divider">
+
+    <TextView
+      android:id="@+id/tv_empty_message"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="Chưa có bài viết nào trên Bảng tin.\nHãy là người đầu tiên chia sẻ khoảnh khắc!"
+      android:textColor="@color/fb_text_secondary"
+      android:textSize="@dimen/text_size_body"
+      tools:ignore="HardcodedText" />
+
+  </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
