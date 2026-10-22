@@ -166,3 +166,175 @@ def toggle_like(db: Session, post_id: str, user_id: str) -> schemas.LikeToggleRe
         isLiked=is_liked,
         likesCount=likes_count
     )
+
+
+
+def get_user_posts(
+    db: Session,
+    user_id: str,
+    current_user_id: Optional[str] = None,
+    skip: int = 0,
+    limit: int = 50
+) -> List[schemas.PostResponse]:
+    """
+    Lấy danh sách bài viết của một người dùng cụ thể trên trang cá nhân:
+    - Sắp xếp bài viết mới nhất trước (created_at DESC).
+    - Tính toán likes_count, comments_count và is_liked theo current_user_id.
+    """
+    likes_sub = (
+        select(func.count(models.PostLike.id))
+        .where(models.PostLike.post_id == models.Post.id)
+        .correlate(models.Post)
+        .scalar_subquery()
+    )
+
+    comments_sub = (
+        select(func.count(models.Comment.id))
+        .where(models.Comment.post_id == models.Post.id)
+        .correlate(models.Post)
+        .scalar_subquery()
+    )
+
+    if current_user_id:
+        is_liked_sub = (
+            select(1)
+            .where(
+                models.PostLike.post_id == models.Post.id,
+                models.PostLike.user_id == current_user_id
+            )
+            .correlate(models.Post)
+            .exists()
+        )
+    else:
+        is_liked_sub = literal(False)
+
+    stmt = (
+        select(
+            models.Post,
+            likes_sub.label("likes_count"),
+            comments_sub.label("comments_count"),
+            is_liked_sub.label("is_liked")
+        )
+        .options(joinedload(models.Post.author))
+        .where(models.Post.author_id == user_id)
+        .order_by(desc(models.Post.created_at))
+        .offset(skip)
+        .limit(limit)
+    )
+
+    results = db.execute(stmt).all()
+    user_posts = []
+    for row in results:
+        post = row[0]
+        likes_count = row[1] or 0
+        comments_count = row[2] or 0
+        is_liked = bool(row[3])
+
+        author_name = post.author.display_name if post.author else "Người dùng Facebook"
+        author_avatar = post.author.avatar_url if post.author else None
+
+        user_posts.append(
+            schemas.PostResponse(
+                id=post.id,
+                authorId=post.author_id,
+                authorName=author_name,
+                authorAvatar=author_avatar,
+                content=post.content,
+                mediaUrl=post.media_url,
+                isPublic=post.is_public,
+                likesCount=likes_count,
+                commentsCount=comments_count,
+                isLiked=is_liked,
+                createdAt=post.created_at
+            )
+        )
+
+    return user_posts
+
+
+def get_user_photos(
+    db: Session,
+    user_id: str,
+    current_user_id: Optional[str] = None,
+    skip: int = 0,
+    limit: int = 50
+) -> List[schemas.PostResponse]:
+    """
+    Lấy danh sách các bài viết có hình ảnh của một người dùng (Tab Ảnh trang cá nhân):
+    - Lọc các bài viết có media_url IS NOT NULL và media_url != ''.
+    - Sắp xếp ảnh mới nhất trước (created_at DESC).
+    - Tính toán likes_count, comments_count và is_liked theo current_user_id.
+    """
+    likes_sub = (
+        select(func.count(models.PostLike.id))
+        .where(models.PostLike.post_id == models.Post.id)
+        .correlate(models.Post)
+        .scalar_subquery()
+    )
+
+    comments_sub = (
+        select(func.count(models.Comment.id))
+        .where(models.Comment.post_id == models.Post.id)
+        .correlate(models.Post)
+        .scalar_subquery()
+    )
+
+    if current_user_id:
+        is_liked_sub = (
+            select(1)
+            .where(
+                models.PostLike.post_id == models.Post.id,
+                models.PostLike.user_id == current_user_id
+            )
+            .correlate(models.Post)
+            .exists()
+        )
+    else:
+        is_liked_sub = literal(False)
+
+    stmt = (
+        select(
+            models.Post,
+            likes_sub.label("likes_count"),
+            comments_sub.label("comments_count"),
+            is_liked_sub.label("is_liked")
+        )
+        .options(joinedload(models.Post.author))
+        .where(
+            models.Post.author_id == user_id,
+            models.Post.media_url.isnot(None),
+            models.Post.media_url != ""
+        )
+        .order_by(desc(models.Post.created_at))
+        .offset(skip)
+        .limit(limit)
+    )
+
+    results = db.execute(stmt).all()
+    user_photos = []
+    for row in results:
+        post = row[0]
+        likes_count = row[1] or 0
+        comments_count = row[2] or 0
+        is_liked = bool(row[3])
+
+        author_name = post.author.display_name if post.author else "Người dùng Facebook"
+        author_avatar = post.author.avatar_url if post.author else None
+
+        user_photos.append(
+            schemas.PostResponse(
+                id=post.id,
+                authorId=post.author_id,
+                authorName=author_name,
+                authorAvatar=author_avatar,
+                content=post.content,
+                mediaUrl=post.media_url,
+                isPublic=post.is_public,
+                likesCount=likes_count,
+                commentsCount=comments_count,
+                isLiked=is_liked,
+                createdAt=post.created_at
+            )
+        )
+
+    return user_photos
