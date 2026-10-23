@@ -101,7 +101,7 @@
 - [ ] **Phúc Đức (FE):** `[D6-PD]` Dựng màn hình `activity_search_friends.xml`, gắn ô tìm kiếm với danh sách bạn bè mẫu, xử lý debounce nhập liệu 300ms.
 - [ ] **Tạ Quang Huy (FE + QA):** `[D6-TQH]` Ghép `PhotoGridAdapter` vào Tab Photos của Profile; chạy thử nghiệm toàn bộ giao diện trên máy ảo `Pixel_10a_API_37`, chụp ảnh các màn hình báo cáo.
 - [ ] **Ánh Dương (BE Lead):** `[D6-AD]` Viết router `comments.py` trên FastAPI: Triển khai endpoint `GET /api/posts/{id}/comments` và `POST /api/posts/{id}/comments` (chỉ nhận text thuần túy).
-- [ ] **Minh Đức (BE):** `[D6-MD]` Viết logic tự động tạo bản ghi trong bảng `notifications` khi có tương tác Thích bài viết hoặc Bình luận bài viết.
+- [x] **Minh Đức (BE):** `[D6-MD]` Viết logic tự động tạo bản ghi trong bảng `notifications` khi có tương tác Thích bài viết hoặc Bình luận bài viết.
 - [ ] **Hà Đăng Huy (BE + QA):** `[D6-HDH]` Rà soát toàn bộ Swagger UI (`http://localhost:8000/docs`), chuẩn bị bộ dữ liệu test mẫu trong `facebook.db` sẵn sàng cho tuần tích hợp.
 
 ---

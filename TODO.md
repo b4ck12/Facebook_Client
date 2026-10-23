@@ -79,7 +79,7 @@
 - [ ] `[D6-PD]` **Phúc Đức:** Dựng màn hình `SearchFriendsActivity.xml`, ô tìm kiếm debounce 300ms.
 - [ ] `[D6-TQH]` **Tạ Quang Huy:** Ghép PhotoGrid vào Tab Photos của Profile; chạy test toàn bộ UI trên máy ảo Pixel 10a.
 - [ ] `[D6-AD]` **Ánh Dương:** Viết router `comments.py` trên FastAPI: triển khai `GET /api/posts/{id}/comments` và `POST /api/posts/{id}/comments` text-only.
-- [ ] `[D6-MD]` **Minh Đức:** Viết logic tự động tạo `Notification` trong SQLite khi có tương tác Like / Comment.
+- [x] `[D6-MD]` **Minh Đức:** Viết logic tự động tạo `Notification` trong SQLite khi có tương tác Like / Comment.
 - [ ] `[D6-HDH]` **Hà Đăng Huy:** Rà soát Swagger UI (`/docs`), chuẩn bị dữ liệu test mẫu trong `facebook.db`.
 
 #### Ngày 07 (Chủ Nhật): Review Checkpoint Tuần 1 & Merge vào nhánh `develop`
