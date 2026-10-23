@@ -86,7 +86,7 @@
 - [x] **Tùng Dương (FE Lead):** `[D5-TD]` Xử lý logic chọn 1 ảnh từ thư viện máy bằng `ActivityResultContracts.GetContent()`; viết hàm kiểm tra validation: **nếu text rỗng VÀ chưa chọn ảnh thì nút ĐĂNG bị mờ/khóa (disable)**.
 - [ ] **Minh Lương (FE):** `[D5-ML]` Dựng `bottom_sheet_comments.xml` và `item_comment.xml` (Bong bóng xám text-only, **không reply, không reaction, không đính kèm ảnh/video, không emoji picker** theo đúng đặc tả PDF).
 - [ ] **Phúc Đức (FE):** `[D5-PD]` Dựng `fragment_profile.xml`: Hiển thị ảnh bìa 200dp, avatar tròn 120dp đè 50% lên ảnh bìa, tên hiển thị, và `TabLayout` (Tab All Posts, Tab Photos/Videos).
-- [ ] **Tạ Quang Huy (FE + QA):** `[D5-TQH]` Thiết kế `item_photo_grid.xml` (ảnh tỷ lệ 1:1) và `PhotoGridAdapter.java` dạng lưới 3 cột (`GridLayoutManager`) phục vụ Tab ảnh của Profile.
+- [x] **Tạ Quang Huy (FE + QA):** `[D5-TQH]` Thiết kế `item_photo_grid.xml` (ảnh tỷ lệ 1:1) và `PhotoGridAdapter.java` dạng lưới 3 cột (`GridLayoutManager`) phục vụ Tab ảnh của Profile.
 - [ ] **Ánh Dương (BE Lead):** `[D5-AD]` Viết endpoint `POST /api/posts` (tạo bài viết) và `POST /api/posts/{id}/share` (chia sẻ bài viết) trên FastAPI.
 - [x] **Minh Đức (BE):** `[D5-MD]` Viết endpoint `GET /api/users/{id}/posts` và `GET /api/users/{id}/photos` (lọc các bài viết có `media_url IS NOT NULL`).
 - [x] **Hà Đăng Huy (BE + QA):** `[D5-HDH]` Viết endpoint `GET /api/friends/search?q=` trên FastAPI tìm kiếm bạn bè theo tên trong SQLite (câu lệnh SQL `LIKE %query%`).
