@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Giao diện Một ô ảnh trong Lưới ảnh Trang cá nhân (Profile Photo Grid Item - [D5-TQH]).
+  Tuân thủ chuẩn Facebook Client Design System (03_DESIGN_SYSTEM.md):
+  1. Tỷ lệ khung hình vuông chuẩn 1:1 (app:layout_constraintDimensionRatio="1:1").
+  2. Tự động co giãn linh hoạt theo 3 cột của GridLayoutManager.
+  3. ImageView cắt cúp ảnh trung tâm (scaleType="centerCrop") không làm biến dạng tỷ lệ gốc.
+  4. Hiệu ứng gợn sóng khi chạm ngón tay (foreground="?attr/selectableItemBackground").
+  5. Đệm viền 1dp tạo khoảng cách tinh tế giữa các ô ảnh (chuẩn giao diện Facebook / Instagram Grid).
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_photo_grid_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="1dp">
+
+  <!--
+    Ảnh hiển thị dạng ô vuông tỷ lệ 1:1:
+    - layout_width="0dp" & layout_height="0dp": Cho phép ConstraintLayout khống chế toàn bộ kích thước.
+    - layout_constraintDimensionRatio="1:1": Cưỡng chế chiều cao luôn bằng chiều rộng (tạo hình vuông hoàn hảo).
+    - scaleType="centerCrop": Tự động cắt ảnh từ trung tâm, lấp đầy khung vuông mà không làm méo ảnh.
+    - background="@color/fb_surface_variant": Nền màu xám nhẹ (#E4E6EB) đóng vai trò khung chờ (placeholder) khi ảnh chưa tải xong.
+    - foreground="?attr/selectableItemBackground": Hiệu ứng gợn sóng bán trong suốt khi người dùng nhấn vào ảnh.
+  -->
+  <ImageView
+      android:id="@+id/iv_grid_photo"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:background="@color/fb_surface_variant"
+      android:contentDescription="@string/cd_grid_photo"
+      android:foreground="?attr/selectableItemBackground"
+      android:scaleType="centerCrop"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintDimensionRatio="1:1"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:src="@drawable/bg_avatar_placeholder" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
