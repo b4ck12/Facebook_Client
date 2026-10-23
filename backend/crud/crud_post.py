@@ -328,3 +328,121 @@ def get_user_photos(
         )
 
     return user_photos
+
+def create_post(db: Session, post_data: schemas.PostCreate) -> schemas.PostResponse:
+    """
+    - Kiểm tra tác giả có tồn tại không.
+    - Validate bắt buộc có text hoặc có media (không được rỗng cả hai).
+    - Tạo bản ghi mới trong bảng posts và trả về PostResponse.
+    """
+
+    # 1.Kiểm tra tác giả 
+    author = db.query(models.User).filter(models.User.id == post_data.authorId).first()
+    if not author:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Không tìm thấy người dùng ID '{post_data.authorId}'"
+        )
+
+    # 2.Validation: Phải có chữ hoặc ảnh
+    has_content = bool(post_data.content and post_data.content.strip())
+    has_media = bool(post_data.mediaUrl and post_data.mediaUrl.strip())
+    if not has_content and not has_media:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Bài viết không để trống . Vui lòng nhập nội dung chữ hoặc đính kèm hình ảnh !"
+        )
+
+    # 3.Tạo bài viết mới
+    post_id = f"post_{uuid.uuid4().hex[:8]}"
+    created_now = int(time.time() * 1000)
+
+    db_post = models.Post(
+        id=post_id,
+        author_id=post_data.authorId,
+        content=post_data.content.strip() if post_data.content else None,
+        media_url=post_data.mediaUrl.strip() if post_data.mediaUrl else None,
+        created_at=created_now
+    )
+    db.add(db_post)
+    db.commit()
+    db.refresh(db_post)
+
+    return schemas.PostResponse(
+        id=db_post.id,
+        authorId=author.id,
+        authorName=author.display_name,
+        authorAvatar=author.avatar_url,
+        content=db_post.content,
+        mediaUrl=db_post.media_url,
+        isPublic=db_post.is_public,
+        likesCount=0,
+        commentsCount=0,
+        isLiked=False,
+        createdAt=db_post.created_at
+    )
+
+def share_post(
+    db:Session,
+    post_id: str,
+    user_id: str,
+    caption: Optional[str] = None
+) ->schemas.PostResponse:
+    """
+    Chia sẻ bài viết lên dòng thời gian cá nhân 
+    """
+
+    # 1.Kiểm tra bài viết tồn tại
+    original_post = db.query(models.Post).filter(models.Post.id == post_id).first()
+    if not original_post:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Không tìm thấy bài viết gốc ID '{post_id}' để chia sẻ !"
+        )
+
+    # 2.Kiểm tra người thực hiện chia sẻ
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Không tìm thấy người dùng ID '{user_id}'"
+        )
+
+    # 3.Xử lí nội dung chia sẻ
+    orig_author_name = original_post.author.display_name if original_post.author else "Người dùng Facebook"
+    shared_text = original_post.content or ""
+
+    if caption and caption.strip():
+        final_content = f"{caption.strip()}\n\n[Chia sẻ từ {orig_author_name}]: {shared_text}".strip()
+    else:
+        final_content = f"[Chia sẻ từ {orig_author_name}]: {shared_text}".strip()
+
+    # 4.Tạo bài viết chia sẻ mới
+    new_post_id = f"post_{uuid.uuid4().hex[:8]}"
+    created_now = int(time.time() * 1000)
+
+    shared_post = models.Post(
+        id=new_post_id,
+        author_id=user_id,
+        content=final_content,
+        media_url=original_post.media_url,  # Giữ nguyên ảnh từ bài gốc nếu có
+        is_public=True,
+        created_at=created_now
+    )
+    db.add(shared_post)
+    db.commit()
+    db.refresh(shared_post)
+
+    return schemas.PostResponse(
+        id=shared_post.id,
+        authorId=user.id,
+        authorName=user.display_name,
+        authorAvatar=user.avatar_url,
+        content=shared_post.content,
+        mediaUrl=shared_post.media_url,
+        isPublic=shared_post.is_public,
+        likesCount=0,
+        commentsCount=0,
+        isLiked=False,
+        createdAt=shared_post.created_at
+    )
