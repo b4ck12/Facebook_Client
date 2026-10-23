@@ -61,3 +61,6 @@ backend/.pytest_cache/
 *.db-shm
 backend/static/uploads/*
 !backend/static/uploads/.gitkeep
+
+# Agent documentation
+AGENTS.md

@@ -18,61 +18,20 @@
   tools:context=".features.notifications.NotificationsFragment">
 
   <!-- ========================================================================= -->
-  <!-- 1. THANH TIÊU ĐỀ ĐỈNH (TOP NOTIFICATIONS HEADER)                          -->
+  <!-- 1. TIÊU ĐỀ MÀN HÌNH THÔNG BÁO (Loại bỏ Header bar 56dp thừa - [D7-TD])      -->
   <!-- ========================================================================= -->
-  <!-- 
-    Header bar 56dp cố định trên đỉnh, không bị cuộn mất khi người dùng cuộn danh sách:
-  -->
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/layout_notifications_header"
-    android:layout_width="0dp"
-    android:layout_height="@dimen/top_bar_height"
-    android:background="@color/fb_surface"
-    android:paddingHorizontal="@dimen/spacing_lg"
-    app:layout_constraintEnd_toEndOf="parent"
+  <TextView
+    android:id="@+id/tv_notifications_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_lg"
+    android:layout_marginTop="@dimen/spacing_md"
+    android:text="@string/notifications_title"
+    android:textColor="@color/fb_text_primary"
+    android:textSize="@dimen/text_size_headline"
+    android:textStyle="bold"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
-
-    <!-- Tiêu đề lớn "Notifications" (22sp Bold) -->
-    <TextView
-      android:id="@+id/tv_notifications_title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/notifications_title"
-      android:textColor="@color/fb_text_primary"
-      android:textSize="@dimen/text_size_headline"
-      android:textStyle="bold"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Nút Tìm kiếm tròn bên phải -->
-    <ImageView
-      android:id="@+id/iv_notifications_search"
-      android:layout_width="36dp"
-      android:layout_height="36dp"
-      android:background="?attr/selectableItemBackgroundBorderless"
-      android:clickable="true"
-      android:contentDescription="@string/cd_search_notifications"
-      android:focusable="true"
-      android:padding="6dp"
-      android:src="@drawable/ic_search"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:tint="@color/fb_text_primary" />
-
-  </androidx.constraintlayout.widget.ConstraintLayout>
-
-  <!-- Đường phân cách 1dp dưới Header -->
-  <View
-    android:id="@+id/view_header_divider"
-    android:layout_width="0dp"
-    android:layout_height="1dp"
-    android:background="@color/fb_divider_light"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/layout_notifications_header" />
+    app:layout_constraintTop_toTopOf="parent" />
 
   <!-- ========================================================================= -->
   <!-- 2. DANH SÁCH THÔNG BÁO (RECYCLERVIEW)                                     -->
@@ -87,6 +46,7 @@
     android:id="@+id/rv_notifications"
     android:layout_width="0dp"
     android:layout_height="0dp"
+    android:layout_marginTop="@dimen/spacing_sm"
     android:clipToPadding="false"
     android:overScrollMode="never"
     android:scrollbars="vertical"
@@ -94,7 +54,7 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/view_header_divider"
+    app:layout_constraintTop_toBottomOf="@id/tv_notifications_title"
     tools:listitem="@layout/item_notification" />
 
   <!-- ========================================================================= -->
@@ -114,7 +74,7 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/view_header_divider"
+    app:layout_constraintTop_toBottomOf="@id/tv_notifications_title"
     tools:visibility="visible" />
 
   <!-- ========================================================================= -->
@@ -137,7 +97,7 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/view_header_divider">
+    app:layout_constraintTop_toBottomOf="@id/tv_notifications_title">
 
     <ImageView
       android:id="@+id/iv_empty_icon"
