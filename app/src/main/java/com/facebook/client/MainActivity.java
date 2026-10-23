@@ -3,8 +3,12 @@ package com.facebook.client;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -61,8 +65,35 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
   @Override
   protected void initViews() {
+    setupWindowInsets();
     setupBottomNavigation();
     setupTopBarActions();
+  }
+
+  /**
+   * Áp dụng WindowInsets cho thanh Top Bar để hỗ trợ chế độ tràn viền (Edge-to-Edge):
+   * Thêm padding đỉnh tương ứng với độ cao Status Bar và Display Cutout (tai thỏ),
+   * đồng thời mở rộng tổng chiều cao của Top Bar để nội dung không bị đè lấp ([D7-TD]).
+   */
+  private void setupWindowInsets() {
+    ViewCompat.setOnApplyWindowInsetsListener(
+        binding.layoutTopBar,
+        (v, windowInsets) -> {
+          Insets insets =
+              windowInsets.getInsets(
+                  WindowInsetsCompat.Type.statusBars() | WindowInsetsCompat.Type.displayCutout());
+
+          int baseTopBarHeight = getResources().getDimensionPixelSize(R.dimen.top_bar_height);
+          ViewGroup.LayoutParams params = v.getLayoutParams();
+          if (params != null) {
+            params.height = baseTopBarHeight + insets.top;
+            v.setLayoutParams(params);
+          }
+          v.setPadding(v.getPaddingLeft(), insets.top, v.getPaddingRight(), v.getPaddingBottom());
+
+          return windowInsets;
+        });
+    ViewCompat.requestApplyInsets(binding.layoutTopBar);
   }
 
   /**

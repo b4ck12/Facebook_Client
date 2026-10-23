@@ -6,9 +6,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 import com.facebook.client.R;
 import com.facebook.client.core.base.BaseActivity;
@@ -59,6 +63,7 @@ public class CreatePostActivity extends BaseActivity<ActivityCreatePostBinding> 
 
   @Override
   protected void initViews() {
+    setupWindowInsets();
     setupAuthorHeader();
     setupTextWatcher();
     setupImagePicker();
@@ -69,6 +74,50 @@ public class CreatePostActivity extends BaseActivity<ActivityCreatePostBinding> 
 
     // Kiểm tra validation ban đầu (mặc định khóa nút ĐĂNG)
     validatePost();
+  }
+
+  /**
+   * Áp dụng WindowInsets cho màn hình Tạo bài viết ([D7-TD]):
+   * 1. Top Bar: Thêm padding đỉnh và tăng chiều cao bằng insets status bar + cutout
+   *    để không bị che lấp bởi thanh trạng thái của hệ thống.
+   * 2. Bottom Toolbar (Nút Photo/video): Đẩy thanh công cụ lên trên Navigation Bar
+   *    hoặc bàn phím ảo (IME) khi người dùng nhập văn bản.
+   */
+  private void setupWindowInsets() {
+    ViewCompat.setOnApplyWindowInsetsListener(
+        binding.getRoot(),
+        (v, windowInsets) -> {
+          Insets statusBarInsets =
+              windowInsets.getInsets(
+                  WindowInsetsCompat.Type.statusBars() | WindowInsetsCompat.Type.displayCutout());
+          Insets bottomInsets =
+              windowInsets.getInsets(
+                  WindowInsetsCompat.Type.navigationBars() | WindowInsetsCompat.Type.ime());
+
+          // 1. Cập nhật Top Bar
+          int baseTopBarHeight = getResources().getDimensionPixelSize(R.dimen.top_bar_height);
+          ViewGroup.LayoutParams topParams = binding.layoutTopBar.getLayoutParams();
+          if (topParams != null) {
+            topParams.height = baseTopBarHeight + statusBarInsets.top;
+            binding.layoutTopBar.setLayoutParams(topParams);
+          }
+          binding.layoutTopBar.setPadding(
+              binding.layoutTopBar.getPaddingLeft(),
+              statusBarInsets.top,
+              binding.layoutTopBar.getPaddingRight(),
+              binding.layoutTopBar.getPaddingBottom());
+
+          // 2. Cập nhật thanh công cụ đáy (layout_add_photo_button)
+          ViewGroup.MarginLayoutParams bottomParams =
+              (ViewGroup.MarginLayoutParams) binding.layoutAddPhotoButton.getLayoutParams();
+          if (bottomParams != null) {
+            bottomParams.bottomMargin = bottomInsets.bottom;
+            binding.layoutAddPhotoButton.setLayoutParams(bottomParams);
+          }
+
+          return windowInsets;
+        });
+    ViewCompat.requestApplyInsets(binding.getRoot());
   }
 
   /**
