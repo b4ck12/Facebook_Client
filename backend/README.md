@@ -12,11 +12,19 @@ backend/
 ├── schemas.py           # Pydantic Schemas xác thực dữ liệu đầu vào và định dạng đầu ra
 ├── crud/
 │   ├── __init__.py      # CRUD package init
-│   └── crud_user.py     # Nghiệp vụ truy vấn CSDL phân hệ User
+│   ├── crud_user.py     # Nghiệp vụ truy vấn CSDL phân hệ User
+│   ├── crud_post.py     # Nghiệp vụ bài viết, toggle like, posts & photos
+│   ├── crud_friend.py   # Nghiệp vụ bạn bè, lời mời kết bạn & tìm kiếm
+│   ├── crud_notif.py    # Tự động tạo và quản lý thông báo (Like, Comment, Friends)
+│   └── crud_comment.py  # Nghiệp vụ bình luận bài viết (Text only)
 ├── routers/
 │   ├── __init__.py      # Routers package init
 │   ├── upload.py        # Router xử lý POST /api/upload tiếp nhận ảnh multipart
-│   └── users.py         # Router xử lý User/Profile: GET/PUT /api/users/{id}, GET /posts, GET /photos
+│   ├── users.py         # Router xử lý User/Profile: GET/PUT /api/users/{id}, GET /posts, GET /photos
+│   ├── posts.py         # Router xử lý Feed & Posts: GET /api/posts, POST /like
+│   ├── comments.py      # Router xử lý Comments: GET/POST /api/posts/{id}/comments
+│   ├── friends.py       # Router xử lý Friends & Friend Requests
+│   └── notifications.py # Router xử lý Notifications: GET /api/notifications, POST /read
 ├── requirements.txt     # Danh sách thư viện Python cần thiết
 ├── static/
 │   └── uploads/         # Thư mục lưu trữ hình ảnh tải lên (/static/uploads/)

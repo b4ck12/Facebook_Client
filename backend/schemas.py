@@ -67,6 +67,8 @@ class CommentCreate(BaseModel):
     authorId: str
     content: str
 
+    model_config = ORMBaseConfig
+
 class CommentResponse(BaseModel):
     id: str
     postId: str
@@ -76,7 +78,7 @@ class CommentResponse(BaseModel):
     content: str
     createdAt: int
 
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ORMBaseConfig
 
 #4.LIKE SCHEMAS
 class LikeToggleResponse(BaseModel):
@@ -121,7 +123,7 @@ class NotificationResponse(BaseModel):
     isRead: bool
     createdAt: int
 
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ORMBaseConfig
 
 
 # 7. UPLOAD SCHEMAS
