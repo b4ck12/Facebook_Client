@@ -8,9 +8,11 @@ from fastapi import HTTPException, status
 try:
     import models
     import schemas
+    from crud import crud_notif
 except ImportError:
     from backend import models
     from backend import schemas
+    from backend.crud import crud_notif
 
 
 def get_feed_posts(
@@ -141,20 +143,8 @@ def toggle_like(db: Session, post_id: str, user_id: str) -> schemas.LikeToggleRe
         )
         db.add(new_like)
 
-        #Tạo thông báo cho tác giả bài viết (nếu không phải tự like)
-        if post.author_id != user_id:
-            sender_name = user.display_name if user.display_name else "Một người bạn"
-            notif = models.Notification(
-                id=f"notif_{uuid.uuid4().hex[:8]}",
-                recipient_id=post.author_id,
-                sender_id=user_id,
-                type="LIKE",
-                post_id=post_id,
-                message=f"{sender_name} đã thích bài viết của bạn.",
-                is_read=False,
-                created_at=int(time.time() * 1000)
-            )
-            db.add(notif)
+        # Tự động tạo Notification cho tác giả bài viết khi được thả Like
+        crud_notif.create_like_notification(db=db, post_id=post_id, user_id=user_id)
         is_liked = True
 
     db.commit()

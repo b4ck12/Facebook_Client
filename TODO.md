@@ -66,7 +66,7 @@
 
 #### Ngày 05 (Thứ Sáu): Validation Đăng bài, Comment Text-only & Profile Layout
 - [x] `[D5-TD]` **Tùng Dương:** Xử lý chọn 1 ảnh từ thư viện bằng ActivityResultContracts, validate **khóa nút ĐĂNG nếu cả text và ảnh đều rỗng**.
-- [ ] `[D5-ML]` **Minh Lương:** Dựng `bottom_sheet_comments.xml` text-only (**không reply, không react, không ảnh/sticker**).
+- [x] `[D5-ML]` **Minh Lương:** Dựng `bottom_sheet_comments.xml` text-only (**không reply, không react, không ảnh/sticker**).
 - [ ] `[D5-PD]` **Phúc Đức:** Dựng `fragment_profile.xml` (Cover 200dp, Avatar tròn 120dp, Tên, TabLayout).
 - [ ] `[D5-TQH]` **Tạ Quang Huy:** Thiết kế `item_photo_grid.xml` và `PhotoGridAdapter.java` lưới 3 cột cho Profile.
 - [ ] `[D5-AD]` **Ánh Dương:** Viết endpoint `POST /api/posts` (tạo bài viết) và `POST /api/posts/{id}/share` (chia sẻ bài viết).
@@ -79,7 +79,7 @@
 - [ ] `[D6-PD]` **Phúc Đức:** Dựng màn hình `SearchFriendsActivity.xml`, ô tìm kiếm debounce 300ms.
 - [ ] `[D6-TQH]` **Tạ Quang Huy:** Ghép PhotoGrid vào Tab Photos của Profile; chạy test toàn bộ UI trên máy ảo Pixel 10a.
 - [ ] `[D6-AD]` **Ánh Dương:** Viết router `comments.py` trên FastAPI: triển khai `GET /api/posts/{id}/comments` và `POST /api/posts/{id}/comments` text-only.
-- [ ] `[D6-MD]` **Minh Đức:** Viết logic tự động tạo `Notification` trong SQLite khi có tương tác Like / Comment.
+- [x] `[D6-MD]` **Minh Đức:** Viết logic tự động tạo `Notification` trong SQLite khi có tương tác Like / Comment.
 - [ ] `[D6-HDH]` **Hà Đăng Huy:** Rà soát Swagger UI (`/docs`), chuẩn bị dữ liệu test mẫu trong `facebook.db`.
 
 #### Ngày 07 (Chủ Nhật): Review Checkpoint Tuần 1 & Merge vào nhánh `develop`

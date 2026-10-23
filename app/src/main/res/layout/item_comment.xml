@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp">
+
+    <!-- Avatar tác giả bình luận (36dp tròn) -->
+    <ImageView
+        android:id="@+id/iv_comment_avatar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="2dp"
+        android:contentDescription="Comment author avatar"
+        android:src="@drawable/bg_avatar_placeholder" />
+
+    <!-- Cụm nội dung: Bong bóng xám bo góc + Thời gian tương đối bên dưới -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical">
+
+        <!-- Bong bóng bình luận xám bo góc 16dp -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_comment_bubble"
+            android:orientation="vertical"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp">
+
+            <!-- Tên người bình luận (in đậm) -->
+            <TextView
+                android:id="@+id/tv_comment_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/fb_text_primary"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="Nguyễn Văn An" />
+
+            <!-- Nội dung văn bản bình luận (Text-only thuần túy) -->
+            <TextView
+                android:id="@+id/tv_comment_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/fb_text_primary"
+                android:textSize="14sp"
+                tools:text="Bài viết hay và ý nghĩa quá bạn ơi!" />
+
+        </LinearLayout>
+
+        <!-- Thời gian bình luận tương đối (Ví dụ: 5 phút trước) -->
+        <TextView
+            android:id="@+id/tv_comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/fb_text_secondary"
+            android:textSize="11sp"
+            tools:text="5 phút trước" />
+
+    </LinearLayout>
+
+</LinearLayout>
