@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+ <!-- THÊM DÒNG QUYỀN MẠNG NÀY ĐỂ GLIDE TẢI ẢNH MẪU TỪ INTERNET (ML-D5/D6)-->
+    <uses-permission android:name="android.permission.INTERNET" />
+ 
 
   <application
     android:allowBackup="true"
