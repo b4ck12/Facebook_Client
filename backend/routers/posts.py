@@ -58,3 +58,43 @@ def toggle_like(
             detail="Thiếu mã người dùng(user_id). Vui lòng truyền qua query param ?user_id=..."
         )
     return crud_post.toggle_like(db=db, post_id=id, user_id=target_user_id)
+
+@router.post(
+    "",
+    response_model=schemas.PostResponse,
+    status_code=status.HTTP_201_CREATED,
+    summary="Tạo bài viết mới (Create Post)"
+)
+def create_new_post(
+    post_data: schemas.PostCreate,
+    db: Session = Depends(get_db)
+):
+    """
+    Tạo bài viết mới trên Bảng tin.
+    Yêu cầu: Bắt buộc có nội dung chữ hoặc hình ảnh.
+    """
+    return crud_post.create_post(db=db, post_data=post_data)
+
+@router.post(
+    "/{id}/share",
+    response_model=schemas.PostResponse,
+    status_code=status.HTTP_201_CREATED,
+    summary="Chia sẻ bài viết lên dòng thời gian (Share Post)"
+)
+def share_post(
+    id: str,
+    user_id: Optional[str] = Query(None, description="Mã ID người chia sẻ (snake_case)"),
+    userId: Optional[str] = Query(None, description="Mã ID người chia sẻ (camelCase)"),
+    caption: Optional[str] = Query(None, description="Dòng cảm nghĩ đính kèm khi chia sẻ (tùy chọn)"),
+    db: Session = Depends(get_db)
+):
+    """
+    Chia sẻ bài viết gốc lên dòng thời gian của người dùng hiện tại.
+    """
+    target_user_id = user_id or userId
+    if not target_user_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Thiếu mã người dùng (user_id) . Vui lòng truyền qua query param ?user_id= hoặc ?userId="
+        )
+    return crud_post.share_post(db=db, post_id=id, user_id=target_user_id, caption=caption)
