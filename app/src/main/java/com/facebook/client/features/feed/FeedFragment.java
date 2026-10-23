@@ -71,6 +71,11 @@ public class FeedFragment extends BaseFragment<FragmentFeedBinding> {
         getBinding().rvFeedPosts.setLayoutManager(new LinearLayoutManager(context));
         getBinding().rvFeedPosts.setHasFixedSize(true);
         getBinding().rvFeedPosts.setAdapter(postAdapter);
+                // Tắt animation nhấp nháy để khi bấm Like danh sách không bị giật hay tự trượt
+        if (getBinding().rvFeedPosts.getItemAnimator() instanceof androidx.recyclerview.widget.SimpleItemAnimator) {
+            ((androidx.recyclerview.widget.SimpleItemAnimator) getBinding().rvFeedPosts.getItemAnimator())
+                    .setSupportsChangeAnimations(false);
+        }
 
         // 2. Nạp avatar người dùng đang đăng nhập vào thanh Tạo bài viết nhanh
         loadCurrentUserAvatar(context);
@@ -133,34 +138,19 @@ public class FeedFragment extends BaseFragment<FragmentFeedBinding> {
         });
     }
 
-    /**
-     * Xử lý bấm Thích bài viết (Optimistic UI: Đổi màu xanh và cập nhật số lượt like ngay lập tức).
+        /**
+     * Xử lý bấm Thích bài viết (Optimistic Like UI: Đổi icon xanh và tăng/giảm like tức thì).
      */
     private void handleLikeClick(@NonNull Post post, int position) {
+        // 1. Đảo trạng thái trực tiếp (Optimistic UI)
         boolean newLikedState = !post.isLiked();
         int newLikesCount = newLikedState ? post.getLikesCount() + 1 : Math.max(0, post.getLikesCount() - 1);
 
-        // Cập nhật giao diện ngay lập tức
         post.setLiked(newLikedState);
         post.setLikesCount(newLikesCount);
-        postAdapter.updatePostAt(position, post);
 
-        // Gọi cập nhật ngầm xuống tầng dữ liệu
-        postRepository.toggleLike(post.getId(), getCurrentUserId(), new RepositoryCallback<Boolean>() {
-            @Override
-            public void onSuccess(Boolean result) {
-                // Đã đồng bộ thành công
-            }
-
-            @Override
-            public void onError(String message) {
-                // Hoàn tác nếu lỗi
-                post.setLiked(!newLikedState);
-                post.setLikesCount(newLikedState ? post.getLikesCount() - 1 : post.getLikesCount() + 1);
-                postAdapter.updatePostAt(position, post);
-                Toast.makeText(getContext(), "Không thể cập nhật lượt thích", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // 2. Cập nhật giao diện mượt mà tại đúng vị trí
+        postAdapter.notifyItemChanged(position);
     }
 
     /**
