@@ -62,6 +62,11 @@
   <string name="btn_your_friends">your friends</string>
   <string name="FriendRequest_title">Friends request</string>
 
-  <!-- Chuỗi văn bản cho Lưới Ảnh Profile ([D5-TQH]) -->
+  <!-- Chuỗi văn bản cho Lưới Ảnh Profile ([D5-TQH] & [D6-TQH]) -->
   <string name="cd_grid_photo">Photo thumbnail</string>
+  <string name="profile_tab_posts">Posts</string>
+  <string name="profile_tab_photos">Photos</string>
+  <string name="profile_edit_button">Edit profile</string>
+  <string name="profile_empty_photos">No photos to show</string>
+  <string name="profile_default_bio">Living my best life ✨ • Mobile App Developer</string>
 </resources>
