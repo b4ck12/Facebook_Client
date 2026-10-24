@@ -35,7 +35,7 @@
 - [ ] **Ánh Dương (BE Lead):** `[D1-AD]` Họp với Tùng Dương, thống nhất 100% cấu trúc các lớp DTO (`User`, `Post`, `Comment`, `FriendRequest`, `Notification`), định nghĩa DDL SQLite (`schema.sql`) và Interface `IPostRepository`, `IFriendRepository`.
 - [x] **Minh Đức (BE):** `[D1-MD]` Khởi tạo project Python FastAPI trong thư mục `backend/`, thiết lập file `requirements.txt` (FastAPI, Uvicorn, SQLAlchemy, Pydantic), cấu hình kết nối SQLite `facebook.db` và thư mục `static/uploads/`.
 - [x] **Hà Đăng Huy (BE + QA):** `[D1-HDH]` Cài đặt Java 17, Python 3.10+, cấu hình Git cá nhân, tạo tài liệu Kế hoạch Kiểm thử tổng thể (Master Test Plan).
-- [ ] **Minh Lương (FE):** `[D1-ML]` Cài đặt Java 17, Android Studio, cấu hình máy ảo chuẩn `Pixel_10a_API_37`, clone repo dự án về máy.
+- [x] **Minh Lương (FE):** `[D1-ML]` Cài đặt Java 17, Android Studio, cấu hình máy ảo chuẩn `Pixel_10a_API_37`, clone repo dự án về máy.
 - [ ] **Phúc Đức (FE):** `[D1-PD]` Cài đặt Java 17, Android Studio, kiểm tra chạy thử máy ảo `Pixel_10a_API_37`, clone repo dự án về máy.
 - [x] **Tạ Quang Huy (FE + QA):** `[D1-TQH]` Cài đặt Java 17, Android Studio, máy ảo `Pixel_10a_API_37`, clone repo, chuẩn bị bộ Vector Icons chuẩn Facebook (like, comment, share, friends, bell).
 
@@ -48,7 +48,7 @@
 - [ ] **Ánh Dương (BE Lead):** `[D2-AD]` Viết SQLAlchemy models (`models.py`) và Pydantic schemas (`schemas.py`), tạo các bảng trên SQLite: `users`, `posts`, `comments`, `friendships`, `post_likes`, `notifications`.
 - [x] **Minh Đức (BE):** `[D2-MD]` Viết endpoint `POST /api/upload` trên FastAPI tiếp nhận ảnh upload dạng multipart, lưu file vào `static/uploads/` và trả về URL ảnh tĩnh phục vụ Android client.
 - [x] **Hà Đăng Huy (BE + QA):** `[D2-HDH]` Xây dựng script `seed_data.py` (chèn dữ liệu mẫu vào SQLite) và class `MockDataGenerator.java` sinh sẵn 10 bài viết mẫu, 5 bạn bè, 5 thông báo trong bộ nhớ để FE dùng ngay.
-- [ ] **Minh Lương (FE):** `[D2-ML]` Tạo class `MockPostRepository.java` thực thi `IPostRepository`, trả về danh sách bài viết giả lập từ `MockDataGenerator`.
+- [x] **Minh Lương (FE):** `[D2-ML]` Tạo class `MockPostRepository.java` thực thi `IPostRepository`, trả về danh sách bài viết giả lập từ `MockDataGenerator`.
 - [x] **Phúc Đức (FE):** `[D2-PD]` Hoàn thiện class `MockFriendRepository.java` thực thi `IFriendRepository`, đồng bộ dữ liệu bạn bè và lời mời kết bạn từ `MockDataGenerator`.
 - [x] **Tạ Quang Huy (FE + QA):** `[D2-TQH]` Tạo class `MockNotificationRepository.java`, dựng sẵn bộ dữ liệu thông báo mẫu; import đầy đủ 21 vector icons Facebook vào `res/drawable`.
 
@@ -58,7 +58,7 @@
 *Mục tiêu ngày 3: Khung điều hướng 4 Tab hoàn thiện, thẻ bài viết item_post lên hình, Feed API sẵn sàng.*
 
 - [ ] **Tùng Dương (FE Lead):** `[D3-TD]` Dựng `MainActivity.xml`, gắn `BottomNavigationView` với 4 Tab: Feed, Friends, Notifications, Profile; tạo `NavigationComponent` chuyển tab mượt mà.
-- [ ] **Minh Lương (FE):** `[D3-ML]` Thiết kế layout `item_post.xml` (Header avatar tròn, tên, thời gian, text nội dung, khung ảnh đính kèm, stats lượt like/comment).
+- [x] **Minh Lương (FE):** `[D3-ML]` Thiết kế layout `item_post.xml` (Header avatar tròn, tên, thời gian, text nội dung, khung ảnh đính kèm, stats lượt like/comment).
 - [ ] **Phúc Đức (FE):** `[D3-PD]` Thiết kế layout `fragment_friends.xml` và `item_friend_request.xml` (Avatar, tên người gửi, nút Confirm màu xanh, nút Delete màu xám).
 - [x] **Tạ Quang Huy (FE + QA):** `[D3-TQH]` Thiết kế layout `fragment_notifications.xml` và `item_notification.xml` (Avatar người tương tác, nội dung thông báo, icon loại tương tác).
 - [ ] **Ánh Dương (BE Lead):** `[D3-AD]` Viết router `posts.py` trên FastAPI: Triển khai endpoint `GET /api/posts` truy vấn bảng `posts` trong SQLite kèm số like, số comment sắp xếp theo `created_at DESC`.
@@ -71,7 +71,7 @@
 *Mục tiêu ngày 4: Bấm like đổi màu ngay lập tức, mở form tạo bài viết chọn ảnh từ thư viện, API Like hoàn tất.*
 
 - [ ] **Tùng Dương (FE Lead):** `[D4-TD]` Dựng giao diện `activity_create_post.xml` (Top bar có nút ĐĂNG, Header người dùng Public, ô nhập text không viền, nút đính kèm ảnh duy nhất có icon xanh).
-- [ ] **Minh Lương (FE):** `[D4-ML]` Viết `PostAdapter.java` kết nối RecyclerView cho Feed; gắn sự kiện click nút Thích (Optimistic UI: đổi icon xanh và tăng số like ngay lập tức mà không chờ mạng).
+- [x] **Minh Lương (FE):** `[D4-ML]` Viết `PostAdapter.java` kết nối RecyclerView cho Feed; gắn sự kiện click nút Thích (Optimistic UI: đổi icon xanh và tăng số like ngay lập tức mà không chờ mạng).
 - [ ] **Phúc Đức (FE):** `[D4-PD]` Viết `FriendRequestAdapter.java`, xử lý sự kiện bấm nút "Chấp nhận" (Confirm) và "Xóa" (Delete) trên danh sách lời mời kết bạn.
 - [x] **Tạ Quang Huy (FE + QA):** `[D4-TQH]` Viết `NotificationAdapter.java`, xử lý hiển thị trạng thái đã đọc / chưa đọc (nền xám nhạt) và thời gian tương đối ("5 phút trước").
 - [ ] **Ánh Dương (BE Lead):** `[D4-AD]` Viết endpoint `POST /api/posts/{id}/like` trên FastAPI xử lý thêm/xóa bản ghi trong bảng `post_likes` (Toggle Like transaction trong SQLite).
@@ -97,7 +97,7 @@
 *Mục tiêu ngày 6: Tất cả các màn hình bấm được, chạy mượt mà trên máy ảo Pixel 10a; API Swagger UI test xanh 100%.*
 
 - [x] **Tùng Dương (FE Lead):** `[D6-TD]` Xây dựng màn hình Đăng nhập 1 chạm (`AccountChooserActivity`), quản lý phiên `SessionManager` và hộp thoại Đổi tài khoản Demo.
-- [ ] **Minh Lương (FE):** `[D6-ML]` Kết nối `CommentViewModel` với `CommentBottomSheetDialog`, gửi comment text và hiển thị ngay vào RecyclerView; làm AlertDialog "Chia sẻ ngay" khi bấm nút Share.
+- [x] **Minh Lương (FE):** `[D6-ML]` Kết nối `CommentViewModel` với `CommentBottomSheetDialog`, gửi comment text và hiển thị ngay vào RecyclerView; làm AlertDialog "Chia sẻ ngay" khi bấm nút Share.
 - [ ] **Phúc Đức (FE):** `[D6-PD]` Dựng màn hình `activity_search_friends.xml`, gắn ô tìm kiếm với danh sách bạn bè mẫu, xử lý debounce nhập liệu 300ms.
 - [x] **Tạ Quang Huy (FE + QA):** `[D6-TQH]` Ghép `PhotoGridAdapter` vào Tab Photos của Profile; chạy thử nghiệm toàn bộ giao diện trên máy ảo `Pixel_10a_API_37`, chụp ảnh các màn hình báo cáo.
 - [ ] **Ánh Dương (BE Lead):** `[D6-AD]` Viết router `comments.py` trên FastAPI: Triển khai endpoint `GET /api/posts/{id}/comments` và `POST /api/posts/{id}/comments` (chỉ nhận text thuần túy).
@@ -111,7 +111,7 @@
 
 - [ ] **Tùng Dương (FE Lead):** `[D7-TD]` Review toàn bộ Pull Request của 3 bạn FE (`Minh Lương`, `Phúc Đức`, `Tạ Quang Huy`), phê duyệt và merge vào nhánh `develop`.
 - [ ] **Ánh Dương (BE Lead):** `[D7-AD]` Review toàn bộ Pull Request của 2 bạn BE (`Minh Đức`, `Hà Đăng Huy`), kiểm tra máy chủ FastAPI và file `facebook.db`, phê duyệt và merge vào nhánh `develop`.
-- [ ] **Minh Lương (FE):** `[D7-ML]` Giải quyết xung đột giao diện (nếu có), đảm bảo app build xanh không có cảnh báo.
+- [x] **Minh Lương (FE):** `[D7-ML]` Giải quyết xung đột giao diện (nếu có), đảm bảo app build xanh không có cảnh báo.
 - [ ] **Phúc Đức (FE):** `[D7-PD]` Đồng bộ nhánh `develop` về máy, test luồng Friends và Profile chạy trơn tru.
 - [x] **Minh Đức (BE):** `[D7-MD]` Kiểm tra thư mục upload ảnh `/static/uploads/` và file `facebook.db` trên nhánh `develop`.
 - [ ] **Hà Đăng Huy (BE + QA):** `[D7-HDH]` Tổng hợp báo cáo kiểm thử Tuần 1: Xác nhận 100% màn hình UI hoạt động hoàn hảo với Mock Data và 100% API FastAPI đã sẵn sàng trên Swagger UI.

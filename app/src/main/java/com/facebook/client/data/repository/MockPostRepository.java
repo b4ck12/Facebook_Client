@@ -4,7 +4,7 @@ import com.facebook.client.data.model.Comment;
 import com.facebook.client.data.model.Post;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +14,7 @@ import java.util.UUID;
  * Repository giả lập (Mock Data) phục vụ phân hệ Bảng tin (Home Feed) và Bình luận (Comments).
  * Cho phép nhóm Frontend phát triển và kiểm thử giao diện độc lập ở Tuần 1 mà không phụ thuộc vào Backend.
  */
+@SuppressWarnings("SpellCheckingInspection")
 public class MockPostRepository implements IPostRepository {
 
     private static final List<Post> MOCK_POSTS = new ArrayList<>();
@@ -210,7 +211,7 @@ public class MockPostRepository implements IPostRepository {
                 "Phạm Minh Tuấn",
                 "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
                 "Đợt tới bảo vệ đồ án xong cả nhóm mình làm một chuyến nhé!",
-                now - (1 * 60 * 1000)
+                now - (60 * 1000)
         ));
         MOCK_COMMENTS_MAP.put("post_1001", commentsPost1001);
 
@@ -273,8 +274,7 @@ public class MockPostRepository implements IPostRepository {
         }
 
         List<Post> resultList = new ArrayList<>(MOCK_POSTS);
-        Collections.sort(resultList, (p1, p2) -> Long.compare(p2.getCreatedAt(), p1.getCreatedAt()));
-
+        resultList.sort((p1, p2) -> Long.compare(p2.getCreatedAt(), p1.getCreatedAt()));
         if (limit > 0 && resultList.size() > limit) {
             resultList = new ArrayList<>(resultList.subList(0, limit));
         }
@@ -356,7 +356,7 @@ public class MockPostRepository implements IPostRepository {
         }
 
         List<Comment> copyList = new ArrayList<>(comments);
-        Collections.sort(copyList, (c1, c2) -> Long.compare(c1.getCreatedAt(), c2.getCreatedAt()));
+                copyList.sort(Comparator.comparingLong(Comment::getCreatedAt));
         callback.onSuccess(copyList);
     }
 

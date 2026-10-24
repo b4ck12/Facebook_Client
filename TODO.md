@@ -85,7 +85,7 @@
 #### Ngày 07 (Chủ Nhật): Review Checkpoint Tuần 1 & Merge vào nhánh `develop`
 - [ ] `[D7-TD]` **Tùng Dương:** Review PR của nhóm FE, merge vào `develop`.
 - [ ] `[D7-AD]` **Ánh Dương:** Review PR của nhóm BE, kiểm tra máy chủ FastAPI và file `facebook.db`, merge vào `develop`.
-- [ ] `[D7-ML]` **Minh Lương:** Giải quyết xung đột giao diện, xác nhận build xanh.
+- [x] `[D7-ML]` **Minh Lương:** Giải quyết xung đột giao diện, xác nhận build xanh.
 - [ ] `[D7-PD]` **Phúc Đức:** Đồng bộ nhánh `develop`, kiểm tra Friends và Profile.
 - [x] `[D7-MD]` **Minh Đức:** Kiểm tra thư mục upload ảnh `/static/uploads/` và file `facebook.db` trên `develop`.
 - [ ] `[D7-HDH]` **Hà Đăng Huy:** Báo cáo kiểm thử Tuần 1: 100% màn hình UI hoạt động hoàn hảo và 100% API FastAPI sẵn sàng trên Swagger UI.
