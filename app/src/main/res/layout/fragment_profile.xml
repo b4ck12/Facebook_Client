@@ -1,38 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Layout khung (Skeleton) cho Màn hình Trang cá nhân (Profile).
-  Thành viên phụ trách mở rộng chi tiết ([D5-PD]): Phúc Đức (FE) & Tạ Quang Huy (FE).
+  Giao diện Màn hình Trang cá nhân (Profile Screen - [D5-PD], [D6-TQH]).
+  Tuân thủ chuẩn Facebook Client Design System (03_DESIGN_SYSTEM.md):
+  1. Header đỉnh: Ảnh bìa 200dp (iv_profile_cover) + Avatar tròn 120dp đè 50% lên mép dưới ảnh bìa.
+  2. Thông tin cá nhân: Tên hiển thị (22sp bold), Tiểu sử ngắn (bio), Nút "Chỉnh sửa trang cá nhân" (btn_edit_profile).
+  3. Thanh phân chia Tab (TabLayout: tab_layout_profile): Tab "Ảnh & Video" (Photos) và Tab "Bài viết" (Posts).
+  4. Lưới ảnh 3 cột (rv_profile_photos): Nhúng PhotoGridAdapter với các item_photo_grid.xml ô vuông 1:1.
+  5. Danh sách bài viết (rv_profile_posts): Hiển thị bài viết cá nhân bằng PostAdapter.
 -->
-<androidx.constraintlayout.widget.ConstraintLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/layout_profile_root"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="@color/fb_background"
-  tools:context=".features.profile.ProfileFragment">
-
-<ImageView
-    android:id="@+id/iv_profile_cover"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_profile_root"
     android:layout_width="match_parent"
-    android:layout_height="220dp"
-    android:scaleType="centerCrop"
-    android:background="@color/fb_divider"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent" />
+    android:layout_height="match_parent"
+    android:background="@color/fb_surface"
+    android:fillViewport="true"
+    tools:context=".features.profile.ProfileFragment">
 
-<com.google.android.material.imageview.ShapeableImageView
-    android:id="@+id/iv_profile_avatar"
-    android:layout_width="120dp"
-    android:layout_height="120dp"
-    android:src="@drawable/ic_profile"
-    app:layout_constraintBottom_toBottomOf="@id/iv_profile_cover"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
-    />
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/layout_profile_content"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- ========================================================================= -->
+    <!-- 1. KHU VỰC ẢNH BÌA (COVER PHOTO) & ẢNH ĐẠI DIỆN TRÒN (AVATAR)             -->
+    <!-- ========================================================================= -->
 
+    <!-- Ảnh bìa Profile: Chiều cao chuẩn 200dp theo Design System -->
+    <ImageView
+        android:id="@+id/iv_profile_cover"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cover_height_profile"
+        android:background="@color/fb_divider"
+        android:contentDescription="@string/placeholder_profile_title"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/bg_avatar_placeholder" />
+
+    <!-- 
+      Ảnh đại diện tròn 120dp:
+      - ShapeableImageView với bo tròn 100% (Corner.Full).
+      - layout_marginTop="-60dp": Kỹ thuật lề âm giúp avatar đè 50% lên mép dưới ảnh bìa chuẩn Facebook.
+      - strokeWidth="4dp" & strokeColor="@color/white": Viền trắng 4dp bao quanh avatar phân tách với nền.
+    -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_profile_avatar"
+        android:layout_width="@dimen/avatar_size_profile"
+        android:layout_height="@dimen/avatar_size_profile"
+        android:layout_marginTop="-60dp"
+        android:contentDescription="@string/cd_author_avatar"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_profile_cover"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+        app:strokeColor="@color/white"
+        app:strokeWidth="4dp" />
+
+    <!-- ========================================================================= -->
+    <!-- 2. THÔNG TIN NGƯỜI DÙNG & NÚT HÀNH ĐỘNG                                   -->
+    <!-- ========================================================================= -->
+
+    <!-- Tên hiển thị người dùng (22sp Bold) -->
+    <TextView
+        android:id="@+id/tv_profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_sm"
+        android:textColor="@color/fb_text_primary"
+        android:textSize="@dimen/text_size_headline"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_profile_avatar"
+        tools:text="Alex Johnson" />
+
+    <!-- Tiểu sử người dùng (Bio) -->
+    <TextView
+        android:id="@+id/tv_profile_bio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/spacing_xl"
+        android:text="@string/profile_default_bio"
+        android:textColor="@color/fb_text_secondary"
+        android:textSize="@dimen/text_size_body"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_name" />
+
+    <!-- Nút "Chỉnh sửa trang cá nhân" (Edit Profile Button) -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_edit_profile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_lg"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:text="@string/profile_edit_button"
+        android:textAllCaps="false"
+        android:textColor="@color/fb_text_primary"
+        android:textSize="@dimen/text_size_title"
+        android:textStyle="bold"
+        app:backgroundTint="@color/fb_surface_variant"
+        app:cornerRadius="@dimen/radius_md"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_bio" />
+
+    <!-- Đường đệm màu xám phân tách phần Header với các Tab nội dung -->
+    <View
+        android:id="@+id/view_profile_divider"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_marginTop="@dimen/spacing_lg"
+        android:background="@color/fb_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_edit_profile" />
+
+    <!-- ========================================================================= -->
+    <!-- 3. THANH ĐIỀU HƯỚNG TAB: "ẢNH & VIDEO" VÀ "BÀI VIẾT"                       -->
+    <!-- ========================================================================= -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout_profile"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/fb_surface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_profile_divider"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/fb_blue"
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/fb_blue"
+        app:tabTextColor="@color/fb_text_secondary" />
+
+    <!-- Đường phân cách 1dp dưới TabLayout -->
+    <View
+        android:id="@+id/view_tab_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/fb_divider_light"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout_profile" />
+
+    <!-- ========================================================================= -->
+    <!-- 4. TAB 1: LƯỚI ẢNH 3 CỘT (PHOTO GRID RECYCLERVIEW - [D5-TQH], [D6-TQH])    -->
+    <!-- ========================================================================= -->
+    <!--
+      RecyclerView hiển thị kho ảnh cá nhân:
+      - nestedScrollingEnabled="false": Nhường quyền cuộn mượt cho NestedScrollView bên ngoài.
+      - GridLayoutManager(context, 3): Sắp xếp lưới 3 cột đều nhau với item_photo_grid.xml.
+    -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_profile_photos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        android:padding="1dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_tab_divider"
+        tools:listitem="@layout/item_photo_grid" />
+
+    <!-- ========================================================================= -->
+    <!-- 5. TAB 2: DANH SÁCH BÀI VIẾT CÁ NHÂN (ALL POSTS RECYCLERVIEW)              -->
+    <!-- ========================================================================= -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_profile_posts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_tab_divider"
+        tools:listitem="@layout/item_post" />
+
+    <!-- Giao diện trống khi Tab Ảnh không có dữ liệu (Empty State) -->
+    <LinearLayout
+        android:id="@+id/layout_empty_photos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingVertical="@dimen/spacing_xl"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/view_tab_divider">
+
+      <ImageView
+          android:layout_width="48dp"
+          android:layout_height="48dp"
+          android:contentDescription="@string/profile_empty_photos"
+          android:src="@drawable/ic_photo_library"
+          app:tint="@color/fb_action_gray" />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/spacing_sm"
+          android:text="@string/profile_empty_photos"
+          android:textColor="@color/fb_text_secondary"
+          android:textSize="@dimen/text_size_body" />
+    </LinearLayout>
+
+    <!-- ProgressBar xoay tròn khi đang tải thông tin Profile -->
+    <ProgressBar
+        android:id="@+id/pb_profile_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/spacing_xl"
+        android:indeterminateTint="@color/fb_blue"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_tab_divider" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
