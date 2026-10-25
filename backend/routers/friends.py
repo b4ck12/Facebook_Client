@@ -115,6 +115,62 @@ def reject_friend_request(
         current_user_id=resolved_curr_id
     )
 
+@router.post(
+    "/{request_id}/accept",
+    response_model=schemas.FriendActionResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Chấp nhận lời mời kết bạn qua Path",
+    include_in_schema=False
+)
+@router.post(
+    "/requests/{request_id}/accept",
+    response_model=schemas.FriendActionResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Chấp nhận lời mời kết bạn qua Requests Path",
+    include_in_schema=False
+)
+def accept_friend_request_by_path(
+    request_id: str,
+    current_user_id: Optional[str] = Query(None),
+    currentUserId: Optional[str] = Query(None),
+    db: Session = Depends(get_db)
+):
+    resolved_curr_id = current_user_id or currentUserId
+    return crud_friend.accept_friend_request(
+        db=db,
+        request_id=request_id,
+        current_user_id=resolved_curr_id
+    )
+
+
+@router.post(
+    "/{request_id}/reject",
+    response_model=schemas.FriendActionResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Từ chối hoặc xóa lời mời kết bạn qua Path",
+    include_in_schema=False
+)
+@router.post(
+    "/requests/{request_id}/reject",
+    response_model=schemas.FriendActionResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Từ chối hoặc xóa lời mời kết bạn qua Requests Path",
+    include_in_schema=False
+)
+def reject_friend_request_by_path(
+    request_id: str,
+    current_user_id: Optional[str] = Query(None),
+    currentUserId: Optional[str] = Query(None),
+    db: Session = Depends(get_db)
+):
+    resolved_curr_id = current_user_id or currentUserId
+    return crud_friend.reject_friend_request(
+        db=db,
+        request_id=request_id,
+        current_user_id=resolved_curr_id
+    )
+
+
 
 # ============================================================================
 # NGÀY 05 (D5-HDH): TÌM KIẾM BẠN BÈ & HOÀN THIỆN HỢP ĐỒNG API

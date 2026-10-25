@@ -33,8 +33,8 @@ def get_friend_requests(
         .filter(models.Friendship.status == "PENDING")
     )
 
-    if user_id:
-        query = query.filter(models.Friendship.receiver_id == user_id)
+    if user_id and str(user_id).strip():
+        query = query.filter(models.Friendship.receiver_id == str(user_id).strip())
 
     friendships = (
         query.order_by(desc(models.Friendship.created_at))
@@ -74,10 +74,11 @@ def accept_friend_request(
     if request_id:
         friendship = db.query(models.Friendship).filter(models.Friendship.id == request_id).first()
 
-    if not friendship and user_id and current_user_id:
+    effective_curr_id = current_user_id or "user_current"
+    if not friendship and user_id:
         friendship = db.query(models.Friendship).filter(
             models.Friendship.requester_id == user_id,
-            models.Friendship.receiver_id == current_user_id,
+            models.Friendship.receiver_id == effective_curr_id,
             models.Friendship.status == "PENDING"
         ).first()
 
@@ -133,10 +134,11 @@ def reject_friend_request(
     if request_id:
         friendship = db.query(models.Friendship).filter(models.Friendship.id == request_id).first()
 
-    if not friendship and user_id and current_user_id:
+    effective_curr_id = current_user_id or "user_current"
+    if not friendship and user_id:
         friendship = db.query(models.Friendship).filter(
             models.Friendship.requester_id == user_id,
-            models.Friendship.receiver_id == current_user_id
+            models.Friendship.receiver_id == effective_curr_id
         ).first()
 
     if not friendship:
@@ -144,6 +146,13 @@ def reject_friend_request(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Lời mời kết bạn không tồn tại"
         )
+
+    if friendship.status == "REJECTED":
+        return {
+            "success": True,
+            "message": "Lời mời kết bạn đã được từ chối trước đó",
+            "status": "REJECTED"
+        }
 
     friendship.status = "REJECTED"
     db.commit()

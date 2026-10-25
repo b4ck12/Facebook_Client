@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, UniqueConstraint, Text
+from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, UniqueConstraint, Text, Index
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -81,6 +81,9 @@ class Friendship(Base):
 
     __table_args__ = (
         UniqueConstraint("requester_id", "receiver_id", name="uq_friendship_requester_receiver"),
+        Index("idx_friendships_receiver_created", "receiver_id", "status", "created_at"),
+        Index("idx_friendships_requester", "requester_id", "status"),
+        Index("idx_friendships_status", "status"),
     )
 
     requester = relationship("User", foreign_keys=[requester_id])
