@@ -100,9 +100,9 @@
 - [ ] `[D8-ML]` **Minh Lương:** Chuyển `FeedViewModel` sang dùng `PostRepositoryImpl`, lấy bài viết thật từ FastAPI + SQLite (`GET /api/posts`); kiểm tra Like đồng bộ lên server.
 - [ ] `[D8-AD]` **Ánh Dương:** Hỗ trợ debug kết nối Retrofit với FastAPI, cấu hình CORS Middleware và log request Uvicorn.
 - [ ] `[D8-PD]` **Phúc Đức:** Ghép `FriendRepositoryImpl` vào `FriendsViewModel`, tải danh sách lời mời kết bạn từ `GET /api/friends/requests`.
-- [ ] `[D8-MD]` **Minh Đức:** Hỗ trợ debug dữ liệu bạn bè và câu lệnh SQL trong SQLite.
+- [x] `[D8-MD]` **Minh Đức:** Hỗ trợ debug dữ liệu bạn bè và câu lệnh SQL trong SQLite.
 - [ ] `[D8-HDH]` **Hà Đăng Huy:** Test độc lập API kết bạn trên 2 tài khoản demo qua Postman / Swagger UI.
-- [ ] `[D8-TQH]` **Tạ Quang Huy:** Ghép `NotificationRepositoryImpl` vào Notifications, gọi API `GET /api/notifications` từ FastAPI server.
+- [x] `[D8-TQH]` **Tạ Quang Huy:** Ghép `NotificationRepositoryImpl` vào Notifications, gọi API `GET /api/notifications` từ FastAPI server.
 
 #### Ngày 09 (Thứ Ba): Tích hợp Real Backend vào Profile & Bạn bè
 - [ ] `[D9-PD]` **Phúc Đức:** Hoàn tất tích hợp dữ liệu thật cho Profile: ảnh bìa, avatar, bài viết cá nhân từ endpoint `/api/users/{id}` và `/api/users/{id}/posts`.

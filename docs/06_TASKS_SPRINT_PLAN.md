@@ -136,9 +136,9 @@
 - [ ] **Minh Lương (FE):** `[D8-ML]` Chuyển `FeedViewModel` sang dùng `PostRepositoryImpl`, lấy dữ liệu bài viết thật từ FastAPI + SQLite (`GET /api/posts`); kiểm tra thao tác Like (`POST /api/posts/{id}/like`) đồng bộ lên server.
 - [ ] **Ánh Dương (BE Lead):** `[D8-AD]` Hỗ trợ Tùng Dương và Minh Lương gỡ lỗi (debug) kết nối Retrofit với FastAPI, cấu hình CORS Middleware và log request Uvicorn.
 - [ ] **Phúc Đức (FE):** `[D8-PD]` Bắt đầu ghép `FriendRepositoryImpl` vào `FriendsViewModel`, gọi API tải danh sách lời mời kết bạn từ endpoint `GET /api/friends/requests`.
-- [ ] **Minh Đức (BE):** `[D8-MD]` Hỗ trợ Phúc Đức gỡ lỗi dữ liệu bạn bè; kiểm tra câu lệnh SQL trong SQLite.
+- [x] **Minh Đức (BE):** `[D8-MD]` Hỗ trợ Phúc Đức gỡ lỗi dữ liệu bạn bè; kiểm tra câu lệnh SQL trong SQLite.
 - [ ] **Hà Đăng Huy (BE + QA):** `[D8-HDH]` Kiểm thử độc lập API kết bạn bằng cách test trên 2 tài khoản demo khác nhau xem lời mời có đến đúng người không.
-- [ ] **Tạ Quang Huy (FE + QA):** `[D8-TQH]` Ghép `NotificationRepositoryImpl` vào `NotificationViewModel`, gọi API `GET /api/notifications` từ FastAPI server.
+- [x] **Tạ Quang Huy (FE + QA):** `[D8-TQH]` Ghép `NotificationRepositoryImpl` vào `NotificationViewModel`, gọi API `GET /api/notifications` từ FastAPI server.
 
 ---
 
