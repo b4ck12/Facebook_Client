@@ -83,4 +83,7 @@ CREATE INDEX IF NOT EXISTS idx_posts_created ON posts(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_comments_post ON comments(post_id, created_at ASC);
 CREATE INDEX IF NOT EXISTS idx_likes_post ON post_likes(post_id);
 CREATE INDEX IF NOT EXISTS idx_friendships_receiver ON friendships(receiver_id, status);
+CREATE INDEX IF NOT EXISTS idx_friendships_requester ON friendships(requester_id, status);
+CREATE INDEX IF NOT EXISTS idx_friendships_receiver_created ON friendships(receiver_id, status, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_friendships_status ON friendships(status);
 CREATE INDEX IF NOT EXISTS idx_notifications_recipient ON notifications(recipient_id, created_at DESC);
