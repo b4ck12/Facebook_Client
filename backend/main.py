@@ -1,4 +1,5 @@
 import os
+import time
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -24,6 +25,30 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 
+# Middleware ghi log chi tiết request phục vụ Android Retrofit Debugging 
+@app.middleware("http")
+async def log_requests_middleware(request: Request, call_next):
+    start_time = time.time()
+    client_ip = request.client.host if request.client else "unknow"
+    method = request.method
+    path = request.url.path
+    query = request.url.query
+    full_path = f"{path}?{query}" if query else path
+
+    #Thực thi request và tính thời gian xử lí (ms)
+    response = await call_next(request)
+    process_time_ms = round((time.time() - start_time) * 1000, 2)
+    status_code = response.status_code
+
+    #Biểu tượng trạng thái trực quan 
+    status_symbol = "✓" if status_code < 400 else "X"
+    print(f"[{status_symbol}] {method} {full_path} | Status: {status_code} | Time: {process_time_ms}ms | Client: {client_ip}")
+
+    #Đính kèm header thời gian xử lí vào response
+    response.headers["X-Process-Time-Ms"] = str(process_time_ms)
+    return response
+
+
 # Cấu hình CORS Middleware cho phép mọi client truy cập
 app.add_middleware(
     CORSMiddleware,
@@ -31,6 +56,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # Mount thư mục static phục vụ file ảnh tĩnh
@@ -72,4 +98,18 @@ def health_check():
         "framework": "FastAPI",
         "database": "SQLite (facebook.db)",
         "message": "Facebook Client Backend is running smoothly"
+    }
+@app.get("/api/network-test", tags=["Health Check"])
+def network_connectivity_test(request: Request):
+    """
+    Endpoint kiểm tra kết nối mạng chuyên dụng dành cho Android Retrofit Client (D8-AD).
+    Client từ máy ảo Google Pixel 10a (10.0.2.2:8000) có thể gọi vào đây để test kết nối.
+    """
+    client_ip = request.client.host if request.client else "unknow"
+    return {
+        "status" : "connected",
+        "message" : "Kết nối thành công từ Androi CLient tới FastAPI Backend !",
+        "client_ip" : client_ip,
+        "server_time" : int(time.time() * 1000),
+        "target_api" : "Facebook Mobile Client RESTful API"
     }
