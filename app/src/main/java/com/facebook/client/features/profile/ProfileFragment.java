@@ -1,226 +1,268 @@
 package com.facebook.client.features.profile;
 
-import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
 import com.facebook.client.R;
 import com.facebook.client.core.base.BaseFragment;
-import com.facebook.client.core.utils.SessionManager;
-import com.facebook.client.data.mock.MockDataGenerator;
+import com.facebook.client.core.utils.FriendsProfileUi;
 import com.facebook.client.data.model.Post;
+import com.facebook.client.data.model.User;
 import com.facebook.client.data.repository.IProfileRepository;
+import com.facebook.client.data.repository.IPostRepository;
 import com.facebook.client.data.repository.MockProfileRepository;
+import com.facebook.client.data.repository.MockPostRepository;
 import com.facebook.client.data.repository.RepositoryCallback;
 import com.facebook.client.databinding.FragmentProfileBinding;
+import com.facebook.client.features.comment.CommentBottomSheetDialog;
+import com.facebook.client.features.feed.PostAdapter;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Màn hình Trang cá nhân (Profile Screen) - Ghép PhotoGrid vào Tab Photos ([D6-TQH]).
- */
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding> {
+    private static final String ARG_USER_ID = "viewed_user_id";
+    private final IProfileRepository profileRepository = new MockProfileRepository();
+    private final IPostRepository postRepository = new MockPostRepository();
+    private PhotoGridAdapter photoAdapter;
+    private PostAdapter postAdapter;
+    private String viewedUserId;
+    private int selectedTab;
+    private int generation;
+    private int pendingLoads;
+    private String loadError;
 
-    // Adapter quản lý hiển thị danh sách ảnh dạng lưới 3 cột
-    private PhotoGridAdapter photoGridAdapter;
-    private IProfileRepository profileRepository;
-    private String currentUserId;
+    private final FragmentManager.FragmentLifecycleCallbacks commentLifecycle =
+            new FragmentManager.FragmentLifecycleCallbacks() {
+                @Override public void onFragmentDetached(@NonNull FragmentManager manager,
+                                                         @NonNull Fragment fragment) {
+                    if (fragment instanceof CommentBottomSheetDialog && isResumed() && getView() != null) {
+                        loadProfile();
+                    }
+                }
+            };
 
-    @Override
-    protected FragmentProfileBinding inflateBinding(
+    public static ProfileFragment newInstance(String userId) {
+        ProfileFragment fragment = new ProfileFragment();
+        Bundle arguments = new Bundle();
+        arguments.putString(ARG_USER_ID, userId);
+        fragment.setArguments(arguments);
+        return fragment;
+    }
+
+    @Override public void onCreate(@Nullable Bundle state) {
+        super.onCreate(state);
+        selectedTab = state == null ? 0 : state.getInt("selected_tab", 0);
+        getChildFragmentManager().registerFragmentLifecycleCallbacks(commentLifecycle, false);
+    }
+
+    @Override protected FragmentProfileBinding inflateBinding(
             @NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
         return FragmentProfileBinding.inflate(inflater, container, false);
     }
 
-    @Override
-    protected void initViews() {
-        initRepositoryAndUser();
-
-        // Cài đặt lưới ảnh 3 cột
-        setupPhotoGridRecyclerView();
-
-        // Cài đặt TabLayout chuyển tab Photos và Posts
-        setupTabLayout();
-
-        // Tải dữ liệu ảnh mẫu đổ vào PhotoGridAdapter
-        loadUserPhotos();
-
-        // Khung chờ giao diện Header và bài viết của Phúc Đức (D5-PD / D9-PD)
-        setupOtherMemberPlaceholders();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Tự động tải lại ảnh nếu người dùng đổi tài khoản đăng nhập ở Top Bar
-        if (getContext() != null) {
-            String activeUserId = SessionManager.getInstance(getContext()).getCurrentUserId();
-            if (activeUserId != null && !activeUserId.equals(currentUserId)) {
-                currentUserId = activeUserId;
-                loadUserPhotos();
+    @Override protected void initViews() {
+        photoAdapter = new PhotoGridAdapter((url, position) -> showPhoto(url));
+        getBinding().rvProfilePhotos.setLayoutManager(new GridLayoutManager(requireContext(), 3));
+        getBinding().rvProfilePhotos.setAdapter(photoAdapter);
+        postAdapter = new PostAdapter(new PostAdapter.OnPostActionListener() {
+            @Override public void onLikeClick(@NonNull Post post, int position) { like(post); }
+            @Override public void onCommentClick(@NonNull Post post) {
+                if (getChildFragmentManager().findFragmentByTag("profile_comments") == null) {
+                    CommentBottomSheetDialog.newInstance(post.getId())
+                            .show(getChildFragmentManager(), "profile_comments");
+                }
             }
-        }
-    }
-
-    private void initRepositoryAndUser() {
-        profileRepository = new MockProfileRepository();
-        if (getContext() != null) {
-            currentUserId = SessionManager.getInstance(getContext()).getCurrentUserId();
-        }
-        if (currentUserId == null || currentUserId.trim().isEmpty()) {
-            currentUserId = MockDataGenerator.getInstance().getCurrentUserId();
-        }
-    }
-
-    /**
-     * Cài đặt RecyclerView hiển thị ảnh dạng lưới 3 cột:
-     * - GridLayoutManager chia 3 cột đều nhau.
-     * - Tắt cuộn nội bộ để nhường quyền cuộn mượt cho NestedScrollView.
-     * - Gắn bộ lắng nghe sự kiện click vào ảnh để mở xem chi tiết.
-     */
-    private void setupPhotoGridRecyclerView() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 3);
-        getBinding().rvProfilePhotos.setLayoutManager(gridLayoutManager);
-        getBinding().rvProfilePhotos.setHasFixedSize(true);
-        getBinding().rvProfilePhotos.setNestedScrollingEnabled(false); // Tránh xung đột cuộn với NestedScrollView
-
-        // Bắt sự kiện click vào ô ảnh để mở hộp thoại phóng to
-        photoGridAdapter = new PhotoGridAdapter((photoUrl, position) -> showPhotoPreviewDialog(photoUrl, position));
-        getBinding().rvProfilePhotos.setAdapter(photoGridAdapter);
-    }
-
-    /**
-     * Cài đặt thanh TabLayout với 2 tab: Ảnh (Photos) và Bài viết (Posts).
-     */
-    private void setupTabLayout() {
-        TabLayout tabLayout = getBinding().tabLayoutProfile;
-        tabLayout.removeAllTabs();
-
-        TabLayout.Tab tabPhotos = tabLayout.newTab().setText(R.string.profile_tab_photos);
-        TabLayout.Tab tabPosts = tabLayout.newTab().setText(R.string.profile_tab_posts);
-
-        tabLayout.addTab(tabPhotos, true);  // Mặc định chọn Tab Photos để kiểm thử lưới ảnh
-        tabLayout.addTab(tabPosts, false);
-
-        // Lắng nghe sự kiện chuyển đổi tab
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switchTabContent(tab.getPosition());
+            @Override public void onShareClick(@NonNull Post post) { share(post); }
+        });
+        getBinding().rvProfilePosts.setLayoutManager(new LinearLayoutManager(requireContext()));
+        getBinding().rvProfilePosts.setAdapter(postAdapter);
+        getBinding().rvProfilePosts.setNestedScrollingEnabled(false);
+        getBinding().rvProfilePhotos.setNestedScrollingEnabled(false);
+        getBinding().btnProfileRetry.setOnClickListener(view -> loadProfile());
+        TabLayout tabs = getBinding().tabLayoutProfile;
+        tabs.removeAllTabs();
+        tabs.addTab(tabs.newTab().setText(R.string.fp_posts), selectedTab == 0);
+        tabs.addTab(tabs.newTab().setText(R.string.fp_photos), selectedTab == 1);
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override public void onTabSelected(TabLayout.Tab tab) {
+                selectedTab = tab.getPosition();
+                render();
             }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
+            @Override public void onTabUnselected(TabLayout.Tab tab) {}
+            @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
     }
 
-    /**
-     * Chuyển đổi hiển thị giữa Tab Lưới Ảnh và Tab Bài viết.
-     */
-    private void switchTabContent(int tabPosition) {
-        if (tabPosition == 0) {
-            // Tab Photos: Hiển thị lưới ảnh nếu có dữ liệu, hiển thị layout rỗng nếu không có ảnh
-            boolean hasPhotos = photoGridAdapter != null && photoGridAdapter.getItemCount() > 0;
-            getBinding().rvProfilePhotos.setVisibility(hasPhotos ? View.VISIBLE : View.GONE);
-            getBinding().layoutEmptyPhotos.setVisibility(hasPhotos ? View.GONE : View.VISIBLE);
-            getBinding().rvProfilePosts.setVisibility(View.GONE);
-        } else {
-            // Tab Posts: Ẩn lưới ảnh, hiển thị danh sách bài viết
-            getBinding().rvProfilePhotos.setVisibility(View.GONE);
-            getBinding().layoutEmptyPhotos.setVisibility(View.GONE);
-            getBinding().rvProfilePosts.setVisibility(View.VISIBLE);
-        }
+    @Override public void onResume() {
+        super.onResume();
+        String activeUser = FriendsProfileUi.activeUserId(requireContext());
+        String requested = getArguments() == null ? null : getArguments().getString(ARG_USER_ID);
+        viewedUserId = requested == null || requested.trim().isEmpty() ? activeUser : requested;
+        loadProfile();
     }
 
-    /**
-     * Tải danh sách ảnh mẫu từ Repository và nạp vào PhotoGridAdapter.
-     */
-    private void loadUserPhotos() {
-        profileRepository.getUserPhotos(currentUserId, new RepositoryCallback<List<Post>>() {
-            @Override
-            public void onSuccess(List<Post> photoPosts) {
-                if (!isAdded() || getView() == null) return;
+    private boolean active(int token) {
+        return token == generation && isAdded() && getView() != null;
+    }
 
-                // Lọc các bài viết có ảnh đính kèm (mediaUrl)
-                List<String> photoUrls = new ArrayList<>();
-                if (photoPosts != null) {
-                    for (Post post : photoPosts) {
+    private void loadProfile() {
+        int token = ++generation;
+        pendingLoads = 3;
+        loadError = null;
+        postAdapter.setPosts(null);
+        photoAdapter.setPhotos(null);
+        getBinding().tvProfileName.setText("");
+        Glide.with(this).clear(getBinding().ivProfileAvatar);
+        Glide.with(this).clear(getBinding().ivProfileCover);
+        getBinding().ivProfileAvatar.setImageResource(R.drawable.ic_profile);
+        getBinding().ivProfileCover.setImageResource(R.color.fb_surface_variant);
+        render();
+        profileRepository.getUserProfile(viewedUserId, new RepositoryCallback<User>() {
+            @Override public void onSuccess(User user) {
+                if (!active(token)) return;
+                getBinding().tvProfileName.setText(user.getDisplayName());
+                Glide.with(ProfileFragment.this).load(user.getAvatarUrl())
+                        .placeholder(R.drawable.ic_profile).error(R.drawable.ic_profile)
+                        .circleCrop().into(getBinding().ivProfileAvatar);
+                Glide.with(ProfileFragment.this).load(user.getCoverUrl())
+                        .placeholder(R.color.fb_surface_variant).error(R.color.fb_surface_variant)
+                        .centerCrop().into(getBinding().ivProfileCover);
+                completePart(null);
+            }
+            @Override public void onError(String message) {
+                if (active(token)) completePart(message);
+            }
+        });
+        profileRepository.getUserPosts(viewedUserId, new RepositoryCallback<List<Post>>() {
+            @Override public void onSuccess(List<Post> posts) {
+                if (!active(token)) return;
+                postAdapter.setPosts(posts);
+                completePart(null);
+            }
+            @Override public void onError(String message) {
+                if (active(token)) completePart(message);
+            }
+        });
+        profileRepository.getUserPhotos(viewedUserId, new RepositoryCallback<List<Post>>() {
+            @Override public void onSuccess(List<Post> posts) {
+                if (!active(token)) return;
+                List<String> urls = new ArrayList<>();
+                if (posts != null) {
+                    for (Post post : posts) {
                         if (post.getMediaUrl() != null && !post.getMediaUrl().trim().isEmpty()) {
-                            photoUrls.add(post.getMediaUrl().trim());
+                            urls.add(post.getMediaUrl());
                         }
                     }
                 }
-
-                // Cập nhật danh sách ảnh vào Adapter
-                photoGridAdapter.setPhotos(photoUrls);
-
-                // Cập nhật lại giao diện nếu đang đứng ở Tab Photos
-                if (getBinding().tabLayoutProfile.getSelectedTabPosition() == 0) {
-                    switchTabContent(0);
-                }
+                photoAdapter.setPhotos(urls);
+                completePart(null);
             }
-
-            @Override
-            public void onError(String message) {
-                if (!isAdded() || getView() == null) return;
-                showToast("Không thể tải kho ảnh: " + message);
+            @Override public void onError(String message) {
+                if (active(token)) completePart(message);
             }
         });
     }
 
-    /**
-     * Hiển thị hộp thoại xem ảnh phóng to khi người dùng nhấn vào một ô ảnh trong lưới.
-     */
-    private void showPhotoPreviewDialog(@NonNull String photoUrl, int position) {
-        Context context = getContext();
-        if (context == null) return;
-
-        // Tạo ImageView xem ảnh phóng to
-        ImageView previewImageView = new ImageView(context);
-        int previewHeight = (int) (320 * getResources().getDisplayMetrics().density);
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, previewHeight);
-        previewImageView.setLayoutParams(layoutParams);
-        previewImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        previewImageView.setAdjustViewBounds(true);
-
-        // Tải ảnh bằng Glide
-        Glide.with(this)
-                .load(photoUrl)
-                .placeholder(R.drawable.bg_avatar_placeholder)
-                .error(R.drawable.bg_avatar_placeholder)
-                .into(previewImageView);
-
-        // Hiển thị Dialog xem ảnh Material 3
-        new MaterialAlertDialogBuilder(context)
-                .setTitle("Ảnh số " + (position + 1))
-                .setView(previewImageView)
-                .setPositiveButton("Đóng", (dialog, which) -> dialog.dismiss())
-                .show();
+    private void completePart(String error) {
+        if (error != null) loadError = error;
+        pendingLoads = Math.max(0, pendingLoads - 1);
+        render();
     }
 
-    /**
-     * Khung giao diện tạm thời chờ tích hợp của Phúc Đức (Header và PostAdapter - D5/D9).
-     */
-    private void setupOtherMemberPlaceholders() {
-        if (getBinding().tvProfileName != null) {
-            getBinding().tvProfileName.setText("Alex Johnson");
-        }
-        if (getBinding().btnEditProfile != null) {
-            getBinding().btnEditProfile.setOnClickListener(v -> showToast("Chỉnh sửa trang cá nhân"));
-        }
+    private void render() {
+        boolean loading = pendingLoads > 0;
+        boolean failed = !loading && loadError != null;
+        boolean photos = selectedTab == 1;
+        int count = photos ? photoAdapter.getItemCount() : postAdapter.getItemCount();
+        getBinding().pbProfileLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
+        getBinding().rvProfilePosts.setVisibility(!loading && !failed && !photos && count > 0
+                ? View.VISIBLE : View.GONE);
+        getBinding().rvProfilePhotos.setVisibility(!loading && !failed && photos && count > 0
+                ? View.VISIBLE : View.GONE);
+        getBinding().tvProfileEmpty.setText(photos ? R.string.fp_empty_photos : R.string.fp_empty_posts);
+        getBinding().tvProfileEmpty.setVisibility(!loading && !failed && count == 0
+                ? View.VISIBLE : View.GONE);
+        getBinding().layoutProfileError.setVisibility(failed ? View.VISIBLE : View.GONE);
+        getBinding().tvProfileError.setText(loadError);
+    }
+
+    private void like(Post post) {
+        int token = generation;
+        postRepository.toggleLike(post.getId(), FriendsProfileUi.activeUserId(requireContext()),
+                new RepositoryCallback<Boolean>() {
+                    @Override public void onSuccess(Boolean liked) {
+                        if (!active(token)) return;
+                        List<Post> displayed = postAdapter.getPosts();
+                        for (int i = 0; i < displayed.size(); i++) {
+                            if (post.getId().equals(displayed.get(i).getId())) {
+                                postAdapter.notifyItemChanged(i);
+                                break;
+                            }
+                        }
+                    }
+                    @Override public void onError(String message) {
+                        if (active(token)) showToast(message);
+                    }
+                });
+    }
+
+    private void share(Post post) {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.fp_share_title).setMessage(R.string.fp_share_message)
+                .setNegativeButton(R.string.fp_cancel, null)
+                .setPositiveButton(R.string.fp_share, (dialog, which) -> {
+                    if (!isAdded() || getView() == null) return;
+                    int token = generation;
+                    postRepository.sharePost(post.getId(),
+                            FriendsProfileUi.activeUserId(requireContext()), "",
+                            new RepositoryCallback<Post>() {
+                                @Override public void onSuccess(Post shared) {
+                                    if (!active(token)) return;
+                                    showToast(getString(R.string.fp_share_success));
+                                    loadProfile();
+                                }
+                                @Override public void onError(String message) {
+                                    if (active(token)) showToast(message);
+                                }
+                            });
+                }).show();
+    }
+
+    private void showPhoto(String url) {
+        ImageView image = new ImageView(requireContext());
+        image.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                (int) (320 * getResources().getDisplayMetrics().density)));
+        image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        Glide.with(this).load(url).placeholder(R.color.fb_surface_variant).into(image);
+        new MaterialAlertDialogBuilder(requireContext()).setTitle(R.string.fp_photo)
+                .setView(image).setPositiveButton(R.string.fp_close, null).show();
+    }
+
+    @Override public void onSaveInstanceState(@NonNull Bundle state) {
+        state.putInt("selected_tab", selectedTab);
+        super.onSaveInstanceState(state);
+    }
+
+    @Override public void onDestroyView() {
+        generation++;
+        getBinding().rvProfilePosts.setAdapter(null);
+        getBinding().rvProfilePhotos.setAdapter(null);
+        super.onDestroyView();
+    }
+
+    @Override public void onDestroy() {
+        getChildFragmentManager().unregisterFragmentLifecycleCallbacks(commentLifecycle);
+        super.onDestroy();
     }
 }

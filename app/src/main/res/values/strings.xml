@@ -56,11 +56,39 @@
   <string name="btn_logout">Log Out</string>
   <string name="btn_cancel">Cancel</string>
 <!-- string cho friends va profile -->
-  <string name="btn_accept">Accept</string>
-  <string name="btn_decline">Decline</string>
-  <string name="Friend_header">Friends</string>
-  <string name="btn_your_friends">your friends</string>
-  <string name="FriendRequest_title">Friends request</string>
+  <string name="fp_friends">Friends</string>
+  <string name="fp_your_friends">Your friends</string>
+  <string name="fp_search_title">Find friends</string>
+  <string name="fp_requests">Friend requests</string>
+  <string name="fp_search_hint">Search friends</string>
+  <string name="fp_accept">Confirm</string>
+  <string name="fp_reject">Delete</string>
+  <string name="fp_view_profile">View profile</string>
+  <string name="fp_friend_label">Friend</string>
+  <string name="fp_no_requests">No pending friend requests</string>
+  <string name="fp_no_friends">No friends yet</string>
+  <string name="fp_no_results">No friends match your search</string>
+  <string name="fp_back">Back</string>
+  <string name="fp_clear">Clear search</string>
+  <string name="fp_retry">Retry</string>
+  <string name="fp_operation_failed">Unable to update this friend request</string>
+  <string name="fp_accept_success">You and %1$s are now friends</string>
+  <string name="fp_reject_success">Friend request removed</string>
+  <string name="fp_user_avatar">Profile picture</string>
+  <string name="fp_profile">Profile</string>
+  <string name="fp_cover">Cover photo</string>
+  <string name="fp_posts">Posts</string>
+  <string name="fp_photos">Photos / Videos</string>
+  <string name="fp_empty_posts">No posts to show</string>
+  <string name="fp_empty_photos">No photos to show</string>
+  <string name="fp_user_not_found">Profile not found</string>
+  <string name="fp_close">Close</string>
+  <string name="fp_photo">Photo</string>
+  <string name="fp_share_title">Share post</string>
+  <string name="fp_share_message">Share this post to your profile?</string>
+  <string name="fp_share">Share now</string>
+  <string name="fp_cancel">Cancel</string>
+  <string name="fp_share_success">Post shared to your profile</string>
 
   <!-- Chuỗi văn bản cho Lưới Ảnh Profile ([D5-TQH] & [D6-TQH]) -->
   <string name="cd_grid_photo">Photo thumbnail</string>
