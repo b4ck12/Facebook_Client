@@ -97,7 +97,7 @@
 
 #### Ngày 08 (Thứ Hai): Tích hợp Real Backend vào Feed & Đăng bài
 - [ ] `[D8-TD]` **Tùng Dương:** Thiết lập Core Network: thêm Retrofit/Gson/OkHttp vào `app/build.gradle`, tạo `network_security_config.xml` cho `10.0.2.2:8000`, quyền `INTERNET` trong `AndroidManifest.xml`, viết `ApiClient`, `ApiService`, `Resource`; ghép `PostRepositoryImpl` vào CreatePost (upload ảnh & tạo bài).
-- [ ] `[D8-ML]` **Minh Lương:** Chuyển `FeedViewModel` sang dùng `PostRepositoryImpl`, lấy bài viết thật từ FastAPI + SQLite (`GET /api/posts`); kiểm tra Like đồng bộ lên server.
+- [x] `[D8-ML]` **Minh Lương:** Chuyển `FeedViewModel` sang dùng `PostRepositoryImpl`, lấy bài viết thật từ FastAPI + SQLite (`GET /api/posts`); kiểm tra Like đồng bộ lên server.
 - [X] `[D8-AD]` **Ánh Dương:** Hỗ trợ debug kết nối Retrofit với FastAPI, cấu hình CORS Middleware và log request Uvicorn.
 - [ ] `[D8-PD]` **Phúc Đức:** Ghép `FriendRepositoryImpl` vào `FriendsViewModel`, tải danh sách lời mời kết bạn từ `GET /api/friends/requests`.
 - [x] `[D8-MD]` **Minh Đức:** Hỗ trợ debug dữ liệu bạn bè và câu lệnh SQL trong SQLite.
