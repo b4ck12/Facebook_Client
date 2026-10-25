@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@color/fb_surface">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="56dp"
+        android:orientation="horizontal" android:gravity="center_vertical">
+        <ImageButton android:id="@+id/ib_back"
+            android:layout_width="48dp" android:layout_height="48dp" android:padding="12dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back" android:contentDescription="@string/fp_back"
+            app:tint="@color/fb_text_primary" />
+        <TextView android:id="@+id/tv_search_title"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:textSize="22sp" android:textStyle="bold" android:textColor="@color/fb_text_primary"
+            tools:text="Find friends" />
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="48dp"
+        android:layout_marginStart="16dp" android:layout_marginEnd="16dp" android:layout_marginBottom="12dp"
+        android:orientation="horizontal" android:gravity="center_vertical"
+        android:background="@drawable/bg_friend_search_input">
+        <EditText android:id="@+id/et_search_query"
+            android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
+            android:background="@null" android:paddingStart="16dp" android:paddingEnd="16dp"
+            android:hint="@string/fp_search_hint" android:textSize="16sp"
+            android:textColor="@color/fb_text_primary" android:textColorHint="@color/fb_text_secondary"
+            android:inputType="textPersonName" android:imeOptions="actionSearch" android:singleLine="true" />
+        <ImageButton android:id="@+id/ib_clear"
+            android:layout_width="48dp" android:layout_height="48dp" android:padding="12dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:contentDescription="@string/fp_clear" android:visibility="gone"
+            app:tint="@color/fb_text_primary" />
+    </LinearLayout>
+
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+        android:background="@color/fb_divider_light" />
+
+    <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+        <androidx.recyclerview.widget.RecyclerView android:id="@+id/rv_search_results"
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_friend_search" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+            android:orientation="vertical" android:gravity="center" android:padding="24dp">
+            <TextView android:id="@+id/tv_search_state"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:gravity="center" android:textSize="14sp"
+                android:textColor="@color/fb_text_secondary" android:visibility="gone" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/btn_search_retry"
+                android:layout_width="wrap_content" android:layout_height="48dp"
+                android:text="@string/fp_retry" android:visibility="gone"
+                app:backgroundTint="@color/fb_blue_dark" />
+        </LinearLayout>
+        <ProgressBar android:id="@+id/pb_search_loading"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center" android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>

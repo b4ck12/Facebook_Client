@@ -14,7 +14,7 @@ import java.util.List;
 public class MockProfileRepository implements IProfileRepository {
 
     private final MockDataGenerator generator = MockDataGenerator.getInstance();
-
+    private final IPostRepository postRepository = new MockPostRepository();
     @Override
     public void getUserProfile(String userId, RepositoryCallback<User> callback) {
         if (callback == null) return;
@@ -32,19 +32,39 @@ public class MockProfileRepository implements IProfileRepository {
     }
 
     @Override
-    public void getUserPosts(String userId, RepositoryCallback<List<Post>> callback) {
+    public void getUserPosts(
+            String userId,
+            RepositoryCallback<List<Post>> callback
+    ) {
         if (callback == null) return;
 
-        String targetId = (userId != null) ? userId : generator.getCurrentUserId();
-        List<Post> allPosts = generator.getPosts();
-        List<Post> userPosts = new ArrayList<>();
+        String targetId = userId != null
+                ? userId
+                : generator.getCurrentUserId();
 
-        for (Post p : allPosts) {
-            if (targetId.equals(p.getAuthorId())) {
-                userPosts.add(p);
-            }
-        }
-        callback.onSuccess(userPosts);
+        postRepository.getFeedPosts(
+                0,
+                generator.getCurrentUserId(),
+                new RepositoryCallback<List<Post>>() {
+                    @Override
+                    public void onSuccess(List<Post> posts) {
+                        List<Post> userPosts = new ArrayList<>();
+
+                        for (Post post : posts) {
+                            if (targetId.equals(post.getAuthorId())) {
+                                userPosts.add(post);
+                            }
+                        }
+
+                        callback.onSuccess(userPosts);
+                    }
+
+                    @Override
+                    public void onError(String message) {
+                        callback.onError("Unable to load posts.");
+                    }
+                }
+        );
     }
 
     @Override
@@ -63,13 +83,6 @@ public class MockProfileRepository implements IProfileRepository {
         }
 
         // Bổ sung thêm một số ảnh mẫu đẹp chất lượng cao nếu user có ít ảnh (phục vụ hiển thị đầy đủ lưới 3 cột)
-        if (photoPosts.isEmpty()) {
-            for (Post p : allPosts) {
-                if (p.getMediaUrl() != null && !p.getMediaUrl().trim().isEmpty()) {
-                    photoPosts.add(p);
-                }
-            }
-        }
 
         callback.onSuccess(photoPosts);
     }

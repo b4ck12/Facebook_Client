@@ -28,6 +28,7 @@ public class MockDataGenerator {
     private final Map<String, List<Comment>> commentsMap = new ConcurrentHashMap<>();
     private final List<FriendRequest> friendRequests = new CopyOnWriteArrayList<>();
     private final List<User> friends = new CopyOnWriteArrayList<>();
+    private final List<FriendRequest> acceptedFriendRequests = new CopyOnWriteArrayList<>();
     private final List<Notification> notifications = new CopyOnWriteArrayList<>();
 
     private MockDataGenerator() {
@@ -57,6 +58,7 @@ public class MockDataGenerator {
         commentsMap.clear();
         friendRequests.clear();
         friends.clear();
+        acceptedFriendRequests.clear();
         notifications.clear();
 
         long now = System.currentTimeMillis();
@@ -236,6 +238,15 @@ public class MockDataGenerator {
                 "user_current", FriendRequest.STATUS_PENDING, now - (2 * 60 * 60 * 1000)
         ));
 
+
+        // Lời mời riêng cho ba tài khoản demo; không đổi hai lời mời của user_current.
+        friendRequests.add(new FriendRequest("req_demo_101", "user_104", user104.getDisplayName(),
+                user104.getAvatarUrl(), "user_101", FriendRequest.STATUS_PENDING, now - 600_000L));
+        friendRequests.add(new FriendRequest("req_demo_102", "user_105", user105.getDisplayName(),
+                user105.getAvatarUrl(), "user_102", FriendRequest.STATUS_PENDING, now - 900_000L));
+        friendRequests.add(new FriendRequest("req_demo_103", "user_102", user102.getDisplayName(),
+                user102.getAvatarUrl(), "user_103", FriendRequest.STATUS_PENDING, now - 1_200_000L));
+
         // Khởi tạo danh sách bạn bè ban đầu
         friends.add(user103);
         friends.add(user104);
@@ -414,50 +425,69 @@ public class MockDataGenerator {
 
     // ==================== QUẢN LÝ BẠN BÈ (FRIENDS) ====================
 
+
+    /** Lời mời đang chờ, chỉ trả về cho đúng người nhận. */
     public List<FriendRequest> getFriendRequests(String userId) {
-        return new ArrayList<>(friendRequests);
+        String targetId = userId != null ? userId : currentUserId;
+        List<FriendRequest> result = new ArrayList<>();
+        for (FriendRequest request : friendRequests) {
+            if (targetId.equals(request.getReceiverId())
+                    && FriendRequest.STATUS_PENDING.equals(request.getStatus())) {
+                result.add(request);
+            }
+        }
+        result.sort((a, b) -> Long.compare(b.getCreatedAt(), a.getCreatedAt()));
+        return result;
     }
 
+    /** Quan hệ bạn bè hai chiều; danh sách friends ban đầu thuộc user_current. */
     public List<User> getFriends(String userId) {
-        return new ArrayList<>(friends);
+        String targetId = userId != null ? userId : currentUserId;
+        Map<String, User> result = new java.util.LinkedHashMap<>();
+        if ("user_current".equals(targetId)) {
+            for (User friend : friends) result.put(friend.getId(), friend);
+        } else {
+            for (User friend : friends) {
+                if (targetId.equals(friend.getId())) {
+                    User owner = getUserById("user_current");
+                    if (owner != null) result.put(owner.getId(), owner);
+                }
+            }
+        }
+        for (FriendRequest request : acceptedFriendRequests) {
+            String otherId = null;
+            if (targetId.equals(request.getReceiverId())) otherId = request.getRequesterId();
+            else if (targetId.equals(request.getRequesterId())) otherId = request.getReceiverId();
+            User other = getUserById(otherId);
+            if (other != null && !targetId.equals(other.getId())) result.put(other.getId(), other);
+        }
+        return new ArrayList<>(result.values());
     }
 
-    public boolean acceptFriendRequest(String requestId) {
+    /** Chỉ tài khoản nhận lời mời mới được chấp nhận. */
+    public synchronized boolean acceptFriendRequest(String requestId) {
         if (requestId == null) return false;
-
-        for (int i = 0; i < friendRequests.size(); i++) {
-            FriendRequest req = friendRequests.get(i);
-            if (requestId.equals(req.getId())) {
-                friendRequests.remove(i);
-
-                User requester = getUserById(req.getRequesterId());
-                if (requester == null) {
-                    requester = new User(
-                            req.getRequesterId(),
-                            req.getRequesterName().toLowerCase().replace(" ", "") + "@facebook.com",
-                            req.getRequesterName(),
-                            req.getRequesterAvatar(),
-                            "",
-                            System.currentTimeMillis()
-                    );
-                    users.add(requester);
-                }
-
-                if (!friends.contains(requester)) {
-                    friends.add(requester);
-                }
+        for (FriendRequest request : friendRequests) {
+            if (requestId.equals(request.getId())
+                    && currentUserId.equals(request.getReceiverId())
+                    && FriendRequest.STATUS_PENDING.equals(request.getStatus())) {
+                request.setStatus(FriendRequest.STATUS_ACCEPTED);
+                acceptedFriendRequests.add(request);
+                friendRequests.remove(request);
                 return true;
             }
         }
         return false;
     }
 
-    public boolean rejectFriendRequest(String requestId) {
+    public synchronized boolean rejectFriendRequest(String requestId) {
         if (requestId == null) return false;
-
-        for (int i = 0; i < friendRequests.size(); i++) {
-            if (requestId.equals(friendRequests.get(i).getId())) {
-                friendRequests.remove(i);
+        for (FriendRequest request : friendRequests) {
+            if (requestId.equals(request.getId())
+                    && currentUserId.equals(request.getReceiverId())
+                    && FriendRequest.STATUS_PENDING.equals(request.getStatus())) {
+                request.setStatus(FriendRequest.STATUS_REJECTED);
+                friendRequests.remove(request);
                 return true;
             }
         }
@@ -465,15 +495,18 @@ public class MockDataGenerator {
     }
 
     public List<User> searchFriends(String query) {
-        List<User> result = new ArrayList<>();
-        if (query == null || query.trim().isEmpty()) {
-            return result;
-        }
+        return searchFriends(query, currentUserId);
+    }
 
-        String lowerQuery = query.toLowerCase().trim();
-        for (User friend : friends) {
-            if (friend.getDisplayName() != null && friend.getDisplayName().toLowerCase().contains(lowerQuery)) {
-                result.add(friend);
+    /** Day 6: tìm trong danh sách bạn bè của tài khoản đang chọn. */
+    public List<User> searchFriends(String query, String userId) {
+        List<User> result = new ArrayList<>();
+        if (query == null || query.trim().isEmpty()) return result;
+        String keyword = query.trim().toLowerCase(java.util.Locale.ROOT);
+        for (User user : getFriends(userId)) {
+            if (user.getDisplayName() != null
+                    && user.getDisplayName().toLowerCase(java.util.Locale.ROOT).contains(keyword)) {
+                result.add(user);
             }
         }
         return result;

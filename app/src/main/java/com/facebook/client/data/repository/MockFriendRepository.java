@@ -80,7 +80,7 @@ public class MockFriendRepository implements IFriendRepository {
   public void searchFriend(String query, String userId, RepositoryCallback<List<User>> callback) {
     if (callback == null) return;
     try {
-      List<User> searchResult = generator.searchFriends(query);
+      List<User> searchResult = generator.searchFriends(query, userId);
       callback.onSuccess(searchResult);
     } catch (Exception e) {
       callback.onError("Lỗi khi tìm kiếm bạn bè: " + e.getMessage());
