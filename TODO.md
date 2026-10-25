@@ -79,15 +79,13 @@
 - [ ] `[D6-PD]` **Phúc Đức:** Dựng màn hình `SearchFriendsActivity.xml`, ô tìm kiếm debounce 300ms.
 - [X] `[D6-TQH]` **Tạ Quang Huy:** Ghép PhotoGrid vào Tab Photos của Profile; chạy test toàn bộ UI trên máy ảo Pixel 10a.
 - [X] `[D6-AD]` **Ánh Dương:** Viết router `comments.py` trên FastAPI: triển khai `GET /api/posts/{id}/comments` và `POST /api/posts/{id}/comments` text-only.
-- [x] `[D6-TQH]` **Tạ Quang Huy:** Ghép PhotoGrid vào Tab Photos của Profile; chạy test toàn bộ UI trên máy ảo Pixel 10a.
-- [X] `[D6-AD]` **Ánh Dương:** Viết router `comments.py` trên FastAPI: triển khai `GET /api/posts/{id}/comments` và `POST /api/posts/{id}/comments` text-only.
 - [x] `[D6-MD]` **Minh Đức:** Viết logic tự động tạo `Notification` trong SQLite khi có tương tác Like / Comment.
 - [ ] `[D6-HDH]` **Hà Đăng Huy:** Rà soát Swagger UI (`/docs`), chuẩn bị dữ liệu test mẫu trong `facebook.db`.
 
 #### Ngày 07 (Chủ Nhật): Review Checkpoint Tuần 1 & Merge vào nhánh `develop`
 - [ ] `[D7-TD]` **Tùng Dương:** Review PR của nhóm FE, merge vào `develop`.
-- [X] `[D7-AD]` **Ánh Dương:** Review PR của nhóm BE, kiểm tra máy chủ FastAPI và file `facebook.db`, merge vào `develop`.
-- [ ] `[D7-ML]` **Minh Lương:** Giải quyết xung đột giao diện, xác nhận build xanh.
+- [x] `[D7-AD]` **Ánh Dương:** Review PR của nhóm BE, kiểm tra máy chủ FastAPI và file `facebook.db`, merge vào `develop`.
+- [x] `[D7-ML]` **Minh Lương:** Giải quyết xung đột giao diện, xác nhận build xanh.
 - [ ] `[D7-PD]` **Phúc Đức:** Đồng bộ nhánh `develop`, kiểm tra Friends và Profile.
 - [x] `[D7-MD]` **Minh Đức:** Kiểm tra thư mục upload ảnh `/static/uploads/` và file `facebook.db` trên `develop`.
 - [ ] `[D7-HDH]` **Hà Đăng Huy:** Báo cáo kiểm thử Tuần 1: 100% màn hình UI hoạt động hoàn hảo và 100% API FastAPI sẵn sàng trên Swagger UI.
