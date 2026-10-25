@@ -89,7 +89,7 @@
 - [ ] `[D7-PD]` **Phúc Đức:** Đồng bộ nhánh `develop`, kiểm tra Friends và Profile.
 - [x] `[D7-MD]` **Minh Đức:** Kiểm tra thư mục upload ảnh `/static/uploads/` và file `facebook.db` trên `develop`.
 - [ ] `[D7-HDH]` **Hà Đăng Huy:** Báo cáo kiểm thử Tuần 1: 100% màn hình UI hoạt động hoàn hảo và 100% API FastAPI sẵn sàng trên Swagger UI.
-- [ ] `[D7-TQH]` **Tạ Quang Huy:** Build APK test lần 1 trên máy ảo Pixel 10a, demo cả nhóm.
+- [x] `[D7-TQH]` **Tạ Quang Huy:** Build APK test lần 1 trên máy ảo Pixel 10a, demo cả nhóm.
 
 ---
 
