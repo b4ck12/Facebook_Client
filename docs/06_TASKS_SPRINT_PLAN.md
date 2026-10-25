@@ -115,7 +115,7 @@
 - [ ] **Phúc Đức (FE):** `[D7-PD]` Đồng bộ nhánh `develop` về máy, test luồng Friends và Profile chạy trơn tru.
 - [x] **Minh Đức (BE):** `[D7-MD]` Kiểm tra thư mục upload ảnh `/static/uploads/` và file `facebook.db` trên nhánh `develop`.
 - [ ] **Hà Đăng Huy (BE + QA):** `[D7-HDH]` Tổng hợp báo cáo kiểm thử Tuần 1: Xác nhận 100% màn hình UI hoạt động hoàn hảo với Mock Data và 100% API FastAPI đã sẵn sàng trên Swagger UI.
-- [ ] **Tạ Quang Huy (FE + QA):** `[D7-TQH]` Chạy build APK thử nghiệm lần 1 trên máy ảo Pixel 10a, demo ngắn cho cả nhóm trong buổi họp tuần 1.
+- [x] **Tạ Quang Huy (FE + QA):** `[D7-TQH]` Chạy build APK thử nghiệm lần 1 trên máy ảo Pixel 10a, demo ngắn cho cả nhóm trong buổi họp tuần 1.
 
 ---
 
@@ -138,7 +138,7 @@
 - [ ] **Phúc Đức (FE):** `[D8-PD]` Bắt đầu ghép `FriendRepositoryImpl` vào `FriendsViewModel`, gọi API tải danh sách lời mời kết bạn từ endpoint `GET /api/friends/requests`.
 - [x] **Minh Đức (BE):** `[D8-MD]` Hỗ trợ Phúc Đức gỡ lỗi dữ liệu bạn bè; kiểm tra câu lệnh SQL trong SQLite.
 - [ ] **Hà Đăng Huy (BE + QA):** `[D8-HDH]` Kiểm thử độc lập API kết bạn bằng cách test trên 2 tài khoản demo khác nhau xem lời mời có đến đúng người không.
-- [ ] **Tạ Quang Huy (FE + QA):** `[D8-TQH]` Ghép `NotificationRepositoryImpl` vào `NotificationViewModel`, gọi API `GET /api/notifications` từ FastAPI server.
+- [x] **Tạ Quang Huy (FE + QA):** `[D8-TQH]` Ghép `NotificationRepositoryImpl` vào `NotificationViewModel`, gọi API `GET /api/notifications` từ FastAPI server.
 
 ---
 

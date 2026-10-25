@@ -89,7 +89,7 @@
 - [ ] `[D7-PD]` **Phúc Đức:** Đồng bộ nhánh `develop`, kiểm tra Friends và Profile.
 - [x] `[D7-MD]` **Minh Đức:** Kiểm tra thư mục upload ảnh `/static/uploads/` và file `facebook.db` trên `develop`.
 - [ ] `[D7-HDH]` **Hà Đăng Huy:** Báo cáo kiểm thử Tuần 1: 100% màn hình UI hoạt động hoàn hảo và 100% API FastAPI sẵn sàng trên Swagger UI.
-- [ ] `[D7-TQH]` **Tạ Quang Huy:** Build APK test lần 1 trên máy ảo Pixel 10a, demo cả nhóm.
+- [x] `[D7-TQH]` **Tạ Quang Huy:** Build APK test lần 1 trên máy ảo Pixel 10a, demo cả nhóm.
 
 ---
 
@@ -102,7 +102,7 @@
 - [ ] `[D8-PD]` **Phúc Đức:** Ghép `FriendRepositoryImpl` vào `FriendsViewModel`, tải danh sách lời mời kết bạn từ `GET /api/friends/requests`.
 - [x] `[D8-MD]` **Minh Đức:** Hỗ trợ debug dữ liệu bạn bè và câu lệnh SQL trong SQLite.
 - [ ] `[D8-HDH]` **Hà Đăng Huy:** Test độc lập API kết bạn trên 2 tài khoản demo qua Postman / Swagger UI.
-- [ ] `[D8-TQH]` **Tạ Quang Huy:** Ghép `NotificationRepositoryImpl` vào Notifications, gọi API `GET /api/notifications` từ FastAPI server.
+- [x] `[D8-TQH]` **Tạ Quang Huy:** Ghép `NotificationRepositoryImpl` vào Notifications, gọi API `GET /api/notifications` từ FastAPI server.
 
 #### Ngày 09 (Thứ Ba): Tích hợp Real Backend vào Profile & Bạn bè
 - [ ] `[D9-PD]` **Phúc Đức:** Hoàn tất tích hợp dữ liệu thật cho Profile: ảnh bìa, avatar, bài viết cá nhân từ endpoint `/api/users/{id}` và `/api/users/{id}/posts`.
