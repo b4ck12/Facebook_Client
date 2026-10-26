@@ -146,7 +146,7 @@
 *Mục tiêu ngày 9: Toàn bộ 4 tab của ứng dụng đều đọc/ghi dữ liệu thật từ FastAPI + SQLite.*
 
 - [ ] **Phúc Đức (FE):** `[D9-PD]` Hoàn tất tích hợp dữ liệu thật cho Màn hình Trang cá nhân (`ProfileFragment`): hiển thị ảnh bìa, avatar và danh sách bài viết từ endpoint `/api/users/{id}` và `/api/users/{id}/posts`.
-- [ ] **Tạ Quang Huy (FE + QA):** `[D9-TQH]` Hoàn tất tích hợp Tab "Ảnh & Video" trong Profile: gọi endpoint `/api/users/{id}/photos` hiển thị lên lưới 3 cột.
+- [x] **Tạ Quang Huy (FE + QA):** `[D9-TQH]` Hoàn tất tích hợp Tab "Ảnh & Video" trong Profile: gọi endpoint `/api/users/{id}/photos` hiển thị lên lưới 3 cột.
 - [ ] **Minh Lương (FE):** `[D9-ML]` Tích hợp gửi comment văn bản thật lên endpoint `POST /api/posts/{id}/comments`, kiểm tra danh sách comment tự động cập nhật sau khi gửi.
 - [ ] **Tùng Dương (FE Lead):** `[D9-TD]` Kiểm tra luồng Đăng bài: test đăng bài chỉ có chữ, test đăng bài chỉ có ảnh, test bài có cả chữ và ảnh; bắt lỗi khi FastAPI server chưa bật.
 - [ ] **Ánh Dương (BE Lead):** `[D9-AD]` Tối ưu SQLite Query Indexes cho các câu truy vấn phức tạp (lọc bài viết theo `author_id` sắp xếp theo `created_at DESC`).
