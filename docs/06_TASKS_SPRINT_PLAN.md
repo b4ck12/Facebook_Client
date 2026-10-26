@@ -127,7 +127,7 @@
 ### NGÀY 08 (Thứ Hai): Tích hợp Real Backend vào Feed & Đăng bài (Integration Day 1)
 *Mục tiêu ngày 8: Thay thế MockPostRepository bằng PostRepositoryImpl, load bài viết thật từ FastAPI server.*
 
-- [ ] **Tùng Dương (FE Lead):** `[D8-TD]` **Xây dựng Tầng Mạng Cốt lõi (Core Network Setup):**
+- [x] **Tùng Dương (FE Lead):** `[D8-TD]` **Xây dựng Tầng Mạng Cốt lõi (Core Network Setup):**
   - Thêm thư viện Retrofit 2 (`2.9.0`), Converter Gson (`2.9.0`), OkHttp Logging Interceptor (`4.12.0`) vào `app/build.gradle`.
   - Tạo cấu hình mạng `res/xml/network_security_config.xml` cho phép HTTP cleartext tới `10.0.2.2` và `localhost`.
   - Khai báo quyền `INTERNET`, `ACCESS_NETWORK_STATE` và gán `networkSecurityConfig` trong `AndroidManifest.xml`.

@@ -95,6 +95,10 @@ python -m venv venv
 venv\Scripts\activate
 # Cài đặt dependencies:
 pip install -r requirements.txt
+# Khởi tạo bảng và nạp dữ liệu mẫu vào SQLite (facebook.db):
+python seed_data.py --reset
+# Hoặc nếu đang đứng ở thư mục gốc Facebook_Client:
+# python backend/seed_data.py --reset
 # Chạy máy chủ FastAPI:
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```

@@ -83,7 +83,7 @@
 - [ ] `[D6-HDH]` **Hà Đăng Huy:** Rà soát Swagger UI (`/docs`), chuẩn bị dữ liệu test mẫu trong `facebook.db`.
 
 #### Ngày 07 (Chủ Nhật): Review Checkpoint Tuần 1 & Merge vào nhánh `develop`
-- [ ] `[D7-TD]` **Tùng Dương:** Review PR của nhóm FE, merge vào `develop`.
+- [x] `[D7-TD]` **Tùng Dương:** Review PR của nhóm FE, merge vào `develop`.
 - [x] `[D7-AD]` **Ánh Dương:** Review PR của nhóm BE, kiểm tra máy chủ FastAPI và file `facebook.db`, merge vào `develop`.
 - [x] `[D7-ML]` **Minh Lương:** Giải quyết xung đột giao diện, xác nhận build xanh.
 - [ ] `[D7-PD]` **Phúc Đức:** Đồng bộ nhánh `develop`, kiểm tra Friends và Profile.
@@ -96,7 +96,7 @@
 ### TUẦN 2 (SPRINT 2: TÍCH HỢP FASTAPI + SQLITE, UNIT TEST, SỬA LỖI & NGHIỆM THU)
 
 #### Ngày 08 (Thứ Hai): Tích hợp Real Backend vào Feed & Đăng bài
-- [ ] `[D8-TD]` **Tùng Dương:** Thiết lập Core Network: thêm Retrofit/Gson/OkHttp vào `app/build.gradle`, tạo `network_security_config.xml` cho `10.0.2.2:8000`, quyền `INTERNET` trong `AndroidManifest.xml`, viết `ApiClient`, `ApiService`, `Resource`; ghép `PostRepositoryImpl` vào CreatePost (upload ảnh & tạo bài).
+- [x] `[D8-TD]` **Tùng Dương:** Thiết lập Core Network: thêm Retrofit/Gson/OkHttp vào `app/build.gradle`, tạo `network_security_config.xml` cho `10.0.2.2:8000`, quyền `INTERNET` trong `AndroidManifest.xml`, viết `ApiClient`, `ApiService`, `Resource`; ghép `PostRepositoryImpl` vào CreatePost (upload ảnh & tạo bài).
 - [x] `[D8-ML]` **Minh Lương:** Chuyển `FeedViewModel` sang dùng `PostRepositoryImpl`, lấy bài viết thật từ FastAPI + SQLite (`GET /api/posts`); kiểm tra Like đồng bộ lên server.
 - [X] `[D8-AD]` **Ánh Dương:** Hỗ trợ debug kết nối Retrofit với FastAPI, cấu hình CORS Middleware và log request Uvicorn.
 - [ ] `[D8-PD]` **Phúc Đức:** Ghép `FriendRepositoryImpl` vào `FriendsViewModel`, tải danh sách lời mời kết bạn từ `GET /api/friends/requests`.

@@ -4,6 +4,7 @@ package com.facebook.client.data.repository;
 import com.facebook.client.data.model.Comment;
 import com.facebook.client.data.model.Post;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -13,6 +14,17 @@ public interface IPostRepository {
 
     /** Lấy danh sách bài viết mới nhất trên Bảng tin Feed kèm cờ isLiked và số lượt like */
     void getFeedPosts(int limit, String currentUserId, RepositoryCallback<List<Post>> callback);
+
+    /** Upload tệp hình ảnh lên máy chủ FastAPI (POST /api/upload) và trả về đường dẫn URL tĩnh */
+    default void uploadImage(File imageFile, RepositoryCallback<String> callback) {
+        if (callback != null) {
+            if (imageFile == null || !imageFile.exists()) {
+                callback.onError("Tệp hình ảnh không hợp lệ hoặc không tồn tại!");
+            } else {
+                callback.onSuccess(imageFile.toURI().toString());
+            }
+        }
+    }
 
     /** Tạo bài viết mới lên hệ thống (yêu cầu có chữ hoặc có ảnh) */
     void createPost(String authorId, String content, String mediaUrl, boolean isPublic, RepositoryCallback<Post> callback);

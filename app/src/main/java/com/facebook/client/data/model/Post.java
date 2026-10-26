@@ -1,20 +1,31 @@
 package com.facebook.client.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * DTO đại diện cho Bài viết trên Bảng tin Feed và Profile.
  * Ánh xạ tương ứng với bảng 'posts' (JOIN 'users') và JSON từ endpoint GET /api/posts.
  */
 public class Post {
     private String id;
+    @SerializedName(value = "authorId", alternate = {"author_id"})
     private String authorId;
+    @SerializedName(value = "authorName", alternate = {"author_name"})
     private String authorName;
+    @SerializedName(value = "authorAvatar", alternate = {"author_avatar"})
     private String authorAvatar;
     private String content;
+    @SerializedName(value = "mediaUrl", alternate = {"media_url"})
     private String mediaUrl;
+    @SerializedName(value = "isPublic", alternate = {"is_public", "public"})
     private boolean isPublic;
+    @SerializedName(value = "likesCount", alternate = {"likes_count"})
     private int likesCount;
+    @SerializedName(value = "commentsCount", alternate = {"comments_count"})
     private int commentsCount;
+    @SerializedName(value = "isLiked", alternate = {"is_liked", "liked"})
     private boolean isLiked;
+    @SerializedName(value = "createdAt", alternate = {"created_at"})
     private long createdAt;
 
     public Post() {
