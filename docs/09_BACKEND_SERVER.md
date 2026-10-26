@@ -636,9 +636,11 @@ print(" Đã khởi tạo thành công dữ liệu mẫu vào facebook.db!")
    # Cài đặt thư viện:
    pip install -r requirements.txt
    ```
-3. **Chèn dữ liệu mẫu & Chạy máy chủ:**
+3. **Khởi tạo bảng, nạp dữ liệu mẫu & Chạy máy chủ:**
    ```bash
-   python seed_data.py
+   python seed_data.py --reset
+   # Hoặc nếu đang đứng ở thư mục gốc Facebook_Client:
+   # python backend/seed_data.py --reset
    uvicorn main:app --reload --host 0.0.0.0 --port 8000
    ```
 4. **Kiểm tra kết quả:**
