@@ -130,3 +130,6 @@ class NotificationResponse(BaseModel):
 class UploadResponse(BaseModel):
     url: str
     filename: str
+    originalSize: Optional[int] = None
+    compressedSize: Optional[int] = None
+    savedPercentage: Optional[float] = None
