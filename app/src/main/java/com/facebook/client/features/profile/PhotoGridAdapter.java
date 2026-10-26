@@ -67,7 +67,7 @@ public class PhotoGridAdapter extends RecyclerView.Adapter<PhotoGridViewHolder> 
     @NonNull
     @Override
     public PhotoGridViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Thổi phồng giao diện res/layout/item_photo_grid.xml thành ViewBinding
+        // Khởi tạo ViewHolder (khung nhìn) từ file layout res/layout/item_photo_grid.xml
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         ItemPhotoGridBinding binding = ItemPhotoGridBinding.inflate(inflater, parent, false);
         return new PhotoGridViewHolder(binding);
@@ -75,13 +75,17 @@ public class PhotoGridAdapter extends RecyclerView.Adapter<PhotoGridViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull PhotoGridViewHolder holder, int position) {
-        // Lấy URL ảnh tại vị trí position và chuyển giao cho ViewHolder vẽ lên màn hình
+        // CẦU NỐI DỮ LIỆU: Được RecyclerView tự động gọi sau notifyDataSetChanged()
+        // 1. Lấy photoUrl tại đúng vị trí position từ mảng
         String photoUrl = photoUrls.get(position);
+
+        // 2. Chuyển giao trực tiếp photoUrl sang cho ViewHolder để Glide tải ảnh vào ô vuông 1:1
         holder.bind(photoUrl, position, listener);
     }
 
     @Override
     public int getItemCount() {
+        // Trả về tổng số ảnh để RecyclerView biết cần lặp gọi onBindViewHolder bao nhiêu lần
         return photoUrls.size();
     }
 
@@ -91,10 +95,14 @@ public class PhotoGridAdapter extends RecyclerView.Adapter<PhotoGridViewHolder> 
      * @param newPhotos Danh sách URL ảnh mới tải từ Repository / API.
      */
     public void setPhotos(@Nullable List<String> newPhotos) {
+        // 1. Cập nhật mảng URL ảnh nội bộ trong Adapter
         photoUrls.clear();
         if (newPhotos != null) {
             photoUrls.addAll(newPhotos);
         }
+
+        // 2. notifyDataSetChanged(): Phát tín hiệu thông báo dữ liệu đã đổi,
+        // kích hoạt RecyclerView tự động gọi getItemCount() và onBindViewHolder() để đổ từng URL vào ViewHolder
         notifyDataSetChanged();
     }
 

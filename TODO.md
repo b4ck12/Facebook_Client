@@ -106,7 +106,7 @@
 
 #### Ngày 09 (Thứ Ba): Tích hợp Real Backend vào Profile & Bạn bè
 - [ ] `[D9-PD]` **Phúc Đức:** Hoàn tất tích hợp dữ liệu thật cho Profile: ảnh bìa, avatar, bài viết cá nhân từ endpoint `/api/users/{id}` và `/api/users/{id}/posts`.
-- [ ] `[D9-TQH]` **Tạ Quang Huy:** Hoàn tất tích hợp Tab "Ảnh & Video" trong Profile dạng lưới 3 cột qua endpoint `/api/users/{id}/photos`.
+- [x] `[D9-TQH]` **Tạ Quang Huy:** Hoàn tất tích hợp Tab "Ảnh & Video" trong Profile dạng lưới 3 cột qua endpoint `/api/users/{id}/photos`.
 - [ ] `[D9-ML]` **Minh Lương:** Tích hợp gửi comment văn bản thật lên endpoint `POST /api/posts/{id}/comments`.
 - [ ] `[D9-TD]` **Tùng Dương:** Kiểm tra luồng Đăng bài: test đăng chỉ text, chỉ ảnh, cả hai; xử lý khi FastAPI server chưa bật.
 - [X] `[D9-AD]` **Ánh Dương:** Tối ưu SQLite Query Indexes cho các câu truy vấn phức tạp.

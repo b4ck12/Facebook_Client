@@ -19,8 +19,8 @@ import com.facebook.client.data.model.Post;
 import com.facebook.client.data.model.User;
 import com.facebook.client.data.repository.IProfileRepository;
 import com.facebook.client.data.repository.IPostRepository;
-import com.facebook.client.data.repository.MockProfileRepository;
-import com.facebook.client.data.repository.MockPostRepository;
+import com.facebook.client.data.repository.ProfileRepositoryImpl;
+import com.facebook.client.data.repository.PostRepositoryImpl;
 import com.facebook.client.data.repository.RepositoryCallback;
 import com.facebook.client.databinding.FragmentProfileBinding;
 import com.facebook.client.features.comment.CommentBottomSheetDialog;
@@ -32,8 +32,9 @@ import java.util.List;
 
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding> {
     private static final String ARG_USER_ID = "viewed_user_id";
-    private final IProfileRepository profileRepository = new MockProfileRepository();
-    private final IPostRepository postRepository = new MockPostRepository();
+    // Tích hợp ProfileRepositoryImpl gọi API thật GET /api/users/{id}/photos từ FastAPI SQLite ([D9-TQH])
+    private final IProfileRepository profileRepository = new ProfileRepositoryImpl();
+    private final IPostRepository postRepository = new PostRepositoryImpl();
     private PhotoGridAdapter photoAdapter;
     private PostAdapter postAdapter;
     private String viewedUserId;
