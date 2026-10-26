@@ -6,32 +6,33 @@ Máy chủ Backend RESTful API được xây dựng bằng **Python FastAPI** v�
 
 ```text
 backend/
-├── main.py              # Khởi tạo FastAPI App, CORS, static files, health check
-├── database.py          # Kết nối CSDL SQLite facebook.db (kèm chế độ WAL và Foreign Keys)
-├── models.py            # SQLAlchemy ORM Models (User, Post, Comment, Friendship, PostLike, Notification)
-├── schemas.py           # Pydantic Schemas xác thực dữ liệu đầu vào và định dạng đầu ra
-├── schema.sql           # DDL cấu trúc CSDL chuẩn hóa 3NF và hệ thống Indexes
-├── seed_data.py         # Script nạp dữ liệu mẫu ban đầu vào facebook.db
-├── debug_friends.py     # Script kiểm tra, debug dữ liệu bạn bè và câu lệnh SQL trong SQLite (D8-MD)
-├── test_friends_crud.py # Bộ kiểm thử logic CRUD và quan hệ bạn bè
+├── main.py                   # Khởi tạo FastAPI App, CORS, static files, health check
+├── database.py               # Kết nối CSDL SQLite facebook.db (kèm chế độ WAL và Foreign Keys)
+├── models.py                 # SQLAlchemy ORM Models (User, Post, Comment, Friendship, PostLike, Notification)
+├── schemas.py                # Pydantic Schemas xác thực dữ liệu đầu vào và định dạng đầu ra
+├── schema.sql                # DDL cấu trúc CSDL chuẩn hóa 3NF và hệ thống Indexes
+├── seed_data.py              # Script nạp dữ liệu mẫu ban đầu vào facebook.db
+├── debug_friends.py          # Script kiểm tra, debug dữ liệu bạn bè và câu lệnh SQL trong SQLite (D8-MD)
+├── test_friends_crud.py      # Bộ kiểm thử logic CRUD và quan hệ bạn bè
+├── test_upload_compression.py# Bộ kiểm thử nén ảnh Bitmap và dung lượng upload (D9-MD)
 ├── crud/
-│   ├── __init__.py      # CRUD package init
-│   ├── crud_user.py     # Nghiệp vụ truy vấn CSDL phân hệ User
-│   ├── crud_post.py     # Nghiệp vụ bài viết, toggle like, posts & photos
-│   ├── crud_friend.py   # Nghiệp vụ bạn bè, lời mời kết bạn & tìm kiếm
-│   ├── crud_notif.py    # Tự động tạo và quản lý thông báo (Like, Comment, Friends)
-│   └── crud_comment.py  # Nghiệp vụ bình luận bài viết (Text only)
+│   ├── __init__.py           # CRUD package init
+│   ├── crud_user.py          # Nghiệp vụ truy vấn CSDL phân hệ User
+│   ├── crud_post.py          # Nghiệp vụ bài viết, toggle like, posts & photos
+│   ├── crud_friend.py        # Nghiệp vụ bạn bè, lời mời kết bạn & tìm kiếm
+│   ├── crud_notif.py         # Tự động tạo và quản lý thông báo (Like, Comment, Friends)
+│   └── crud_comment.py       # Nghiệp vụ bình luận bài viết (Text only)
 ├── routers/
-│   ├── __init__.py      # Routers package init
-│   ├── upload.py        # Router xử lý POST /api/upload tiếp nhận ảnh multipart
-│   ├── users.py         # Router xử lý User/Profile: GET/PUT /api/users/{id}, GET /posts, GET /photos
-│   ├── posts.py         # Router xử lý Feed & Posts: GET /api/posts, POST /like
-│   ├── comments.py      # Router xử lý Comments: GET/POST /api/posts/{id}/comments
-│   ├── friends.py       # Router xử lý Friends & Friend Requests
-│   └── notifications.py # Router xử lý Notifications: GET /api/notifications, POST /read
-├── requirements.txt     # Danh sách thư viện Python cần thiết
+│   ├── __init__.py           # Routers package init
+│   ├── upload.py             # Router xử lý POST /api/upload tiếp nhận ảnh multipart & nén Bitmap
+│   ├── users.py              # Router xử lý User/Profile: GET/PUT /api/users/{id}, GET /posts, GET /photos
+│   ├── posts.py              # Router xử lý Feed & Posts: GET /api/posts, POST /like
+│   ├── comments.py           # Router xử lý Comments: GET/POST /api/posts/{id}/comments
+│   ├── friends.py            # Router xử lý Friends & Friend Requests
+│   └── notifications.py      # Router xử lý Notifications: GET /api/notifications, POST /read
+├── requirements.txt          # Danh sách thư viện Python cần thiết (kèm Pillow>=10.0.0)
 ├── static/
-│   └── uploads/         # Thư mục lưu trữ hình ảnh tải lên (/static/uploads/)
+│   └── uploads/              # Thư mục lưu trữ hình ảnh tải lên (/static/uploads/)
 └── README.md
 ```
 
@@ -85,3 +86,29 @@ Script tự động thực hiện:
 3. **Phân tích hiệu năng SQL:** Sử dụng `EXPLAIN QUERY PLAN` để chứng minh 100% câu truy vấn đều dùng chỉ mục.
 4. **Kiểm tra hợp đồng dữ liệu Android:** Xác thực định dạng JSON từ FastAPI khớp tuyệt đối với DTO Java (`FriendRequest.java`, `User.java`).
 5. **Kịch bản kiểm thử vòng đời kết bạn:** Mô phỏng gửi lời mời -> sinh thông báo -> chấp nhận lời mời -> đồng bộ danh sách bạn bè.
+
+---
+
+## Tối ưu hóa Nén ảnh Bitmap & Quản lý Dung lượng Upload (Task [D9-MD] - Minh Đức)
+
+Nhằm tiết kiệm băng thông mạng di động và tối ưu hóa không gian lưu trữ cho máy chủ:
+
+1. **Thuật toán nén ảnh Bitmap phía Backend (`routers/upload.py`):**
+   - **Tự động hiệu chỉnh hướng EXIF:** Giữ nguyên hướng dọc/ngang của ảnh từ camera smartphone bằng `ImageOps.exif_transpose`.
+   - **Giới hạn kích thước tối đa:** Resize ảnh vượt quá 1920px (Full HD) theo tỉ lệ chuẩn với thuật toán `LANCZOS` chất lượng cao.
+   - **Nén JPEG chất lượng 82%:** Tích hợp `optimize=True` và `progressive=True`, tiết kiệm trung bình 75% - 85% dung lượng mà mắt thường không phân biệt được suy giảm chất lượng.
+   - **Chuyển đổi thông minh PNG không trong suốt sang JPEG:** Giảm tới 80% dung lượng cho ảnh chụp định dạng PNG.
+   - **Bảo toàn ảnh gốc tối ưu:** Nếu sau khi nén dung lượng không giảm, hệ thống tự động giữ nguyên file gốc để tránh suy hao chất lượng không cần thiết.
+
+2. **Tiện ích nén ảnh Bitmap phía Android Client (`BitmapCompressor.java`):**
+   - `compressImageFile(Context, Uri)` trong `com.facebook.client.core.utils`:
+     - Tự động tính toán `inSampleSize` theo lũy thừa 2 để tránh `OutOfMemoryError` khi giải mã ảnh độ phân giải cao.
+     - Xoay ảnh theo thẻ `ExifInterface.TAG_ORIENTATION`.
+     - Nén thành file JPEG tạm trong cache trước khi gửi Multipart lên server.
+
+3. **Kiểm tra thống kê lưu trữ:**
+   - Endpoint `GET /api/upload/stats`: Báo cáo số lượng tệp và dung lượng MB đang sử dụng trong thư mục `static/uploads/`.
+   - Chạy Unit Test kiểm thử nén ảnh:
+     ```bash
+     python backend/test_upload_compression.py
+     ```
