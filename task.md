@@ -12,12 +12,12 @@
 |:---:|:---:|:---|:---|:---:|
 | **Ngày 06** | `[D6-HDH]` | Rà soát Swagger UI, Đối chiếu DTO camelCase & Kiểm tra Seed Data | `backend/tests/test_contract_dto.py`, `backend/seed_data.py` | `[x]` Hoàn thành |
 | **Ngày 07** | `[D7-HDH]` | Tổng hợp Báo cáo Kiểm thử Tuần 1 (Quality Gate Checkpoint) | `docs/reports/WEEK_1_QA_REPORT.md`, Cập nhật `TODO.md` | `[x]` Hoàn thành |
-| **Ngày 08** | `[D8-HDH]` | Kiểm thử độc lập API kết bạn trên 2 tài khoản qua Postman/Swagger | `backend/tests/test_multi_account_friends.py`, cURL logs | `[ ]` Chưa bắt đầu |
+| **Ngày 08** | `[D8-HDH]` | Kiểm thử độc lập API kết bạn trên 2 tài khoản qua Postman/Swagger | `backend/tests/test_multi_account_friends.py`, cURL logs | `[x]` Hoàn thành |
 | **Ngày 09** | `[D9-HDH]` | Viết Unit Test toàn diện cho tầng Backend (`test_api.py`) | `backend/tests/test_api.py` (≥ 15 test cases) | `[ ]` Chưa bắt đầu |
 
 ```
 Tiến độ thực hiện:
-[=========================                         ] 50% Hoàn thành (2/4 Tasks)
+[====================================              ] 75% Hoàn thành (3/4 Tasks)
 ```
 
 ---
@@ -118,10 +118,10 @@ Tiến độ thực hiện:
 > **Mục tiêu:** Kiểm thử thực tế tương tác mạng xã hội giữa 2 tài khoản độc lập (Người gửi A và Người nhận B); xác thực tính chính xác của lời mời kết bạn, ngăn chặn gửi trùng, và đồng bộ thông báo tự động.
 
 #### Checklist công việc:
-- [ ] **3.1. Thiết lập 2 tài khoản thử nghiệm độc lập:**
+- [x] **3.1. Thiết lập 2 tài khoản thử nghiệm độc lập:**
   - Tài khoản A: `user_101` (Nguyễn Văn An)
   - Tài khoản B: `user_102` (Trần Thị Mai)
-- [ ] **3.2. Thực thi Kịch bản 1: Gửi lời mời kết bạn (A $\rightarrow$ B):**
+- [x] **3.2. Thực thi Kịch bản 1: Gửi lời mời kết bạn (A $\rightarrow$ B):**
   - Gửi request qua cURL:
     ```bash
     curl -X POST "http://localhost:8000/api/friends/requests" \
@@ -131,7 +131,7 @@ Tiến độ thực hiện:
   - Kiểm tra kết quả: HTTP `201 Created`, trả về bản ghi có `status = "PENDING"`.
   - Gọi `GET /api/friends/requests?user_id=user_102`: Xác nhận thấy lời mời từ `user_101`.
   - Gọi `GET /api/notifications?user_id=user_102`: Xác nhận có thông báo loại `FRIEND_REQUEST` từ `user_101`.
-- [ ] **3.3. Thực thi Kịch bản 2: Kiểm tra Chống trùng lặp (Duplicate Request):**
+- [x] **3.3. Thực thi Kịch bản 2: Kiểm tra Chống trùng lặp (Duplicate Request):**
   - Tiếp tục gửi lại lời mời từ `user_101` sang `user_102`:
     ```bash
     curl -X POST "http://localhost:8000/api/friends/requests" \
@@ -140,23 +140,23 @@ Tiến độ thực hiện:
     ```
   - Kiểm tra kết quả: HTTP `400 Bad Request`, thông báo lỗi: `"Yêu cầu kết bạn đã tồn tại hoặc đã là bạn bè"`.
   - Xác nhận trong bảng `friendships` không bị tạo 2 dòng giống nhau.
-- [ ] **3.4. Thực thi Kịch bản 3: Chặn tự gửi kết bạn cho chính mình:**
+- [x] **3.4. Thực thi Kịch bản 3: Chặn tự gửi kết bạn cho chính mình:**
   - Gửi lời mời với `requesterId = user_101` và `receiverId = user_101`.
   - Kiểm tra kết quả: HTTP `400 Bad Request`, chi tiết: `"Không thể gửi lời mời kết bạn cho chính mình"`.
-- [ ] **3.5. Thực thi Kịch bản 4: Chấp nhận kết bạn (B đồng ý A):**
+- [x] **3.5. Thực thi Kịch bản 4: Chấp nhận kết bạn (B đồng ý A):**
   - B gọi `POST /api/friends/accept` với `requestId` vừa tạo.
   - Kiểm tra: HTTP `200 OK`, `status = "ACCEPTED"`.
   - Kiểm tra thông báo của A (`GET /api/notifications?user_id=user_101`): Có thông báo `FRIEND_ACCEPT` từ `user_102`.
   - Kiểm tra danh sách bạn bè 2 chiều:
     - `GET /api/friends?user_id=user_101` $\rightarrow$ Chứa `user_102`.
     - `GET /api/friends?user_id=user_102` $\rightarrow$ Chứa `user_101`.
-- [ ] **3.6. Tự động hóa kịch bản bằng file test (`test_multi_account_friends.py`):**
+- [x] **3.6. Tự động hóa kịch bản bằng file test (`test_multi_account_friends.py`):**
   ```bash
   pytest backend/tests/test_multi_account_friends.py -v
   ```
-- [ ] **3.7. Git Commit Ngày 8:**
+- [x] **3.7. Git Commit Ngày 8:**
   ```bash
-  git add backend/tests/test_multi_account_friends.py TODO.md
+  git add backend/tests/test_multi_account_friends.py TODO.md docs/06_TASKS_SPRINT_PLAN.md task.md
   git commit -m "test(friends): verify multi-account friend requests and duplicate prevention (D8-HDH)"
   ```
 
