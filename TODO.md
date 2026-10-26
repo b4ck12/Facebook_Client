@@ -109,7 +109,7 @@
 - [ ] `[D9-TQH]` **Tạ Quang Huy:** Hoàn tất tích hợp Tab "Ảnh & Video" trong Profile dạng lưới 3 cột qua endpoint `/api/users/{id}/photos`.
 - [ ] `[D9-ML]` **Minh Lương:** Tích hợp gửi comment văn bản thật lên endpoint `POST /api/posts/{id}/comments`.
 - [ ] `[D9-TD]` **Tùng Dương:** Kiểm tra luồng Đăng bài: test đăng chỉ text, chỉ ảnh, cả hai; xử lý khi FastAPI server chưa bật.
-- [ ] `[D9-AD]` **Ánh Dương:** Tối ưu SQLite Query Indexes cho các câu truy vấn phức tạp.
+- [X] `[D9-AD]` **Ánh Dương:** Tối ưu SQLite Query Indexes cho các câu truy vấn phức tạp.
 - [ ] `[D9-MD]` **Minh Đức:** Nén ảnh bitmap trước khi upload lên thư mục `static/uploads/` để tiết kiệm băng thông.
 - [ ] `[D9-HDH]` **Hà Đăng Huy:** Bắt đầu viết Unit Test cho tầng Backend: tạo file `test_api.py` sử dụng `pytest` và `TestClient`.
 

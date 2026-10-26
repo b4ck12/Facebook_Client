@@ -33,6 +33,13 @@ class Post(Base):
     is_public = Column(Boolean, default=True, nullable=False)
     created_at = Column(Integer, nullable=False, index=True)
 
+
+    #Thêm Index tối ưu truy vấn bài viết theo tác giả và thời gian 
+    __table_args__ = (
+        Index("idx_posts_author_created", "author_id", "created_at"),
+    )
+
+    
     # --- Mối quan hệ ---
     author = relationship("User", back_populates="posts")
     comments = relationship("Comment", back_populates="post", cascade="all, delete-orphan")
