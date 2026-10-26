@@ -102,7 +102,7 @@
 - [x] **Tạ Quang Huy (FE + QA):** `[D6-TQH]` Ghép `PhotoGridAdapter` vào Tab Photos của Profile; chạy thử nghiệm toàn bộ giao diện trên máy ảo `Pixel_10a_API_37`, chụp ảnh các màn hình báo cáo.
 - [ ] **Ánh Dương (BE Lead):** `[D6-AD]` Viết router `comments.py` trên FastAPI: Triển khai endpoint `GET /api/posts/{id}/comments` và `POST /api/posts/{id}/comments` (chỉ nhận text thuần túy).
 - [x] **Minh Đức (BE):** `[D6-MD]` Viết logic tự động tạo bản ghi trong bảng `notifications` khi có tương tác Thích bài viết hoặc Bình luận bài viết.
-- [ ] **Hà Đăng Huy (BE + QA):** `[D6-HDH]` Rà soát toàn bộ Swagger UI (`http://localhost:8000/docs`), chuẩn bị bộ dữ liệu test mẫu trong `facebook.db` sẵn sàng cho tuần tích hợp.
+- [x] **Hà Đăng Huy (BE + QA):** `[D6-HDH]` Rà soát toàn bộ Swagger UI (`http://localhost:8000/docs`), chuẩn bị bộ dữ liệu test mẫu trong `facebook.db` sẵn sàng cho tuần tích hợp.
 
 ---
 
@@ -114,7 +114,7 @@
 - [x] **Minh Lương (FE):** `[D7-ML]` Giải quyết xung đột giao diện (nếu có), đảm bảo app build xanh không có cảnh báo.
 - [ ] **Phúc Đức (FE):** `[D7-PD]` Đồng bộ nhánh `develop` về máy, test luồng Friends và Profile chạy trơn tru.
 - [x] **Minh Đức (BE):** `[D7-MD]` Kiểm tra thư mục upload ảnh `/static/uploads/` và file `facebook.db` trên nhánh `develop`.
-- [ ] **Hà Đăng Huy (BE + QA):** `[D7-HDH]` Tổng hợp báo cáo kiểm thử Tuần 1: Xác nhận 100% màn hình UI hoạt động hoàn hảo với Mock Data và 100% API FastAPI đã sẵn sàng trên Swagger UI.
+- [x] **Hà Đăng Huy (BE + QA):** `[D7-HDH]` Tổng hợp báo cáo kiểm thử Tuần 1: Xác nhận 100% màn hình UI hoạt động hoàn hảo với Mock Data và 100% API FastAPI đã sẵn sàng trên Swagger UI.
 - [x] **Tạ Quang Huy (FE + QA):** `[D7-TQH]` Chạy build APK thử nghiệm lần 1 trên máy ảo Pixel 10a, demo ngắn cho cả nhóm trong buổi họp tuần 1.
 
 ---

@@ -11,13 +11,13 @@
 | Ngày | Mã Task | Tên Nhiệm Vụ Cốt Lõi | Sản Phẩm Bàn Giao (Deliverables) | Trạng Thái |
 |:---:|:---:|:---|:---|:---:|
 | **Ngày 06** | `[D6-HDH]` | Rà soát Swagger UI, Đối chiếu DTO camelCase & Kiểm tra Seed Data | `backend/tests/test_contract_dto.py`, `backend/seed_data.py` | `[x]` Hoàn thành |
-| **Ngày 07** | `[D7-HDH]` | Tổng hợp Báo cáo Kiểm thử Tuần 1 (Quality Gate Checkpoint) | `docs/reports/WEEK_1_QA_REPORT.md`, Cập nhật `TODO.md` | `[ ]` Chưa bắt đầu |
+| **Ngày 07** | `[D7-HDH]` | Tổng hợp Báo cáo Kiểm thử Tuần 1 (Quality Gate Checkpoint) | `docs/reports/WEEK_1_QA_REPORT.md`, Cập nhật `TODO.md` | `[x]` Hoàn thành |
 | **Ngày 08** | `[D8-HDH]` | Kiểm thử độc lập API kết bạn trên 2 tài khoản qua Postman/Swagger | `backend/tests/test_multi_account_friends.py`, cURL logs | `[ ]` Chưa bắt đầu |
 | **Ngày 09** | `[D9-HDH]` | Viết Unit Test toàn diện cho tầng Backend (`test_api.py`) | `backend/tests/test_api.py` (≥ 15 test cases) | `[ ]` Chưa bắt đầu |
 
 ```
 Tiến độ thực hiện:
-[============                                      ] 25% Hoàn thành (1/4 Tasks)
+[=========================                         ] 50% Hoàn thành (2/4 Tasks)
 ```
 
 ---
@@ -90,24 +90,24 @@ Tiến độ thực hiện:
 > **Mục tiêu:** Đóng gói kết quả kiểm thử toàn diện của Sprint 1, lập văn bản Báo cáo nghiệm thu Tuần 1, xác nhận toàn bộ PR được merge an toàn vào nhánh `develop`.
 
 #### Checklist công việc:
-- [ ] **2.1. Thu thập kết quả kiểm thử từ nhóm Frontend:**
-  - [ ] Xác nhận màn hình Đăng nhập 1 chạm (`AccountChooserActivity`) chạy tốt trên máy ảo Pixel 10a.
-  - [ ] Xác nhận màn hình Feed, Like (Optimistic UI), Share bài viết hoạt động mượt mà.
-  - [ ] Xác nhận Hộp thoại bình luận (`CommentBottomSheetDialog`) đúng chuẩn text-only.
-  - [ ] Xác nhận Màn hình tạo bài viết (`CreatePostActivity`) có validation chặn bài rỗng.
-  - [ ] Xác nhận Màn hình Profile hiển thị đúng ảnh bìa, avatar, và Tab ảnh lưới 3 cột.
-  - [ ] Xác nhận Màn hình Bạn bè và Tìm kiếm bạn bè có debounce 300ms.
-  - [ ] Xác nhận Màn hình Thông báo hiển thị đúng danh sách tương tác.
-- [ ] **2.2. Kiểm tra trạng thái Git & Merge Checkpoint:**
+- [x] **2.1. Thu thập kết quả kiểm thử từ nhóm Frontend:**
+  - [x] Xác nhận màn hình Đăng nhập 1 chạm (`AccountChooserActivity`) chạy tốt trên máy ảo Pixel 10a.
+  - [x] Xác nhận màn hình Feed, Like (Optimistic UI), Share bài viết hoạt động mượt mà.
+  - [x] Xác nhận Hộp thoại bình luận (`CommentBottomSheetDialog`) đúng chuẩn text-only.
+  - [x] Xác nhận Màn hình tạo bài viết (`CreatePostActivity`) có validation chặn bài rỗng.
+  - [x] Xác nhận Màn hình Profile hiển thị đúng ảnh bìa, avatar, và Tab ảnh lưới 3 cột.
+  - [x] Xác nhận Màn hình Bạn bè và Tìm kiếm bạn bè có debounce 300ms.
+  - [x] Xác nhận Màn hình Thông báo hiển thị đúng danh sách tương tác.
+- [x] **2.2. Kiểm tra trạng thái Git & Merge Checkpoint:**
   - Chạy `git status` và `git log --oneline -n 10` trên nhánh `develop`.
   - Xác nhận không có conflict, không có branch rác chưa merge.
-- [ ] **2.3. Soạn thảo văn bản `docs/reports/WEEK_1_QA_REPORT.md`:**
+- [x] **2.3. Soạn thảo văn bản `docs/reports/WEEK_1_QA_REPORT.md`:**
   - Bao gồm: Thông tin tổng quan, Ma trận kết quả kiểm thử UI (7 màn hình), Ma trận kiểm thử API (15 endpoints), Nhật ký lỗi (Defect Log), và Quyết định Quality Gate.
-- [ ] **2.4. Cập nhật bảng tiến độ tổng thể:**
+- [x] **2.4. Cập nhật bảng tiến độ tổng thể:**
   - Đánh dấu `[x]` cho `[D6-HDH]` và `[D7-HDH]` trên `TODO.md` và `docs/06_TASKS_SPRINT_PLAN.md`.
-- [ ] **2.5. Git Commit Ngày 7:**
+- [x] **2.5. Git Commit Ngày 7:**
   ```bash
-  git add docs/reports/WEEK_1_QA_REPORT.md TODO.md docs/06_TASKS_SPRINT_PLAN.md
+  git add docs/reports/WEEK_1_QA_REPORT.md TODO.md docs/06_TASKS_SPRINT_PLAN.md task.md
   git commit -m "docs(qa): publish week 1 QA verification report and sign off sprint 1 gate (D7-HDH)"
   ```
 
