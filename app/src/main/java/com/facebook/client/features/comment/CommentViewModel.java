@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.facebook.client.data.model.Comment;
 import com.facebook.client.data.repository.IPostRepository;
-import com.facebook.client.data.repository.MockPostRepository;
+import com.facebook.client.data.repository.PostRepositoryImpl;//Day 9
 import com.facebook.client.data.repository.RepositoryCallback;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class CommentViewModel extends ViewModel {
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
     public CommentViewModel() {
-        this(new MockPostRepository());
+        this(new PostRepositoryImpl());//Day 9
     }
 
     public CommentViewModel(@NonNull IPostRepository postRepository) {
