@@ -287,23 +287,31 @@ public class MockPostRepository implements IPostRepository {
      */
     @Override
     public void createPost(String authorId, String content, String mediaUrl, boolean isPublic, RepositoryCallback<Post> callback) {
-        if (callback == null) {
-            return;
-        }
-
         boolean isContentEmpty = (content == null || content.trim().isEmpty());
         boolean isMediaEmpty = (mediaUrl == null || mediaUrl.trim().isEmpty());
 
         if (isContentEmpty && isMediaEmpty) {
-            callback.onError("Vui lòng nhập nội dung hoặc chọn ảnh để đăng bài viết!");
+            if (callback != null) {
+                callback.onError("Vui lòng nhập nội dung hoặc chọn ảnh!");
+            }
             return;
         }
 
+        String resolvedAuthorId = (authorId != null && !authorId.trim().isEmpty()) ? authorId.trim() : "user_current";
+        com.facebook.client.data.model.User author =
+                com.facebook.client.data.mock.MockDataGenerator.getInstance().getUserById(resolvedAuthorId);
+        String authorName = (author != null && author.getDisplayName() != null)
+                ? author.getDisplayName()
+                : "Người dùng hiện tại";
+        String authorAvatar = (author != null && author.getAvatarUrl() != null)
+                ? author.getAvatarUrl()
+                : "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150";
+
         Post newPost = new Post(
                 "post_" + UUID.randomUUID().toString().substring(0, 8),
-                authorId != null ? authorId : "user_current",
-                "Người dùng hiện tại",
-                "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
+                resolvedAuthorId,
+                authorName,
+                authorAvatar,
                 content != null ? content.trim() : "",
                 mediaUrl,
                 isPublic,
@@ -314,7 +322,9 @@ public class MockPostRepository implements IPostRepository {
         );
 
         MOCK_POSTS.add(0, newPost);
-        callback.onSuccess(newPost);
+        if (callback != null) {
+            callback.onSuccess(newPost);
+        }
     }
 
     /**

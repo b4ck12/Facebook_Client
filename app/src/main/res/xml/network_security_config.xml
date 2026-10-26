@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Cấu hình an ninh mạng (Network Security Config - [D8-TD]):
+  Cho phép giao thức HTTP cleartext khi kết nối từ máy ảo Android (10.0.2.2)
+  hoặc localhost tới máy chủ Python FastAPI (cổng 8000) trong môi trường phát triển.
+-->
+<network-security-config>
+  <domain-config cleartextTrafficPermitted="true">
+    <domain includeSubdomains="true">10.0.2.2</domain>
+    <domain includeSubdomains="true">localhost</domain>
+    <domain includeSubdomains="true">127.0.0.1</domain>
+  </domain-config>
+</network-security-config>

@@ -1,5 +1,7 @@
 package com.facebook.client.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * DTO đại diện cho thông tin tài khoản Người dùng (User).
  * Ánh xạ tương ứng với bảng 'users' trong SQLite và JSON từ endpoint GET /api/users/{id}.
@@ -7,9 +9,13 @@ package com.facebook.client.data.model;
 public class User {
     private String id;
     private String email;
+    @SerializedName(value = "displayName", alternate = {"display_name"})
     private String displayName;
+    @SerializedName(value = "avatarUrl", alternate = {"avatar_url"})
     private String avatarUrl;
+    @SerializedName(value = "coverUrl", alternate = {"cover_url"})
     private String coverUrl;
+    @SerializedName(value = "createdAt", alternate = {"created_at"})
     private long createdAt;
 
     public User() {

@@ -9,35 +9,50 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.facebook.client.R;
 import com.facebook.client.core.base.BaseActivity;
+import com.facebook.client.core.common.Resource;
+import com.facebook.client.core.utils.BitmapCompressor;
 import com.facebook.client.core.utils.PostValidator;
+import com.facebook.client.core.utils.SessionManager;
 import com.facebook.client.data.mock.MockDataGenerator;
 import com.facebook.client.data.model.User;
 import com.facebook.client.databinding.ActivityCreatePostBinding;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
- * Màn hình tạo bài viết mới (Create Post Screen - [D4-TD] & [D5-TD]).
+ * Màn hình tạo bài viết mới (Create Post Screen - [D4-TD], [D5-TD], [D8-TD]).
  *
- * <p>Chức năng hoàn thiện trong task [D5-TD]:
+ * <p>Chức năng hoàn thiện trong task [D8-TD]:
  * <ul>
  *   <li>Chọn 1 ảnh từ thư viện máy bằng {@link ActivityResultContracts.GetContent}.
  *   <li>Hiển thị ảnh xem trước và nút [X] để gỡ ảnh.
  *   <li>Kiểm tra validation qua {@link PostValidator}: Khóa nút POST (alpha=0.4, enabled=false)
  *       nếu cả text và ảnh đều rỗng; bật sáng (alpha=1.0, enabled=true) khi có ít nhất 1 yếu tố.
- *   <li>Lấy thông tin người dùng hiện tại từ {@link MockDataGenerator#getCurrentUser()}.
- *   <li>Lưu bài viết mới vào {@link MockDataGenerator#createPost} và trả về {@code RESULT_OK}.
+ *   <li>Kết nối {@link CreatePostViewModel} và {@code PostRepositoryImpl}: Nén ảnh qua
+ *       {@link BitmapCompressor}, upload ảnh multipart ({@code POST /api/upload}) và tạo bài viết
+ *       mới ({@code POST /api/posts}) trên máy chủ FastAPI + SQLite.
  * </ul>
  */
 public class CreatePostActivity extends BaseActivity<ActivityCreatePostBinding> {
 
   private String selectedImageUri = null;
+  private boolean isSubmitting = false;
   private ActivityResultLauncher<String> imagePickerLauncher;
+  private CreatePostViewModel viewModel;
+  private final ExecutorService imagePrepExecutor = Executors.newSingleThreadExecutor();
 
   @Override
   protected ActivityCreatePostBinding inflateBinding(LayoutInflater inflater) {
@@ -58,6 +73,7 @@ public class CreatePostActivity extends BaseActivity<ActivityCreatePostBinding> 
               validatePost();
             });
 
+    viewModel = new ViewModelProvider(this).get(CreatePostViewModel.class);
     super.onCreate(savedInstanceState);
   }
 
@@ -70,10 +86,42 @@ public class CreatePostActivity extends BaseActivity<ActivityCreatePostBinding> 
     setupSubmitButton();
 
     // Nút quay lại Top Bar
-    binding.ibBack.setOnClickListener(v -> finish());
+    binding.ibBack.setOnClickListener(
+        v -> {
+          if (!isSubmitting) {
+            finish();
+          }
+        });
 
     // Kiểm tra validation ban đầu (mặc định khóa nút ĐĂNG)
     validatePost();
+  }
+
+  @Override
+  protected void initObservers() {
+    viewModel
+        .getCreatePostStatus()
+        .observe(
+            this,
+            resource -> {
+              if (resource == null) {
+                return;
+              }
+              if (resource.status == Resource.Status.LOADING) {
+                setSubmittingUiState(true);
+              } else if (resource.status == Resource.Status.SUCCESS) {
+                setSubmittingUiState(false);
+                showToast("Đã đăng bài viết thành công!");
+                setResult(RESULT_OK);
+                finish();
+              } else if (resource.status == Resource.Status.ERROR) {
+                setSubmittingUiState(false);
+                showToast(
+                    resource.message != null
+                        ? resource.message
+                        : "Không thể đăng bài viết. Vui lòng thử lại!");
+              }
+            });
   }
 
   /**
@@ -121,9 +169,14 @@ public class CreatePostActivity extends BaseActivity<ActivityCreatePostBinding> 
   }
 
   /**
-   * Hiển thị thông tin người đăng bài từ tài khoản đang đăng nhập.
+   * Hiển thị thông tin người đăng bài từ tài khoản đang đăng nhập trong SessionManager.
    */
   private void setupAuthorHeader() {
+    String sessionUserId = SessionManager.getInstance(this).getCurrentUserId();
+    if (sessionUserId != null && !sessionUserId.trim().isEmpty()) {
+      MockDataGenerator.getInstance().setCurrentUserId(sessionUserId.trim());
+    }
+
     User currentUser = MockDataGenerator.getInstance().getCurrentUser();
     if (currentUser != null) {
       binding.tvAuthorName.setText(currentUser.getDisplayName());
@@ -161,11 +214,19 @@ public class CreatePostActivity extends BaseActivity<ActivityCreatePostBinding> 
    */
   private void setupImagePicker() {
     // Bấm nút "Photo/video" ở thanh công cụ đáy -> Mở Photo Picker của hệ thống
-    binding.layoutAddPhotoButton.setOnClickListener(v -> imagePickerLauncher.launch("image/*"));
+    binding.layoutAddPhotoButton.setOnClickListener(
+        v -> {
+          if (!isSubmitting) {
+            imagePickerLauncher.launch("image/*");
+          }
+        });
 
     // Bấm nút [X] ở góc trên bên phải khung xem trước -> Xóa ảnh đã chọn
     binding.ibRemoveImage.setOnClickListener(
         v -> {
+          if (isSubmitting) {
+            return;
+          }
           selectedImageUri = null;
           binding.cvMediaPreview.setVisibility(View.GONE);
           binding.ivPostImage.setImageDrawable(null);
@@ -178,10 +239,7 @@ public class CreatePostActivity extends BaseActivity<ActivityCreatePostBinding> 
    */
   private void displaySelectedImage(Uri uri) {
     binding.cvMediaPreview.setVisibility(View.VISIBLE);
-    Glide.with(this)
-        .load(uri)
-        .centerCrop()
-        .into(binding.ivPostImage);
+    Glide.with(this).load(uri).centerCrop().into(binding.ivPostImage);
   }
 
   /**
@@ -189,6 +247,11 @@ public class CreatePostActivity extends BaseActivity<ActivityCreatePostBinding> 
    * Ràng buộc cứng chuẩn Mobile App.pdf: Nếu chưa có gắn ảnh hay viết gì thì chưa được đăng.
    */
   private void validatePost() {
+    if (isSubmitting) {
+      binding.btnSubmitPost.setEnabled(false);
+      binding.btnSubmitPost.setAlpha(0.4f);
+      return;
+    }
     String content =
         binding.etPostContent.getText() != null
             ? binding.etPostContent.getText().toString()
@@ -200,31 +263,102 @@ public class CreatePostActivity extends BaseActivity<ActivityCreatePostBinding> 
   }
 
   /**
-   * Thiết lập sự kiện bấm nút ĐĂNG bài viết mới.
+   * Thiết lập sự kiện bấm nút ĐĂNG bài viết mới qua CreatePostViewModel ([D8-TD]).
    */
   private void setupSubmitButton() {
     binding.btnSubmitPost.setOnClickListener(
         v -> {
+          if (isSubmitting) {
+            return;
+          }
+
           String content =
               binding.etPostContent.getText() != null
                   ? binding.etPostContent.getText().toString().trim()
                   : "";
 
-          // Kiểm tra an toàn trước khi lưu
           if (!PostValidator.isValidPost(content, selectedImageUri)) {
-            showToast("Vui lòng nhập nội dung hoặc chọn ảnh để đăng bài.");
+            showToast("Vui lòng nhập nội dung hoặc chọn ảnh!");
             return;
           }
 
-          User currentUser = MockDataGenerator.getInstance().getCurrentUser();
-          String authorId = currentUser != null ? currentUser.getId() : "user_current";
+          String authorId = resolveCurrentAuthorId();
 
-          // Lưu bài viết mới vào bộ nhớ MockDataGenerator
-          MockDataGenerator.getInstance().createPost(authorId, content, selectedImageUri, true);
+          // Nếu không có ảnh đính kèm -> Gửi bài viết văn bản ngay
+          if (selectedImageUri == null || selectedImageUri.trim().isEmpty()) {
+            viewModel.submitPost(authorId, content, null);
+            return;
+          }
 
-          showToast("Đã đăng bài viết thành công!");
-          setResult(RESULT_OK);
-          finish();
+          // Nếu có ảnh đính kèm -> Nén ảnh thành File trên luồng phụ rồi gọi ViewModel upload & đăng bài
+          final String currentUriString = selectedImageUri.trim();
+          setSubmittingUiState(true);
+          imagePrepExecutor.execute(
+              () -> {
+                File preparedFile = prepareImageFileForUpload(Uri.parse(currentUriString));
+                runOnUiThread(
+                    () -> viewModel.submitPost(authorId, content, preparedFile, currentUriString));
+              });
         });
+  }
+
+  @NonNull
+  private String resolveCurrentAuthorId() {
+    String sessionUserId = SessionManager.getInstance(this).getCurrentUserId();
+    if (sessionUserId != null && !sessionUserId.trim().isEmpty()) {
+      return sessionUserId.trim();
+    }
+    User currentUser = MockDataGenerator.getInstance().getCurrentUser();
+    return currentUser != null ? currentUser.getId() : "user_101";
+  }
+
+  /**
+   * Nén ảnh từ Uri sang File tạm bằng {@link BitmapCompressor}; nếu không giải mã được Bitmap
+   * thì sao chép trực tiếp luồng dữ liệu từ ContentResolver sang File tạm để đảm bảo upload thành công.
+   */
+  @Nullable
+  private File prepareImageFileForUpload(@NonNull Uri uri) {
+    File compressed = BitmapCompressor.compressImageFile(getApplicationContext(), uri);
+    if (compressed != null && compressed.exists() && compressed.length() > 0) {
+      return compressed;
+    }
+
+    try (InputStream is = getContentResolver().openInputStream(uri)) {
+      if (is == null) {
+        return null;
+      }
+      File cacheDir = new File(getCacheDir(), "compressed_uploads");
+      if (!cacheDir.exists()) {
+        //noinspection ResultOfMethodCallIgnored
+        cacheDir.mkdirs();
+      }
+      File fallbackFile =
+          new File(cacheDir, "upload_" + UUID.randomUUID().toString().substring(0, 8) + ".jpg");
+      try (FileOutputStream fos = new FileOutputStream(fallbackFile)) {
+        byte[] buffer = new byte[8192];
+        int read;
+        while ((read = is.read(buffer)) != -1) {
+          fos.write(buffer, 0, read);
+        }
+        fos.flush();
+      }
+      return fallbackFile.length() > 0 ? fallbackFile : null;
+    } catch (Exception ignored) {
+      return null;
+    }
+  }
+
+  private void setSubmittingUiState(boolean submitting) {
+    this.isSubmitting = submitting;
+    binding.etPostContent.setEnabled(!submitting);
+    binding.layoutAddPhotoButton.setEnabled(!submitting);
+    binding.ibRemoveImage.setEnabled(!submitting);
+    validatePost();
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    imagePrepExecutor.shutdownNow();
   }
 }
