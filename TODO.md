@@ -111,7 +111,7 @@
 - [ ] `[D9-TD]` **Tùng Dương:** Kiểm tra luồng Đăng bài: test đăng chỉ text, chỉ ảnh, cả hai; xử lý khi FastAPI server chưa bật.
 - [X] `[D9-AD]` **Ánh Dương:** Tối ưu SQLite Query Indexes cho các câu truy vấn phức tạp.
 - [x] `[D9-MD]` **Minh Đức:** Nén ảnh bitmap trước khi upload lên thư mục `static/uploads/` để tiết kiệm băng thông.
-- [ ] `[D9-HDH]` **Hà Đăng Huy:** Bắt đầu viết Unit Test cho tầng Backend: tạo file `test_api.py` sử dụng `pytest` và `TestClient`.
+- [x] `[D9-HDH]` **Hà Đăng Huy:** Bắt đầu viết Unit Test cho tầng Backend: tạo file `test_api.py` sử dụng `pytest` và `TestClient`.
 
 #### Ngày 10 (Thứ Tư): Viết Toàn bộ Unit Test & Xử lý Trạng thái UI
 - [ ] `[D10-HDH]` **Hà Đăng Huy:** Hoàn thiện Unit Test cho Data Layer: `PostRepositoryTest` (Android Mockito) và `test_api.py` (FastAPI với pytest).

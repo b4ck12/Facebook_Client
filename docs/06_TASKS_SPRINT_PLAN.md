@@ -151,7 +151,7 @@
 - [ ] **Tùng Dương (FE Lead):** `[D9-TD]` Kiểm tra luồng Đăng bài: test đăng bài chỉ có chữ, test đăng bài chỉ có ảnh, test bài có cả chữ và ảnh; bắt lỗi khi FastAPI server chưa bật.
 - [ ] **Ánh Dương (BE Lead):** `[D9-AD]` Tối ưu SQLite Query Indexes cho các câu truy vấn phức tạp (lọc bài viết theo `author_id` sắp xếp theo `created_at DESC`).
 - [x] **Minh Đức (BE):** `[D9-MD]` Kiểm tra dung lượng ảnh tải lên thư mục `static/uploads/`, bổ sung xử lý nén ảnh bitmap trước khi upload để tiết kiệm băng thông.
-- [ ] **Hà Đăng Huy (BE + QA):** `[D9-HDH]` Bắt đầu viết Unit Test cho tầng Backend: tạo file `test_api.py` sử dụng `pytest` và `TestClient` để kiểm thử toàn diện các endpoint FastAPI.
+- [x] **Hà Đăng Huy (BE + QA):** `[D9-HDH]` Bắt đầu viết Unit Test cho tầng Backend: tạo file `test_api.py` sử dụng `pytest` và `TestClient` để kiểm thử toàn diện các endpoint FastAPI.
 
 ---
 
