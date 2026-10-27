@@ -55,6 +55,21 @@
           android:layout_width="wrap_content" android:layout_height="48dp"
           android:text="@string/fp_retry" app:backgroundTint="@color/fb_blue_dark" />
     </LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_change_profile"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/fp_change_profile"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        app:backgroundTint="@color/fb_blue_dark"
+        app:cornerRadius="8dp"
+        tools:visibility="visible" />
 
     <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:minHeight="120dp">

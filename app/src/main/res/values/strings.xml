@@ -89,6 +89,19 @@
   <string name="fp_share">Share now</string>
   <string name="fp_cancel">Cancel</string>
   <string name="fp_share_success">Post shared to your profile</string>
+  <string name="fp_change_profile">Change profile</string>
+  <string name="fp_change_name">Change name</string>
+  <string name="fp_change_picture">Change profile picture</string>
+  <string name="fp_name_hint">Display name</string>
+  <string name="fp_name_save">Save</string>
+  <string name="fp_name_cancel">Cancel</string>
+  <string name="fp_name_saving">Saving...</string>
+  <string name="fp_name_required">Please enter your name.</string>
+  <string name="fp_name_updated">Name updated successfully.</string>
+  <string name="fp_name_update_failed">Could not update your name. Please try again.</string>
+  <string name="fp_avatar_uploading">Updating picture...</string>
+  <string name="fp_avatar_updated">Profile picture updated successfully.</string>
+  <string name="fp_avatar_failed">Could not update your picture. Check your connection and choose a JPG, PNG, or WEBP image under 10 MB.</string>
 
   <!-- Chuỗi văn bản cho Lưới Ảnh Profile ([D5-TQH] & [D6-TQH]) -->
   <string name="cd_grid_photo">Photo thumbnail</string>
