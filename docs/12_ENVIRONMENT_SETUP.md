@@ -318,7 +318,16 @@ Cài đặt các gói phụ thuộc từ `requirements.txt`:
 pip install -r requirements.txt
 ```
 
-### Bước 8.3: Khởi chạy máy chủ FastAPI với Uvicorn
+### Bước 8.3: Khởi tạo và nạp dữ liệu mẫu vào CSDL SQLite (facebook.db)
+```bash
+python seed_data.py --reset
+```
+*Lưu ý: Nếu đang đứng ở thư mục gốc của dự án (`Facebook_Client`), chạy lệnh:*
+```bash
+python backend/seed_data.py --reset
+```
+
+### Bước 8.4: Khởi chạy máy chủ FastAPI với Uvicorn
 ```bash
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
@@ -329,7 +338,7 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
   INFO: Application startup complete.
   ```
 
-### Bước 8.4: Kiểm tra Swagger UI & Kết nối Android Studio
+### Bước 8.5: Kiểm tra Swagger UI & Kết nối Android Studio
 1. **Kiểm tra trên trình duyệt máy tính:** 
    Truy cập `http://localhost:8000/docs` để xem giao diện tài liệu OpenAPI Swagger UI và thử nghiệm các API.
 2. **Quy tắc địa chỉ IP cho Android Studio Emulator:**

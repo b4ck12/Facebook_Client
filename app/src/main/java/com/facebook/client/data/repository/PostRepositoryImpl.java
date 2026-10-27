@@ -2,410 +2,450 @@ package com.facebook.client.data.repository;
 
 import android.os.Handler;
 import android.os.Looper;
-
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
+import com.facebook.client.core.network.ApiClient;
+import com.facebook.client.core.network.ApiResponseHandler;
+import com.facebook.client.core.network.ApiService;
+import com.facebook.client.core.utils.PostValidator;
+import com.facebook.client.data.mock.MockDataGenerator;
 import com.facebook.client.data.model.Comment;
 import com.facebook.client.data.model.Post;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Locale;
+import java.util.Map;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
- *  Gọi RESTful API  từ Python FastAPI + SQLite .
- * Tính năng chính:
- * 1. Kết nối trực tiếp tới các endpoint của FastAPI:
- *    - GET  /api/posts (Lấy danh sách bài viết Bảng tin Feed)
- *    - POST /api/posts (Tạo bài viết mới)
- *    - POST /api/posts/{id}/like (Toggle Like bài viết trong bảng post_likes)
- *    - POST /api/posts/{id}/share (Chia sẻ bài viết kèm caption)
- *    - GET  /api/posts/{id}/comments (Lấy danh sách bình luận Text-only)
- *    - POST /api/posts/{id}/comments (Gửi bình luận văn bản mới lên SQLite)
- * 2. Cơ chế Graceful Degradation (Fallback an toàn):
- *    - Khi máy chủ FastAPI đang bật: Đọc/ghi trực tiếp vào CSDL SQLite.   
+ * Triển khai {@link IPostRepository} kết nối trực tiếp tới máy chủ Python FastAPI &amp; SQLite
+ * thông qua tầng mạng chuẩn {@link ApiClient} và {@link ApiService} (Retrofit 2 - [D8-TD] &amp; [D8-ML]).
+ *
+ * <p>Tính năng chính:
+ * <ul>
+ *   <li>{@code GET /api/posts}: Lấy danh sách bài viết Bảng tin Feed.
+ *   <li>{@code POST /api/upload}: Tải lên hình ảnh dạng {@code multipart/form-data} vào
+ *       {@code /static/uploads/} và nhận đường dẫn URL ảnh tĩnh.
+ *   <li>{@code POST /api/posts}: Tạo bài viết mới trong SQLite.
+ *   <li>{@code POST /api/posts/{id}/like}: Toggle Like bài viết trong bảng {@code post_likes}.
+ *   <li>{@code POST /api/posts/{id}/share}: Chia sẻ bài viết kèm caption.
+ *   <li>{@code GET /api/posts/{id}/comments} &amp; {@code POST /api/posts/{id}/comments}:
+ *       Tải và gửi bình luận văn bản (Text-only).
+ *   <li>Cơ chế Graceful Degradation (Dự phòng an toàn): Khi máy chủ FastAPI chưa bật,
+ *       tự động fallback về {@link MockPostRepository} và {@link MockDataGenerator}.
+ * </ul>
  */
 @SuppressWarnings("SpellCheckingInspection")
 public class PostRepositoryImpl implements IPostRepository {
 
-    // Địa chỉ gốc của máy chủ FastAPI trên máy ảo Android (10.0.2.2 trỏ về localhost của máy tính)
-    private static final String SERVER_ORIGIN = "http://10.0.2.2:8000";
-    private static final String BASE_POSTS_URL = SERVER_ORIGIN + "/api/posts";
+  private final ApiService apiService;
+  private final MockPostRepository fallbackMock;
 
-    // Thời gian chờ phản hồi tối đa (3 giây)
-    private static final int TIMEOUT_MS = 3000;
+  /**
+   * Khởi tạo Repository mặc định sử dụng {@link ApiClient#getApiService()}.
+   */
+  public PostRepositoryImpl() {
+    this(ApiClient.getApiService(), new MockPostRepository());
+  }
 
-    // Luồng thực thi ngầm tránh chặn giao diện chính (UI Thread)
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private final Handler mainHandler = new Handler(Looper.getMainLooper());
+  /**
+   * Constructor hỗ trợ tiêm {@link ApiService} tùy chỉnh (phục vụ Unit Test với Mockito).
+   */
+  public PostRepositoryImpl(@NonNull ApiService apiService) {
+    this(apiService, new MockPostRepository());
+  }
 
-    // Nguồn dữ liệu dự phòng khi chưa bật server FastAPI
-    private final MockPostRepository fallbackMock = new MockPostRepository();
+  public PostRepositoryImpl(
+      @NonNull ApiService apiService, @NonNull MockPostRepository fallbackMock) {
+    this.apiService = apiService;
+    this.fallbackMock = fallbackMock;
+  }
 
-    @Override
-    public void getFeedPosts(int limit, String currentUserId, RepositoryCallback<List<Post>> callback) {
-        if (callback == null) {
-            return;
-        }
-
-        executor.execute(() -> {
-            try {
-                String safeUserId = (currentUserId != null && !currentUserId.trim().isEmpty())
-                        ? URLEncoder.encode(currentUserId.trim(), "UTF-8")
-                        : "user_101";
-                int safeLimit = limit > 0 ? limit : 20;
-
-                String urlString = BASE_POSTS_URL + "?current_user_id=" + safeUserId + "&limit=" + safeLimit;
-                HttpURLConnection conn = createConnection(urlString, "GET", false);
-
-                int responseCode = conn.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    String responseBody = readStream(conn.getInputStream());
-                    conn.disconnect();
-
-                    JSONArray jsonArray = new JSONArray(responseBody);
-                    List<Post> posts = new ArrayList<>();
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject obj = jsonArray.getJSONObject(i);
-                        posts.add(parsePost(obj));
-                    }
-
-                    mainHandler.post(() -> callback.onSuccess(posts));
-                    return;
-                }
-                conn.disconnect();
-            } catch (Exception ignored) {
-                // Máy chủ FastAPI chưa bật -> Tự động chuyển sang Fallback bên dưới
-            }
-
-            // Fallback về MockPostRepository khi offline
-            mainHandler.post(() -> fallbackMock.getFeedPosts(limit, currentUserId, callback));
-        });
+  @Override
+  public void getFeedPosts(
+      int limit, String currentUserId, RepositoryCallback<List<Post>> callback) {
+    if (callback == null) {
+      return;
     }
 
-    @Override
-    public void createPost(String authorId, String content, String mediaUrl, boolean isPublic, RepositoryCallback<Post> callback) {
-        if (callback == null) {
-            return;
-        }
+    String safeUserId =
+        (currentUserId != null && !currentUserId.trim().isEmpty())
+            ? currentUserId.trim()
+            : "user_101";
+    int safeLimit = limit > 0 ? limit : 20;
 
-        executor.execute(() -> {
-            try {
-                HttpURLConnection conn = createConnection(BASE_POSTS_URL, "POST", true);
-
-                JSONObject payload = new JSONObject();
-                payload.put("authorId", authorId != null ? authorId : "user_101");
-                payload.put("content", content != null ? content : "");
-                if (mediaUrl != null && !mediaUrl.trim().isEmpty()) {
-                    payload.put("mediaUrl", mediaUrl.trim());
+    apiService
+        .getFeedPosts(safeLimit, safeUserId)
+        .enqueue(
+            new Callback<List<Post>>() {
+              @Override
+              public void onResponse(
+                  @NonNull Call<List<Post>> call, @NonNull Response<List<Post>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                  List<Post> normalizedList = new ArrayList<>();
+                  for (Post post : response.body()) {
+                    if (post != null) {
+                      normalizedList.add(normalizePost(post));
+                    }
+                  }
+                  dispatchMain(() -> callback.onSuccess(normalizedList));
                 } else {
-                    payload.put("mediaUrl", JSONObject.NULL);
+                  dispatchMain(() -> fallbackMock.getFeedPosts(limit, currentUserId, callback));
                 }
-                payload.put("isPublic", isPublic);
+              }
 
-                writeJsonBody(conn, payload.toString());
-
-                int responseCode = conn.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
-                    String responseBody = readStream(conn.getInputStream());
-                    conn.disconnect();
-
-                    Post createdPost = parsePost(new JSONObject(responseBody));
-                    // Đồng bộ thêm vào bộ nhớ tạm để giữ tính nhất quán
-                    fallbackMock.createPost(authorId, content, mediaUrl, isPublic, null);
-                    mainHandler.post(() -> callback.onSuccess(createdPost));
-                    return;
-                }
-                conn.disconnect();
-            } catch (Exception ignored) {
+              @Override
+              public void onFailure(@NonNull Call<List<Post>> call, @NonNull Throwable t) {
                 // Máy chủ FastAPI chưa bật -> Tự động chuyển sang Fallback
-            }
+                dispatchMain(() -> fallbackMock.getFeedPosts(limit, currentUserId, callback));
+              }
+            });
+  }
 
-            mainHandler.post(() -> fallbackMock.createPost(authorId, content, mediaUrl, isPublic, callback));
-        });
+  @Override
+  public void uploadImage(File imageFile, RepositoryCallback<String> callback) {
+    if (callback == null) {
+      return;
+    }
+    if (imageFile == null || !imageFile.exists() || imageFile.length() == 0) {
+      dispatchMain(() -> callback.onError("Tệp hình ảnh không hợp lệ hoặc không tồn tại!"));
+      return;
     }
 
-    @Override
-    public void toggleLike(String postId, String userId, RepositoryCallback<Boolean> callback) {
-        if (postId == null) {
-            return;
-        }
+    String mimeType = resolveMimeType(imageFile.getName());
+    RequestBody requestFile = RequestBody.create(imageFile, MediaType.parse(mimeType));
+    MultipartBody.Part filePart =
+        MultipartBody.Part.createFormData("file", imageFile.getName(), requestFile);
 
-        executor.execute(() -> {
-            try {
-                String safeUserId = (userId != null && !userId.trim().isEmpty())
-                        ? URLEncoder.encode(userId.trim(), "UTF-8")
-                        : "user_101";
-                String urlString = BASE_POSTS_URL + "/" + URLEncoder.encode(postId, "UTF-8") + "/like?user_id=" + safeUserId;
+    apiService
+        .uploadImage(filePart)
+        .enqueue(
+            new Callback<Map<String, Object>>() {
+              @Override
+              public void onResponse(
+                  @NonNull Call<Map<String, Object>> call,
+                  @NonNull Response<Map<String, Object>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                  Object rawUrlObj = response.body().get("url");
+                  String uploadedUrl =
+                      rawUrlObj != null ? ApiClient.normalizeStaticUrl(String.valueOf(rawUrlObj)) : null;
+                  if (uploadedUrl != null && !uploadedUrl.isEmpty()) {
+                    dispatchMain(() -> callback.onSuccess(uploadedUrl));
+                  } else {
+                    dispatchMain(() -> callback.onSuccess(imageFile.toURI().toString()));
+                  }
+                } else if (response.code() >= 400 && response.code() < 500) {
+                  String errorMsg = ApiResponseHandler.parseHttpError(response);
+                  dispatchMain(() -> callback.onError(errorMsg));
+                } else {
+                  // Lỗi máy chủ 5xx -> Dự phòng đường dẫn tệp cục bộ
+                  dispatchMain(() -> callback.onSuccess(imageFile.toURI().toString()));
+                }
+              }
 
-                HttpURLConnection conn = createConnection(urlString, "POST", false);
-                int responseCode = conn.getResponseCode();
+              @Override
+              public void onFailure(
+                  @NonNull Call<Map<String, Object>> call, @NonNull Throwable t) {
+                // Máy chủ FastAPI chưa bật -> Trả về URI tệp cục bộ để đăng bài ở chế độ Offline
+                dispatchMain(() -> callback.onSuccess(imageFile.toURI().toString()));
+              }
+            });
+  }
 
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    String responseBody = readStream(conn.getInputStream());
-                    conn.disconnect();
+  @Override
+  public void createPost(
+      String authorId,
+      String content,
+      String mediaUrl,
+      boolean isPublic,
+      RepositoryCallback<Post> callback) {
+    if (callback == null) {
+      return;
+    }
 
-                    JSONObject json = new JSONObject(responseBody);
-                    boolean isLiked = json.optBoolean("isLiked", false);
+    if (!PostValidator.isValidPost(content, mediaUrl)) {
+      dispatchMain(() -> callback.onError("Vui lòng nhập nội dung hoặc chọn ảnh!"));
+      return;
+    }
 
-                    if (callback != null) {
-                        mainHandler.post(() -> callback.onSuccess(isLiked));
+    String safeAuthorId =
+        (authorId != null && !authorId.trim().isEmpty()) ? authorId.trim() : "user_101";
+    String safeContent = content != null ? content.trim() : "";
+    String safeMediaUrl =
+        (mediaUrl != null && !mediaUrl.trim().isEmpty()) ? mediaUrl.trim() : null;
+
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("authorId", safeAuthorId);
+    payload.put("content", safeContent);
+    payload.put("mediaUrl", safeMediaUrl);
+    payload.put("isPublic", isPublic);
+
+    apiService
+        .createPost(payload)
+        .enqueue(
+            new Callback<Post>() {
+              @Override
+              public void onResponse(
+                  @NonNull Call<Post> call, @NonNull Response<Post> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                  Post createdPost = normalizePost(response.body());
+                  // Đồng bộ vào bộ nhớ tạm để giữ tính nhất quán giữa các Tab
+                  fallbackMock.createPost(safeAuthorId, safeContent, createdPost.getMediaUrl(), isPublic, null);
+                  MockDataGenerator.getInstance().addPost(createdPost);
+                  dispatchMain(() -> callback.onSuccess(createdPost));
+                } else if (response.code() == 400 || response.code() == 422) {
+                  String errorMsg = ApiResponseHandler.parseHttpError(response);
+                  dispatchMain(() -> callback.onError(errorMsg));
+                } else {
+                  createOfflinePostFallback(safeAuthorId, safeContent, safeMediaUrl, isPublic, callback);
+                }
+              }
+
+              @Override
+              public void onFailure(@NonNull Call<Post> call, @NonNull Throwable t) {
+                // Máy chủ FastAPI chưa bật -> Tự động lưu vào bộ nhớ Fallback
+                createOfflinePostFallback(safeAuthorId, safeContent, safeMediaUrl, isPublic, callback);
+              }
+            });
+  }
+
+  private void createOfflinePostFallback(
+      String authorId,
+      String content,
+      String mediaUrl,
+      boolean isPublic,
+      RepositoryCallback<Post> callback) {
+    dispatchMain(
+        () -> {
+          MockDataGenerator.getInstance().createPost(authorId, content, mediaUrl, isPublic);
+          fallbackMock.createPost(authorId, content, mediaUrl, isPublic, callback);
+        });
+  }
+
+  @Override
+  public void toggleLike(String postId, String userId, RepositoryCallback<Boolean> callback) {
+    if (postId == null || postId.trim().isEmpty()) {
+      return;
+    }
+
+    String safeUserId =
+        (userId != null && !userId.trim().isEmpty()) ? userId.trim() : "user_101";
+
+    apiService
+        .toggleLike(postId.trim(), safeUserId)
+        .enqueue(
+            new Callback<Map<String, Object>>() {
+              @Override
+              public void onResponse(
+                  @NonNull Call<Map<String, Object>> call,
+                  @NonNull Response<Map<String, Object>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                  Object likedVal = response.body().get("isLiked");
+                  boolean isLiked =
+                      likedVal instanceof Boolean
+                          ? (Boolean) likedVal
+                          : Boolean.parseBoolean(String.valueOf(likedVal));
+                  if (callback != null) {
+                    dispatchMain(() -> callback.onSuccess(isLiked));
+                  }
+                } else {
+                  dispatchMain(() -> fallbackMock.toggleLike(postId, userId, callback));
+                }
+              }
+
+              @Override
+              public void onFailure(
+                  @NonNull Call<Map<String, Object>> call, @NonNull Throwable t) {
+                dispatchMain(() -> fallbackMock.toggleLike(postId, userId, callback));
+              }
+            });
+  }
+
+  @Override
+  public void getComments(String postId, RepositoryCallback<List<Comment>> callback) {
+    if (callback == null || postId == null || postId.trim().isEmpty()) {
+      return;
+    }
+
+    apiService
+        .getComments(postId.trim())
+        .enqueue(
+            new Callback<List<Comment>>() {
+              @Override
+              public void onResponse(
+                  @NonNull Call<List<Comment>> call, @NonNull Response<List<Comment>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                  List<Comment> normalizedComments = new ArrayList<>();
+                  for (Comment c : response.body()) {
+                    if (c != null) {
+                      normalizedComments.add(normalizeComment(c, postId.trim()));
                     }
-                    return;
+                  }
+                  dispatchMain(() -> callback.onSuccess(normalizedComments));
+                } else {
+                  dispatchMain(() -> fallbackMock.getComments(postId, callback));
                 }
-                conn.disconnect();
-            } catch (Exception ignored) {
-                // Máy chủ FastAPI chưa bật -> Tự động chuyển sang Fallback
-            }
+              }
 
-            mainHandler.post(() -> fallbackMock.toggleLike(postId, userId, callback));
-        });
+              @Override
+              public void onFailure(@NonNull Call<List<Comment>> call, @NonNull Throwable t) {
+                dispatchMain(() -> fallbackMock.getComments(postId, callback));
+              }
+            });
+  }
+
+  @Override
+  public void addComment(
+      String postId, String authorId, String content, RepositoryCallback<Comment> callback) {
+    if (callback == null || postId == null || postId.trim().isEmpty()) {
+      return;
     }
 
-    @Override
-    public void getComments(String postId, RepositoryCallback<List<Comment>> callback) {
-        if (callback == null || postId == null) {
-            return;
-        }
+    if (content == null || content.trim().isEmpty()) {
+      dispatchMain(() -> callback.onError("Nội dung bình luận không được để trống!"));
+      return;
+    }
 
-        executor.execute(() -> {
-            try {
-                String urlString = BASE_POSTS_URL + "/" + URLEncoder.encode(postId, "UTF-8") + "/comments";
-                HttpURLConnection conn = createConnection(urlString, "GET", false);
+    String safeAuthorId =
+        (authorId != null && !authorId.trim().isEmpty()) ? authorId.trim() : "user_101";
+    String safeContent = content.trim();
 
-                int responseCode = conn.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    String responseBody = readStream(conn.getInputStream());
-                    conn.disconnect();
+    Map<String, String> payload = new HashMap<>();
+    payload.put("authorId", safeAuthorId);
+    payload.put("content", safeContent);
 
-                    JSONArray jsonArray = new JSONArray(responseBody);
-                    List<Comment> comments = new ArrayList<>();
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject obj = jsonArray.getJSONObject(i);
-                        comments.add(parseComment(obj, postId));
-                    }
-
-                    mainHandler.post(() -> callback.onSuccess(comments));
-                    return;
+    apiService
+        .addComment(postId.trim(), payload)
+        .enqueue(
+            new Callback<Comment>() {
+              @Override
+              public void onResponse(
+                  @NonNull Call<Comment> call, @NonNull Response<Comment> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                  Comment createdComment = normalizeComment(response.body(), postId.trim());
+                  fallbackMock.addComment(postId, safeAuthorId, safeContent, null);
+                  MockDataGenerator.getInstance().addComment(postId, createdComment);
+                  dispatchMain(() -> callback.onSuccess(createdComment));
+                } else {
+                  dispatchMain(() -> fallbackMock.addComment(postId, safeAuthorId, safeContent, callback));
                 }
-                conn.disconnect();
-            } catch (Exception ignored) {
-                // Máy chủ FastAPI chưa bật -> Tự động chuyển sang Fallback
-            }
+              }
 
-            mainHandler.post(() -> fallbackMock.getComments(postId, callback));
-        });
+              @Override
+              public void onFailure(@NonNull Call<Comment> call, @NonNull Throwable t) {
+                dispatchMain(() -> fallbackMock.addComment(postId, safeAuthorId, safeContent, callback));
+              }
+            });
+  }
+
+  @Override
+  public void sharePost(
+      String originalPostId, String authorId, String caption, RepositoryCallback<Post> callback) {
+    if (callback == null || originalPostId == null || originalPostId.trim().isEmpty()) {
+      return;
     }
 
-    @Override
-    public void addComment(String postId, String authorId, String content, RepositoryCallback<Comment> callback) {
-        if (callback == null || postId == null) {
-            return;
-        }
+    String safeUserId =
+        (authorId != null && !authorId.trim().isEmpty()) ? authorId.trim() : "user_101";
+    String safeCaption =
+        (caption != null && !caption.trim().isEmpty()) ? caption.trim() : null;
 
-        executor.execute(() -> {
-            try {
-                String urlString = BASE_POSTS_URL + "/" + URLEncoder.encode(postId, "UTF-8") + "/comments";
-                HttpURLConnection conn = createConnection(urlString, "POST", true);
-
-                JSONObject payload = new JSONObject();
-                payload.put("authorId", authorId != null ? authorId : "user_101");
-                payload.put("content", content != null ? content.trim() : "");
-
-                writeJsonBody(conn, payload.toString());
-
-                int responseCode = conn.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
-                    String responseBody = readStream(conn.getInputStream());
-                    conn.disconnect();
-
-                    Comment createdComment = parseComment(new JSONObject(responseBody), postId);
-                    fallbackMock.addComment(postId, authorId, content, null);
-                    mainHandler.post(() -> callback.onSuccess(createdComment));
-                    return;
+    apiService
+        .sharePost(originalPostId.trim(), safeUserId, safeCaption)
+        .enqueue(
+            new Callback<Post>() {
+              @Override
+              public void onResponse(
+                  @NonNull Call<Post> call, @NonNull Response<Post> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                  Post sharedPost = normalizePost(response.body());
+                  fallbackMock.sharePost(originalPostId, safeUserId, safeCaption, null);
+                  MockDataGenerator.getInstance().addPost(sharedPost);
+                  dispatchMain(() -> callback.onSuccess(sharedPost));
+                } else {
+                  dispatchMain(
+                      () -> fallbackMock.sharePost(originalPostId, safeUserId, safeCaption, callback));
                 }
-                conn.disconnect();
-            } catch (Exception ignored) {
-                // Máy chủ FastAPI chưa bật -> Tự động chuyển sang Fallback
-            }
+              }
 
-            mainHandler.post(() -> fallbackMock.addComment(postId, authorId, content, callback));
-        });
+              @Override
+              public void onFailure(@NonNull Call<Post> call, @NonNull Throwable t) {
+                dispatchMain(
+                    () -> fallbackMock.sharePost(originalPostId, safeUserId, safeCaption, callback));
+              }
+            });
+  }
+
+  @NonNull
+  private Post normalizePost(@NonNull Post post) {
+    if (post.getAuthorName() == null || post.getAuthorName().trim().isEmpty()) {
+      post.setAuthorName("Người dùng Facebook");
     }
+    if (post.getContent() == null) {
+      post.setContent("");
+    }
+    post.setAuthorAvatar(ApiClient.normalizeStaticUrl(post.getAuthorAvatar()));
+    post.setMediaUrl(ApiClient.normalizeStaticUrl(post.getMediaUrl()));
+    if (post.getCreatedAt() <= 0) {
+      post.setCreatedAt(System.currentTimeMillis());
+    }
+    return post;
+  }
 
-    @Override
-    public void sharePost(String originalPostId, String authorId, String caption, RepositoryCallback<Post> callback) {
-        if (callback == null || originalPostId == null) {
-            return;
+  @NonNull
+  private Comment normalizeComment(@NonNull Comment comment, @NonNull String defaultPostId) {
+    if (comment.getPostId() == null || comment.getPostId().trim().isEmpty()) {
+      comment.setPostId(defaultPostId);
+    }
+    if (comment.getAuthorName() == null || comment.getAuthorName().trim().isEmpty()) {
+      comment.setAuthorName("Người dùng Facebook");
+    }
+    if (comment.getContent() == null) {
+      comment.setContent("");
+    }
+    comment.setAuthorAvatar(ApiClient.normalizeStaticUrl(comment.getAuthorAvatar()));
+    if (comment.getCreatedAt() <= 0) {
+      comment.setCreatedAt(System.currentTimeMillis());
+    }
+    return comment;
+  }
+
+  @NonNull
+  private String resolveMimeType(@Nullable String filename) {
+    if (filename == null) {
+      return "image/jpeg";
+    }
+    String lower = filename.toLowerCase(Locale.ROOT);
+    if (lower.endsWith(".png")) {
+      return "image/png";
+    }
+    if (lower.endsWith(".webp")) {
+      return "image/webp";
+    }
+    return "image/jpeg";
+  }
+
+  private void dispatchMain(@NonNull Runnable action) {
+    try {
+      Looper mainLooper = Looper.getMainLooper();
+      if (mainLooper != null) {
+        if (Thread.currentThread() == mainLooper.getThread()) {
+          action.run();
+        } else {
+          new Handler(mainLooper).post(action);
         }
-
-        executor.execute(() -> {
-            try {
-                String safeUserId = (authorId != null && !authorId.trim().isEmpty())
-                        ? URLEncoder.encode(authorId.trim(), "UTF-8")
-                        : "user_101";
-                StringBuilder urlBuilder = new StringBuilder(BASE_POSTS_URL)
-                        .append("/")
-                        .append(URLEncoder.encode(originalPostId, "UTF-8"))
-                        .append("/share?user_id=")
-                        .append(safeUserId);
-
-                if (caption != null && !caption.trim().isEmpty()) {
-                    urlBuilder.append("&caption=").append(URLEncoder.encode(caption.trim(), "UTF-8"));
-                }
-
-                HttpURLConnection conn = createConnection(urlBuilder.toString(), "POST", false);
-                int responseCode = conn.getResponseCode();
-
-                if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
-                    String responseBody = readStream(conn.getInputStream());
-                    conn.disconnect();
-
-                    Post sharedPost = parsePost(new JSONObject(responseBody));
-                    fallbackMock.sharePost(originalPostId, authorId, caption, null);
-                    mainHandler.post(() -> callback.onSuccess(sharedPost));
-                    return;
-                }
-                conn.disconnect();
-            } catch (Exception ignored) {
-                // Máy chủ FastAPI chưa bật -> Tự động chuyển sang Fallback
-            }
-
-            mainHandler.post(() -> fallbackMock.sharePost(originalPostId, authorId, caption, callback));
-        });
+        return;
+      }
+    } catch (Throwable ignored) {
+      // Trong môi trường JUnit Test trên JVM không mock Looper -> chạy trực tiếp
     }
-
-    /**
-     * Khởi tạo kết nối HTTP chuẩn tới FastAPI server.
-     */
-    private HttpURLConnection createConnection(String urlString, String method, boolean hasBody) throws Exception {
-        URL url = new URL(urlString);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod(method);
-        conn.setConnectTimeout(TIMEOUT_MS);
-        conn.setReadTimeout(TIMEOUT_MS);
-        conn.setRequestProperty("Accept", "application/json");
-        if (hasBody) {
-            conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            conn.setDoOutput(true);
-        }
-        return conn;
-    }
-
-    /**
-     * Ghi dữ liệu JSON vào request body.
-     */
-    private void writeJsonBody(HttpURLConnection conn, String jsonBody) throws Exception {
-        try (OutputStream os = conn.getOutputStream()) {
-            byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
-            os.write(input, 0, input.length);
-        }
-    }
-
-    /**
-     * Đọc toàn bộ chuỗi JSON phản hồi từ InputStream.
-     */
-    private String readStream(InputStream inputStream) throws Exception {
-        StringBuilder builder = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                builder.append(line);
-            }
-        }
-        return builder.toString();
-    }
-
-    /**
-     * Chuyển đổi JSONObject từ FastAPI (PostResponse) sang đối tượng Post của Android.
-     */
-    private Post parsePost(JSONObject obj) {
-        String id = obj.optString("id", "");
-        String authorId = obj.optString("authorId", obj.optString("author_id", ""));
-        String authorName = obj.optString("authorName", obj.optString("author_name", "Người dùng Facebook"));
-        String authorAvatar = normalizeUrl(optNullableString(obj, "authorAvatar", "author_avatar"));
-        String content = optNullableString(obj, "content", "content");
-        String mediaUrl = normalizeUrl(optNullableString(obj, "mediaUrl", "media_url"));
-        boolean isPublic = obj.optBoolean("isPublic", obj.optBoolean("is_public", true));
-        int likesCount = obj.optInt("likesCount", obj.optInt("likes_count", 0));
-        int commentsCount = obj.optInt("commentsCount", obj.optInt("comments_count", 0));
-        boolean isLiked = obj.optBoolean("isLiked", obj.optBoolean("is_liked", false));
-        long createdAt = obj.optLong("createdAt", obj.optLong("created_at", System.currentTimeMillis()));
-
-        return new Post(
-                id,
-                authorId,
-                authorName,
-                authorAvatar,
-                content != null ? content : "",
-                mediaUrl,
-                isPublic,
-                likesCount,
-                commentsCount,
-                isLiked,
-                createdAt
-        );
-    }
-
-    /**
-     * Chuyển đổi JSONObject từ FastAPI (CommentResponse) sang đối tượng Comment của Android.
-     */
-    private Comment parseComment(JSONObject obj, String defaultPostId) {
-        String id = obj.optString("id", "");
-        String postId = obj.optString("postId", obj.optString("post_id", defaultPostId));
-        String authorId = obj.optString("authorId", obj.optString("author_id", ""));
-        String authorName = obj.optString("authorName", obj.optString("author_name", "Người dùng Facebook"));
-        String authorAvatar = normalizeUrl(optNullableString(obj, "authorAvatar", "author_avatar"));
-        String content = obj.optString("content", "");
-        long createdAt = obj.optLong("createdAt", obj.optLong("created_at", System.currentTimeMillis()));
-
-        return new Comment(id, postId, authorId, authorName, authorAvatar, content, createdAt);
-    }
-
-    /**
-     * Lấy chuỗi từ JSON an toàn (tránh chuỗi "null" của JSONObject.optString).
-     */
-    @Nullable
-    private String optNullableString(JSONObject obj, String camelKey, String snakeKey) {
-        if (!obj.isNull(camelKey)) {
-            String val = obj.optString(camelKey, "");
-            if (!val.isEmpty() && !"null".equalsIgnoreCase(val)) {
-                return val;
-            }
-        }
-        if (!obj.isNull(snakeKey)) {
-            String val = obj.optString(snakeKey, "");
-            if (!val.isEmpty() && !"null".equalsIgnoreCase(val)) {
-                return val;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Chuẩn hóa đường dẫn ảnh tĩnh từ FastAPI (/static/uploads/...) thành URL đầy đủ cho Glide.
-     */
-    @Nullable
-    private String normalizeUrl(@Nullable String rawUrl) {
-        if (rawUrl == null || rawUrl.trim().isEmpty()) {
-            return null;
-        }
-        String trimmed = rawUrl.trim();
-        if (trimmed.startsWith("/")) {
-            return SERVER_ORIGIN + trimmed;
-        }
-        return trimmed;
-    }
+    action.run();
+  }
 }

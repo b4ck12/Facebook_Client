@@ -80,15 +80,15 @@
 - [X] `[D6-TQH]` **Tạ Quang Huy:** Ghép PhotoGrid vào Tab Photos của Profile; chạy test toàn bộ UI trên máy ảo Pixel 10a.
 - [X] `[D6-AD]` **Ánh Dương:** Viết router `comments.py` trên FastAPI: triển khai `GET /api/posts/{id}/comments` và `POST /api/posts/{id}/comments` text-only.
 - [x] `[D6-MD]` **Minh Đức:** Viết logic tự động tạo `Notification` trong SQLite khi có tương tác Like / Comment.
-- [ ] `[D6-HDH]` **Hà Đăng Huy:** Rà soát Swagger UI (`/docs`), chuẩn bị dữ liệu test mẫu trong `facebook.db`.
+- [x] `[D6-HDH]` **Hà Đăng Huy:** Rà soát Swagger UI (`/docs`), chuẩn bị dữ liệu test mẫu trong `facebook.db`.
 
 #### Ngày 07 (Chủ Nhật): Review Checkpoint Tuần 1 & Merge vào nhánh `develop`
-- [ ] `[D7-TD]` **Tùng Dương:** Review PR của nhóm FE, merge vào `develop`.
+- [x] `[D7-TD]` **Tùng Dương:** Review PR của nhóm FE, merge vào `develop`.
 - [x] `[D7-AD]` **Ánh Dương:** Review PR của nhóm BE, kiểm tra máy chủ FastAPI và file `facebook.db`, merge vào `develop`.
 - [x] `[D7-ML]` **Minh Lương:** Giải quyết xung đột giao diện, xác nhận build xanh.
 - [ ] `[D7-PD]` **Phúc Đức:** Đồng bộ nhánh `develop`, kiểm tra Friends và Profile.
 - [x] `[D7-MD]` **Minh Đức:** Kiểm tra thư mục upload ảnh `/static/uploads/` và file `facebook.db` trên `develop`.
-- [ ] `[D7-HDH]` **Hà Đăng Huy:** Báo cáo kiểm thử Tuần 1: 100% màn hình UI hoạt động hoàn hảo và 100% API FastAPI sẵn sàng trên Swagger UI.
+- [x] `[D7-HDH]` **Hà Đăng Huy:** Báo cáo kiểm thử Tuần 1: 100% màn hình UI hoạt động hoàn hảo và 100% API FastAPI sẵn sàng trên Swagger UI.
 - [x] `[D7-TQH]` **Tạ Quang Huy:** Build APK test lần 1 trên máy ảo Pixel 10a, demo cả nhóm.
 
 ---
@@ -96,12 +96,12 @@
 ### TUẦN 2 (SPRINT 2: TÍCH HỢP FASTAPI + SQLITE, UNIT TEST, SỬA LỖI & NGHIỆM THU)
 
 #### Ngày 08 (Thứ Hai): Tích hợp Real Backend vào Feed & Đăng bài
-- [ ] `[D8-TD]` **Tùng Dương:** Thiết lập Core Network: thêm Retrofit/Gson/OkHttp vào `app/build.gradle`, tạo `network_security_config.xml` cho `10.0.2.2:8000`, quyền `INTERNET` trong `AndroidManifest.xml`, viết `ApiClient`, `ApiService`, `Resource`; ghép `PostRepositoryImpl` vào CreatePost (upload ảnh & tạo bài).
+- [x] `[D8-TD]` **Tùng Dương:** Thiết lập Core Network: thêm Retrofit/Gson/OkHttp vào `app/build.gradle`, tạo `network_security_config.xml` cho `10.0.2.2:8000`, quyền `INTERNET` trong `AndroidManifest.xml`, viết `ApiClient`, `ApiService`, `Resource`; ghép `PostRepositoryImpl` vào CreatePost (upload ảnh & tạo bài).
 - [x] `[D8-ML]` **Minh Lương:** Chuyển `FeedViewModel` sang dùng `PostRepositoryImpl`, lấy bài viết thật từ FastAPI + SQLite (`GET /api/posts`); kiểm tra Like đồng bộ lên server.
 - [X] `[D8-AD]` **Ánh Dương:** Hỗ trợ debug kết nối Retrofit với FastAPI, cấu hình CORS Middleware và log request Uvicorn.
 - [ ] `[D8-PD]` **Phúc Đức:** Ghép `FriendRepositoryImpl` vào `FriendsViewModel`, tải danh sách lời mời kết bạn từ `GET /api/friends/requests`.
 - [x] `[D8-MD]` **Minh Đức:** Hỗ trợ debug dữ liệu bạn bè và câu lệnh SQL trong SQLite.
-- [ ] `[D8-HDH]` **Hà Đăng Huy:** Test độc lập API kết bạn trên 2 tài khoản demo qua Postman / Swagger UI.
+- [x] `[D8-HDH]` **Hà Đăng Huy:** Test độc lập API kết bạn trên 2 tài khoản demo qua Postman / Swagger UI.
 - [x] `[D8-TQH]` **Tạ Quang Huy:** Ghép `NotificationRepositoryImpl` vào Notifications, gọi API `GET /api/notifications` từ FastAPI server.
 
 #### Ngày 09 (Thứ Ba): Tích hợp Real Backend vào Profile & Bạn bè
@@ -111,7 +111,7 @@
 - [ ] `[D9-TD]` **Tùng Dương:** Kiểm tra luồng Đăng bài: test đăng chỉ text, chỉ ảnh, cả hai; xử lý khi FastAPI server chưa bật.
 - [X] `[D9-AD]` **Ánh Dương:** Tối ưu SQLite Query Indexes cho các câu truy vấn phức tạp.
 - [x] `[D9-MD]` **Minh Đức:** Nén ảnh bitmap trước khi upload lên thư mục `static/uploads/` để tiết kiệm băng thông.
-- [ ] `[D9-HDH]` **Hà Đăng Huy:** Bắt đầu viết Unit Test cho tầng Backend: tạo file `test_api.py` sử dụng `pytest` và `TestClient`.
+- [x] `[D9-HDH]` **Hà Đăng Huy:** Bắt đầu viết Unit Test cho tầng Backend: tạo file `test_api.py` sử dụng `pytest` và `TestClient`.
 
 #### Ngày 10 (Thứ Tư): Viết Toàn bộ Unit Test & Xử lý Trạng thái UI
 - [ ] `[D10-HDH]` **Hà Đăng Huy:** Hoàn thiện Unit Test cho Data Layer: `PostRepositoryTest` (Android Mockito) và `test_api.py` (FastAPI với pytest).

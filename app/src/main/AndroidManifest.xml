@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
- <!-- THÊM DÒNG QUYỀN MẠNG NÀY ĐỂ GLIDE TẢI ẢNH MẪU TỪ INTERNET (ML-D5/D6)-->
-    <uses-permission android:name="android.permission.INTERNET" />
- 
+  <!-- Quyền kết nối mạng và kiểm tra trạng thái mạng phục vụ Retrofit & Glide ([D8-TD]) -->
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
   <application
     android:allowBackup="true"
     android:icon="@android:drawable/sym_def_app_icon"
     android:label="@string/app_name"
+    android:networkSecurityConfig="@xml/network_security_config"
     android:roundIcon="@android:drawable/sym_def_app_icon"
     android:supportsRtl="true"
-    android:theme="@style/Theme.FacebookClient">
+    android:theme="@style/Theme.FacebookClient"
+    android:usesCleartextTraffic="true">
 
     <!-- Màn hình Đăng nhập 1 chạm / Chọn tài khoản Demo ([D6-TD]) -->
     <activity

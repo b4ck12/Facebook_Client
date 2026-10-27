@@ -102,7 +102,7 @@
 - [x] **Tạ Quang Huy (FE + QA):** `[D6-TQH]` Ghép `PhotoGridAdapter` vào Tab Photos của Profile; chạy thử nghiệm toàn bộ giao diện trên máy ảo `Pixel_10a_API_37`, chụp ảnh các màn hình báo cáo.
 - [ ] **Ánh Dương (BE Lead):** `[D6-AD]` Viết router `comments.py` trên FastAPI: Triển khai endpoint `GET /api/posts/{id}/comments` và `POST /api/posts/{id}/comments` (chỉ nhận text thuần túy).
 - [x] **Minh Đức (BE):** `[D6-MD]` Viết logic tự động tạo bản ghi trong bảng `notifications` khi có tương tác Thích bài viết hoặc Bình luận bài viết.
-- [ ] **Hà Đăng Huy (BE + QA):** `[D6-HDH]` Rà soát toàn bộ Swagger UI (`http://localhost:8000/docs`), chuẩn bị bộ dữ liệu test mẫu trong `facebook.db` sẵn sàng cho tuần tích hợp.
+- [x] **Hà Đăng Huy (BE + QA):** `[D6-HDH]` Rà soát toàn bộ Swagger UI (`http://localhost:8000/docs`), chuẩn bị bộ dữ liệu test mẫu trong `facebook.db` sẵn sàng cho tuần tích hợp.
 
 ---
 
@@ -114,7 +114,7 @@
 - [x] **Minh Lương (FE):** `[D7-ML]` Giải quyết xung đột giao diện (nếu có), đảm bảo app build xanh không có cảnh báo.
 - [ ] **Phúc Đức (FE):** `[D7-PD]` Đồng bộ nhánh `develop` về máy, test luồng Friends và Profile chạy trơn tru.
 - [x] **Minh Đức (BE):** `[D7-MD]` Kiểm tra thư mục upload ảnh `/static/uploads/` và file `facebook.db` trên nhánh `develop`.
-- [ ] **Hà Đăng Huy (BE + QA):** `[D7-HDH]` Tổng hợp báo cáo kiểm thử Tuần 1: Xác nhận 100% màn hình UI hoạt động hoàn hảo với Mock Data và 100% API FastAPI đã sẵn sàng trên Swagger UI.
+- [x] **Hà Đăng Huy (BE + QA):** `[D7-HDH]` Tổng hợp báo cáo kiểm thử Tuần 1: Xác nhận 100% màn hình UI hoạt động hoàn hảo với Mock Data và 100% API FastAPI đã sẵn sàng trên Swagger UI.
 - [x] **Tạ Quang Huy (FE + QA):** `[D7-TQH]` Chạy build APK thử nghiệm lần 1 trên máy ảo Pixel 10a, demo ngắn cho cả nhóm trong buổi họp tuần 1.
 
 ---
@@ -127,7 +127,7 @@
 ### NGÀY 08 (Thứ Hai): Tích hợp Real Backend vào Feed & Đăng bài (Integration Day 1)
 *Mục tiêu ngày 8: Thay thế MockPostRepository bằng PostRepositoryImpl, load bài viết thật từ FastAPI server.*
 
-- [ ] **Tùng Dương (FE Lead):** `[D8-TD]` **Xây dựng Tầng Mạng Cốt lõi (Core Network Setup):**
+- [x] **Tùng Dương (FE Lead):** `[D8-TD]` **Xây dựng Tầng Mạng Cốt lõi (Core Network Setup):**
   - Thêm thư viện Retrofit 2 (`2.9.0`), Converter Gson (`2.9.0`), OkHttp Logging Interceptor (`4.12.0`) vào `app/build.gradle`.
   - Tạo cấu hình mạng `res/xml/network_security_config.xml` cho phép HTTP cleartext tới `10.0.2.2` và `localhost`.
   - Khai báo quyền `INTERNET`, `ACCESS_NETWORK_STATE` và gán `networkSecurityConfig` trong `AndroidManifest.xml`.
@@ -137,7 +137,7 @@
 - [ ] **Ánh Dương (BE Lead):** `[D8-AD]` Hỗ trợ Tùng Dương và Minh Lương gỡ lỗi (debug) kết nối Retrofit với FastAPI, cấu hình CORS Middleware và log request Uvicorn.
 - [ ] **Phúc Đức (FE):** `[D8-PD]` Bắt đầu ghép `FriendRepositoryImpl` vào `FriendsViewModel`, gọi API tải danh sách lời mời kết bạn từ endpoint `GET /api/friends/requests`.
 - [x] **Minh Đức (BE):** `[D8-MD]` Hỗ trợ Phúc Đức gỡ lỗi dữ liệu bạn bè; kiểm tra câu lệnh SQL trong SQLite.
-- [ ] **Hà Đăng Huy (BE + QA):** `[D8-HDH]` Kiểm thử độc lập API kết bạn bằng cách test trên 2 tài khoản demo khác nhau xem lời mời có đến đúng người không.
+- [x] **Hà Đăng Huy (BE + QA):** `[D8-HDH]` Kiểm thử độc lập API kết bạn bằng cách test trên 2 tài khoản demo khác nhau xem lời mời có đến đúng người không.
 - [x] **Tạ Quang Huy (FE + QA):** `[D8-TQH]` Ghép `NotificationRepositoryImpl` vào `NotificationViewModel`, gọi API `GET /api/notifications` từ FastAPI server.
 
 ---
@@ -151,7 +151,7 @@
 - [ ] **Tùng Dương (FE Lead):** `[D9-TD]` Kiểm tra luồng Đăng bài: test đăng bài chỉ có chữ, test đăng bài chỉ có ảnh, test bài có cả chữ và ảnh; bắt lỗi khi FastAPI server chưa bật.
 - [ ] **Ánh Dương (BE Lead):** `[D9-AD]` Tối ưu SQLite Query Indexes cho các câu truy vấn phức tạp (lọc bài viết theo `author_id` sắp xếp theo `created_at DESC`).
 - [x] **Minh Đức (BE):** `[D9-MD]` Kiểm tra dung lượng ảnh tải lên thư mục `static/uploads/`, bổ sung xử lý nén ảnh bitmap trước khi upload để tiết kiệm băng thông.
-- [ ] **Hà Đăng Huy (BE + QA):** `[D9-HDH]` Bắt đầu viết Unit Test cho tầng Backend: tạo file `test_api.py` sử dụng `pytest` và `TestClient` để kiểm thử toàn diện các endpoint FastAPI.
+- [x] **Hà Đăng Huy (BE + QA):** `[D9-HDH]` Bắt đầu viết Unit Test cho tầng Backend: tạo file `test_api.py` sử dụng `pytest` và `TestClient` để kiểm thử toàn diện các endpoint FastAPI.
 
 ---
 

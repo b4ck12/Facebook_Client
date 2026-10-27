@@ -58,12 +58,21 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Khởi chạy máy chủ FastAPI với Uvicorn
+### 3. Khởi tạo và nạp dữ liệu mẫu vào CSDL SQLite (facebook.db)
+```bash
+python seed_data.py --reset
+```
+*Lưu ý: Nếu đang đứng ở thư mục gốc của dự án (`Facebook_Client`), chạy lệnh:*
+```bash
+python backend/seed_data.py --reset
+```
+
+### 4. Khởi chạy máy chủ FastAPI với Uvicorn
 ```bash
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### 4. Kiểm tra hoạt động
+### 5. Kiểm tra hoạt động
 - **Swagger UI (Interactive Docs):** Mở trình duyệt tại [http://localhost:8000/docs](http://localhost:8000/docs)
 - **Health Check Endpoint:** [http://localhost:8000/](http://localhost:8000/)
 - **Địa chỉ kết nối từ máy ảo Android (Pixel 10a):** `http://10.0.2.2:8000/api/`
