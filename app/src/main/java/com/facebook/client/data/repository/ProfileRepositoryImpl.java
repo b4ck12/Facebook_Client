@@ -212,7 +212,8 @@ public class ProfileRepositoryImpl implements IProfileRepository {
     @Override
     public void getUserPosts(String userId, RepositoryCallback<List<Post>> callback) {
         if (callback == null) return;
-
+        final String viewerId =
+                MockDataGenerator.getInstance().getCurrentUserId();
         executor.execute(() -> {
             String targetId = (userId != null && !userId.trim().isEmpty())
                     ? userId
@@ -222,7 +223,10 @@ public class ProfileRepositoryImpl implements IProfileRepository {
 
             // 1. Thử gọi API thật từ FastAPI server: GET /api/users/{id}/posts
             try {
-                String fullUrl = BASE_URL + "/" + targetId + "/posts";
+                String fullUrl = BASE_URL + "/"
+                        + java.net.URLEncoder.encode(targetId, "UTF-8")
+                        + "/posts?current_user_id="
+                        + java.net.URLEncoder.encode(viewerId, "UTF-8");
                 URL url = new URL(fullUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
