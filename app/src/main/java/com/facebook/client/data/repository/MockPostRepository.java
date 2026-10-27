@@ -39,9 +39,9 @@ public class MockPostRepository implements IPostRepository {
                 "post_1001",
                 "user_101",
                 "Nguyễn Văn An",
-                "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
-                "Cuối tuần đi săn mây Đà Lạt cùng hội bạn thân, thời tiết se lạnh tuyệt vời quá mọi người ơi!",
-                "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMluf60MVuwtpjhzR6Ikq7PWJDPFBrT241dhtI36AaKZZuDInnINFsg0pb&s=10",
+                "LỄ KHAI GIẢNG NĂM HỌC 2026 – 2027: GEN 17 – JEAN-MARC LAVEST ",
+                "https://scontent.fsgn5-11.fna.fbcdn.net/v/t39.30808-6/794329997_1082916594281310_7741994807684161768_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1365&ctp=s2048x1365&_nc_cat=110&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFgXI52937Kc3min0lr502fb419Q-820aJvjX1D7zbRor76DQIyS5St8jnGvNfQE_G7vLkghKeF54rqguib1QMS&_nc_ohc=y23hBHOwWWMQ7kNvwFXilbH&_nc_oc=AdrQg9NEF45Aw4VO2FUiAktuauxB9cZn7pH_5vKdU64m3k0eKzhhtdGCs2v8yIT3enyaJZJ01m5kmDLQiNJN2tHo&_nc_zt=23&_nc_ht=scontent.fsgn5-11.fna&_nc_gid=Ht8FAnYipBAhKxNDlU7AqQ&_nc_ss=7b2a8&oh=00_AQN5QPk6h4U53-qTIrT_yZbWmbzAGyBYV7bkvRsZzVLpOA&oe=6AE5C636",
                 true,
                 24,
                 3,
@@ -114,7 +114,7 @@ public class MockPostRepository implements IPostRepository {
                 "post_1006",
                 "user_101",
                 "Nguyễn Văn An",
-                "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMluf60MVuwtpjhzR6Ikq7PWJDPFBrT241dhtI36AaKZZuDInnINFsg0pb&s=10",
                 "Một ly Espresso nóng cho buổi chiều tỉnh táo fix bug.",
                 "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800",
                 true,
@@ -192,7 +192,7 @@ public class MockPostRepository implements IPostRepository {
                 "user_102",
                 "Trần Thị Mai",
                 "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
-                "Chuyến đi tuyệt vời quá bạn ơi!",
+                "Chào đón các bạn tân sinh viên Gen 17 USTH nhé!",
                 now - (4 * 60 * 1000)
         ));
         commentsPost1001.add(new Comment(
@@ -201,7 +201,7 @@ public class MockPostRepository implements IPostRepository {
                 "user_103",
                 "Lê Hoàng Nam",
                 "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150",
-                "Ảnh chụp nét căng, săn mây ở đồi nào thế An?",
+                "Một màu áo Xanh đầy hy vọng - Welcome Gen 17",
                 now - (3 * 60 * 1000)
         ));
         commentsPost1001.add(new Comment(
@@ -210,7 +210,7 @@ public class MockPostRepository implements IPostRepository {
                 "user_104",
                 "Phạm Minh Tuấn",
                 "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
-                "Đợt tới bảo vệ đồ án xong cả nhóm mình làm một chuyến nhé!",
+                "Chúc năm học mới 2026 - 2027 : Bản Lĩnh - Nhiệt Huyết - Sáng Tạo ",
                 now - (60 * 1000)
         ));
         MOCK_COMMENTS_MAP.put("post_1001", commentsPost1001);
@@ -222,7 +222,7 @@ public class MockPostRepository implements IPostRepository {
                 "post_1002",
                 "user_101",
                 "Nguyễn Văn An",
-                "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMluf60MVuwtpjhzR6Ikq7PWJDPFBrT241dhtI36AaKZZuDInnINFsg0pb&s=10",
                 "Quyết tâm đạt điểm A+ môn này nhé cả nhà!",
                 now - (15 * 60 * 1000)
         ));
