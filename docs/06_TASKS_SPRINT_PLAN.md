@@ -159,7 +159,7 @@
 *Mục tiêu ngày 10: Đạt chuẩn Unit Test đồ án (Android JUnit + Backend pytest), app xử lý mượt mà khi rỗng hoặc lỗi mạng.*
 
 - [ ] **Hà Đăng Huy (BE + QA Lead):** `[D10-HDH]` Hoàn thiện bộ Unit Test cho Data Layer: `PostRepositoryTest` (Android Mockito) và `test_api.py` (FastAPI endpoints với pytest, đạt ít nhất 8 test cases bao gồm success/error).
-- [ ] **Tạ Quang Huy (FE + QA):** `[D10-TQH]` Viết bộ Unit Test cho tầng ViewModel: `CreatePostViewModelTest` (test chặn bài rỗng, test submit thành công) với `InstantTaskExecutorRule`.
+- [x] **Tạ Quang Huy (FE + QA):** `[D10-TQH]` Viết bộ Unit Test cho tầng ViewModel: `CreatePostViewModelTest` (test chặn bài rỗng, test submit thành công) với `InstantTaskExecutorRule`.
 - [ ] **Tùng Dương (FE Lead):** `[D10-TD]` Viết class tiện ích `PostValidator.java` và viết Unit Test `PostValidatorTest.java` kiểm tra logic đăng bài chuẩn xác 100%.
 - [ ] **Minh Lương (FE):** `[D10-ML]` Bổ sung giao diện Empty State ("Chưa có bài viết nào") và Shimmer Loading cho bảng tin Feed.
 - [ ] **Phúc Đức (FE):** `[D10-PD]` Bổ sung giao diện Empty State cho tab Lời mời kết bạn ("Không có lời mời nào") và tab Tìm kiếm.
@@ -172,7 +172,7 @@
 *Mục tiêu ngày 11: Tìm ra toàn bộ lỗi còn tồn đọng, phân loại P0-P3 theo ma trận RACI và gán người fix.*
 
 - [ ] **Hà Đăng Huy (QA Lead):** `[D11-HDH]` Thực hiện kiểm thử toàn bộ chức năng theo Master Test Plan; tạo danh sách Bug Tickets trên GitHub/Zalo kèm HTTP status code và Logcat.
-- [ ] **Tạ Quang Huy (QA):** `[D11-TQH]` Kiểm thử giao diện trên máy ảo `Pixel_10a_API_37`: xoay màn hình, cuộn nhanh RecyclerView, kiểm tra font chữ, padding, màu sắc theo Design System.
+- [x] **Tạ Quang Huy (QA):** `[D11-TQH]` Kiểm thử giao diện trên máy ảo `Pixel_10a_API_37`: xoay màn hình, cuộn nhanh RecyclerView, kiểm tra font chữ, padding, màu sắc theo Design System.
 - [ ] **Tùng Dương (FE Lead):** `[D11-TD]` Tiếp nhận các bug liên quan đến màn hình Tạo bài viết và Navigation, bắt đầu xử lý ngay các lỗi P0/P1.
 - [ ] **Minh Lương (FE):** `[D11-ML]` Tiếp nhận các bug liên quan đến Feed, nút Like, nút Share và Comment Sheet.
 - [ ] **Phúc Đức (FE):** `[D11-PD]` Tiếp nhận các bug liên quan đến Profile, hiển thị ảnh bìa, danh sách bạn bè và thanh tìm kiếm.
@@ -187,7 +187,7 @@
 - [ ] **Tùng Dương (FE Lead):** `[D12-TD]` Sửa triệt để lỗi giao diện tạo bài viết, đảm bảo nút ĐĂNG chỉ sáng khi có chữ hoặc ảnh; vô hiệu hóa nút trong khi đang tải (tránh bấm 2 lần).
 - [ ] **Minh Lương (FE):** `[D12-ML]` Tối ưu RecyclerView Feed: cấu hình `setHasFixedSize(true)`, tích hợp Glide caching để cuộn mượt mà không bị giật lag.
 - [ ] **Phúc Đức (FE):** `[D12-PD]` Sửa lỗi vỡ ảnh bìa trên Profile, xử lý trường hợp người dùng chưa có ảnh đăng thì hiển thị placeholder đẹp mắt.
-- [ ] **Tạ Quang Huy (FE + QA):** `[D12-TQH]` Kiểm tra lại thông báo click: đảm bảo bấm vào thông báo nhảy chính xác tới màn hình chi tiết bài viết.
+- [x] **Tạ Quang Huy (FE + QA):** `[D12-TQH]` Kiểm tra lại thông báo click: đảm bảo bấm vào thông báo nhảy chính xác tới màn hình chi tiết bài viết.
 - [ ] **Ánh Dương (BE Lead):** `[D12-AD]` Kiểm tra xử lý ngoại lệ mất kết nối server (Connection Refused / Timeout) ở tầng Repository, đảm bảo app không bị crash khi FastAPI chưa bật.
 - [ ] **Minh Đức (BE):** `[D12-MD]` Kiểm tra đường dẫn URL ảnh trả về từ FastAPI (`http://10.0.2.2:8000/static/uploads/...`), loại bỏ các liên kết hỏng.
 - [ ] **Hà Đăng Huy (BE + QA):** `[D12-HDH]` Kiểm tra lại từng bug đã được dev sửa, xác nhận kết quả và chuyển trạng thái sang `Resolved`.
