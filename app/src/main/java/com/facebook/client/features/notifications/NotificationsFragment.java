@@ -9,11 +9,14 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.facebook.client.R;
 import com.facebook.client.core.base.BaseFragment;
 import com.facebook.client.core.utils.SessionManager;
 import com.facebook.client.data.mock.MockDataGenerator;
 import com.facebook.client.data.model.Notification;
 import com.facebook.client.databinding.FragmentNotificationsBinding;
+import com.facebook.client.features.comment.CommentBottomSheetDialog;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
  * Fragment hiển thị danh sách Thông báo tương tác (Notifications Tab - [D8-TQH]).
@@ -59,7 +62,8 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
                     notificationAdapter.markAsRead(position);
                     notificationViewModel.markAsRead(notification.getId());
                 }
-                showToast("Đã chọn thông báo từ: " + notification.getSenderName());
+                // Điều hướng tới màn hình bài viết chi tiết hoặc Tab tương ứng ([D12-TQH])
+                handleNotificationNavigation(notification);
             }
 
             @Override
@@ -132,6 +136,35 @@ public class NotificationsFragment extends BaseFragment<FragmentNotificationsBin
         }
         if (currentUserId == null || currentUserId.trim().isEmpty()) {
             currentUserId = MockDataGenerator.getInstance().getCurrentUserId();
+        }
+    }
+
+    /**
+     * Điều hướng người dùng tới màn hình tương ứng khi bấm vào thông báo ([D12-TQH]).
+     * - LIKE / COMMENT: Mở CommentBottomSheetDialog hiển thị chi tiết thảo luận của bài viết đích.
+     * - FRIEND_REQUEST / FRIEND_ACCEPT: Chuyển sang Tab Bạn bè (nav_friends) trong Bottom Navigation.
+     */
+    private void handleNotificationNavigation(@NonNull Notification notification) {
+        String targetPostId = notification.getTargetPostId();
+        String type = notification.getType();
+
+        if (targetPostId != null && !targetPostId.trim().isEmpty()) {
+            // Mở CommentBottomSheetDialog xem thảo luận bài viết đích ([D12-TQH])
+            CommentBottomSheetDialog dialog = CommentBottomSheetDialog.newInstance(targetPostId.trim());
+            dialog.show(getChildFragmentManager(), "notification_post_comments");
+            showToast("Đang mở bài viết của " + notification.getSenderName());
+        } else if (Notification.TYPE_FRIEND_REQUEST.equalsIgnoreCase(type)
+                || Notification.TYPE_FRIEND_ACCEPT.equalsIgnoreCase(type)) {
+            // Chuyển sang Tab Bạn bè trong BottomNavigationView ([D12-TQH])
+            if (getActivity() != null) {
+                BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
+                if (bottomNav != null) {
+                    bottomNav.setSelectedItemId(R.id.nav_friends);
+                }
+            }
+            showToast("Chuyển tới danh sách Bạn bè");
+        } else {
+            showToast("Đã xem thông báo từ " + notification.getSenderName());
         }
     }
 }

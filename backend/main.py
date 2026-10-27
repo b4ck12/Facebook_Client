@@ -1,5 +1,12 @@
 import os
+import sys
 import time
+
+# Đảm bảo thư mục backend luôn có trong sys.path để import các module nội bộ
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
+
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -7,9 +14,6 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from database import engine, Base
 import models
-
-# Đảm bảo thư mục upload tĩnh tồn tại
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 UPLOAD_DIR = os.path.join(STATIC_DIR, "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)

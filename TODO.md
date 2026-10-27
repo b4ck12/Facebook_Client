@@ -115,7 +115,7 @@
 
 #### Ngày 10 (Thứ Tư): Viết Toàn bộ Unit Test & Xử lý Trạng thái UI
 - [ ] `[D10-HDH]` **Hà Đăng Huy:** Hoàn thiện Unit Test cho Data Layer: `PostRepositoryTest` (Android Mockito) và `test_api.py` (FastAPI với pytest).
-- [ ] `[D10-TQH]` **Tạ Quang Huy:** Viết Unit Test cho `CreatePostViewModelTest` với `InstantTaskExecutorRule`.
+- [x] `[D10-TQH]` **Tạ Quang Huy:** Viết Unit Test cho `CreatePostViewModelTest` với `InstantTaskExecutorRule`.
 - [ ] `[D10-TD]` **Tùng Dương:** Viết `PostValidator.java` và `PostValidatorTest.java` test chặn bài rỗng.
 - [ ] `[D10-ML]` **Minh Lương:** Bổ sung Empty State và Shimmer Loading cho Feed.
 - [ ] `[D10-PD]` **Phúc Đức:** Bổ sung Empty State cho danh sách Lời mời kết bạn và Tìm kiếm.
@@ -124,7 +124,7 @@
 
 #### Ngày 11 (Thứ Năm): Bug Hunting Day (Kiểm thử Toàn diện & Phân loại Bug)
 - [ ] `[D11-HDH]` **Hà Đăng Huy:** Kiểm thử toàn bộ chức năng, tạo danh sách Bug Ticket kèm mã lỗi HTTP và Logcat.
-- [ ] `[D11-TQH]` **Tạ Quang Huy:** Kiểm thử giao diện trên máy ảo Pixel 10a (xoay màn hình, cuộn nhanh, font chữ).
+- [x] `[D11-TQH]` **Tạ Quang Huy:** Kiểm thử giao diện trên máy ảo Pixel 10a (xoay màn hình, cuộn nhanh, font chữ).
 - [ ] `[D11-TD]` **Tùng Dương:** Nhận và sửa bug màn hình Tạo bài viết và Navigation.
 - [ ] `[D11-ML]` **Minh Lương:** Nhận và sửa bug Feed, Like, Share, Comment Sheet.
 - [ ] `[D11-PD]` **Phúc Đức:** Nhận và sửa bug Profile, hiển thị ảnh bìa, danh sách bạn bè.
@@ -135,7 +135,7 @@
 - [ ] `[D12-TD]` **Tùng Dương:** Sửa triệt để validation đăng bài, chống bấm đúp khi đang tải.
 - [ ] `[D12-ML]` **Minh Lương:** Tối ưu RecyclerView Feed: Glide caching chống giật lag.
 - [ ] `[D12-PD]` **Phúc Đức:** Sửa lỗi vỡ ảnh bìa Profile, hiển thị placeholder ảnh đẹp mắt.
-- [ ] `[D12-TQH]` **Tạ Quang Huy:** Kiểm tra click notification điều hướng chính xác bài viết.
+- [x] `[D12-TQH]` **Tạ Quang Huy:** Kiểm tra click notification điều hướng chính xác bài viết.
 - [ ] `[D12-AD]` **Ánh Dương:** Xử lý ngoại lệ mất kết nối server (Connection Refused/Timeout) ở tầng Repository, chống crash app.
 - [ ] `[D12-MD]` **Minh Đức:** Kiểm tra URL ảnh trả về từ FastAPI (`http://10.0.2.2:8000/static/uploads/...`), loại bỏ liên kết hỏng.
 - [ ] `[D12-HDH]` **Hà Đăng Huy:** Verify lại các bug đã được sửa, chuyển trạng thái `Resolved`.
