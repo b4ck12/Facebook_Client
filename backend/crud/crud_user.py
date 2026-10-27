@@ -53,35 +53,36 @@ def update_user(db: Session, user_id: str, update_data: schemas.UserUpdate) -> O
 
 
 
-def get_user_posts(
-    db: Session,
-    user_id: str,
-    current_user_id: Optional[str] = None,
-    skip: int = 0,
-    limit: int = 50
-) -> List[schemas.PostResponse]:
-    """
-    Lấy danh sách bài viết của người dùng (gọi sang crud_post).
-    """
-    try:
-        from crud import crud_post
-    except ImportError:
-        from backend.crud import crud_post
-    return crud_post.get_user_posts(db, user_id=user_id, current_user_id=current_user_id, skip=skip, limit=limit)
+# NOTE: 2 ham duoi day la proxy wrapper cu, hien khong dung vi router users.py da goi truc tiep sang crud_post.
+# def get_user_posts(
+#     db: Session,
+#     user_id: str,
+#     current_user_id: Optional[str] = None,
+#     skip: int = 0,
+#     limit: int = 50
+# ) -> List[schemas.PostResponse]:
+#     """
+#     Lấy danh sách bài viết của người dùng (gọi sang crud_post).
+#     """
+#     try:
+#         from crud import crud_post
+#     except ImportError:
+#         from backend.crud import crud_post
+#     return crud_post.get_user_posts(db, user_id=user_id, current_user_id=current_user_id, skip=skip, limit=limit)
 
 
-def get_user_photos(
-    db: Session,
-    user_id: str,
-    current_user_id: Optional[str] = None,
-    skip: int = 0,
-    limit: int = 50
-) -> List[schemas.PostResponse]:
-    """
-    Lấy danh sách ảnh của người dùng (gọi sang crud_post).
-    """
-    try:
-        from crud import crud_post
-    except ImportError:
-        from backend.crud import crud_post
-    return crud_post.get_user_photos(db, user_id=user_id, current_user_id=current_user_id, skip=skip, limit=limit)
+# def get_user_photos(
+#     db: Session,
+#     user_id: str,
+#     current_user_id: Optional[str] = None,
+#     skip: int = 0,
+#     limit: int = 50
+# ) -> List[schemas.PostResponse]:
+#     """
+#     Lấy danh sách ảnh của người dùng (gọi sang crud_post).
+#     """
+#     try:
+#         from crud import crud_post
+#     except ImportError:
+#         from backend.crud import crud_post
+#     return crud_post.get_user_photos(db, user_id=user_id, current_user_id=current_user_id, skip=skip, limit=limit)
