@@ -155,8 +155,8 @@ def seed_data(conn: sqlite3.Connection):
             "user_101",
             "an.nguyen@facebook.com",
             "Nguyễn Văn An",
-            "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
-            "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMluf60MVuwtpjhzR6Ikq7PWJDPFBrT241dhtI36AaKZZuDInnINFsg0pb&s=10",
+            "https://scontent.fsgn5-11.fna.fbcdn.net/v/t39.30808-6/794329997_1082916594281310_7741994807684161768_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1365&ctp=s2048x1365&_nc_cat=110&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFgXI52937Kc3min0lr502fb419Q-820aJvjX1D7zbRor76DQIyS5St8jnGvNfQE_G7vLkghKeF54rqguib1QMS&_nc_ohc=y23hBHOwWWMQ7kNvwFXilbH&_nc_oc=AdrQg9NEF45Aw4VO2FUiAktuauxB9cZn7pH_5vKdU64m3k0eKzhhtdGCs2v8yIT3enyaJZJ01m5kmDLQiNJN2tHo&_nc_zt=23&_nc_ht=scontent.fsgn5-11.fna&_nc_gid=Ht8FAnYipBAhKxNDlU7AqQ&_nc_ss=7b2a8&oh=00_AQN5QPk6h4U53-qTIrT_yZbWmbzAGyBYV7bkvRsZzVLpOA&oe=6AE5C636",
             now - (90 * 24 * 60 * 60 * 1000)
         ),
         (
@@ -205,8 +205,8 @@ def seed_data(conn: sqlite3.Connection):
         (
             "post_1001",
             "user_101",
-            "Cuối tuần đi săn mây Đà Lạt cùng hội bạn thân, thời tiết se lạnh tuyệt vời quá mọi người ơi!",
-            "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800",
+            "LỄ KHAI GIẢNG NĂM HỌC 2026 – 2027: GEN 17 – JEAN-MARC LAVEST",
+            "https://scontent.fsgn5-11.fna.fbcdn.net/v/t39.30808-6/794329997_1082916594281310_7741994807684161768_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1365&ctp=s2048x1365&_nc_cat=110&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFgXI52937Kc3min0lr502fb419Q-820aJvjX1D7zbRor76DQIyS5St8jnGvNfQE_G7vLkghKeF54rqguib1QMS&_nc_ohc=y23hBHOwWWMQ7kNvwFXilbH&_nc_oc=AdrQg9NEF45Aw4VO2FUiAktuauxB9cZn7pH_5vKdU64m3k0eKzhhtdGCs2v8yIT3enyaJZJ01m5kmDLQiNJN2tHo&_nc_zt=23&_nc_ht=scontent.fsgn5-11.fna&_nc_gid=Ht8FAnYipBAhKxNDlU7AqQ&_nc_ss=7b2a8&oh=00_AQN5QPk6h4U53-qTIrT_yZbWmbzAGyBYV7bkvRsZzVLpOA&oe=6AE5C636",
             1,
             now - (5 * 60 * 1000)
         ),
@@ -293,9 +293,9 @@ def seed_data(conn: sqlite3.Connection):
 
     # 3. Seed 7 Comments (Text-only theo đặc tả PDF)
     comments_data = [
-        ("cmt_1", "post_1001", "user_102", "Chuyến đi tuyệt vời quá bạn ơi!", now - (4 * 60 * 1000)),
-        ("cmt_2", "post_1001", "user_103", "Ảnh chụp nét căng, săn mây ở đồi nào thế An?", now - (3 * 60 * 1000)),
-        ("cmt_3", "post_1001", "user_104", "Đợt tới bảo vệ đồ án xong cả nhóm mình làm một chuyến nhé!", now - (1 * 60 * 1000)),
+        ("cmt_1", "post_1001", "user_102", "Chào đón các bạn tân sinh viên Gen 17 USTH nhé!", now - (4 * 60 * 1000)),
+        ("cmt_2", "post_1001", "user_103", "Một màu áo Xanh đầy hy vọng - Welcome Gen 17!", now - (3 * 60 * 1000)),
+        ("cmt_3", "post_1001", "user_104", "Chúc năm học mới 2026 - 2027 : Bản Lĩnh - Nhiệt Huyết - Sáng Tạo ", now - (1 * 60 * 1000)),
         ("cmt_4", "post_1002", "user_101", "Quyết tâm đạt điểm A+ môn này nhé cả nhà!", now - (15 * 60 * 1000)),
         ("cmt_5", "post_1002", "user_105", "Giao diện lên hình mượt lắm rồi!", now - (10 * 60 * 1000)),
         ("cmt_6", "post_1003", "user_104", "Góc setup gọn gàng và chất lượng quá Nam ơi.", now - (30 * 60 * 1000)),
