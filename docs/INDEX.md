@@ -26,6 +26,7 @@ Bộ tài liệu này được thiết kế và chuẩn hóa toàn diện theo q
 | **11** | [**11_BUG_TRIAGE_PROCESS.md**](./11_BUG_TRIAGE_PROCESS.md) | Quy trình quản lý và xử lý lỗi (**Bug Triage**), Ma trận trách nhiệm ai fix lỗi gì (RACI), Hotfix flow | Mục 15 |
 | **12** | [**12_ENVIRONMENT_SETUP.md**](./12_ENVIRONMENT_SETUP.md) | Hướng dẫn cài đặt **JDK 17**, Python FastAPI, Clone GitHub, Setup Package, **Máy ảo chuẩn Pixel 10a (API 37.2)** | Mục 17 |
 | **13** | [**QA_MASTER_TEST_PLAN.md**](./QA_MASTER_TEST_PLAN.md) | **Kế hoạch Kiểm thử Tổng thể (Master Test Plan)** chuẩn hóa 100% kịch bản kiểm thử 5 phân hệ & SLA lỗi | QA Lead (Mục 13, 15) |
+| **14** | [**14_BAO_VE_DO_AN_TOAN_DIEN.md**](./14_BAO_VE_DO_AN_TOAN_DIEN.md) | **CẨM NANG BẢO VỆ ĐỒ ÁN TOÀN DIỆN**: Cấu trúc code, flow, giải thích từng class/function/dòng code & bộ câu hỏi phản biện | BẢO VỆ ĐỒ ÁN |
 
 ---
 
